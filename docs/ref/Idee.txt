@@ -1,0 +1,15 @@
+1) Quali sono le situazioni e gli eventi inaspettati che possono influenzare il tragitto per la consegna? Per esempio strade chiuse, traffico, incidenti, meteo, etc. 
+Definire quale è il livello di importanza per ogni evento e le relative azioni da intraprendere. 
+
+2) Avere dei dati in tempo reale da varie risorse, come GPS, sensori di traffico, servizi meteorologici, news etc. I dati dovrebbero essere analizzati e filtrati in modo da identificare gli eventi che influenzeranno il tragitto. 
+
+3) Predirre quali possono essere gli eventi che si verificheranno in modo che il sistema può anticipare il problema e pianificare una strada alternativa. 
+
+5) Notificare il centro operativo e i corrieri di qualsiasi problema inaspettato, con informazioni sul livello di gravità dell'evento.
+
+6) Monitoraggio del tragitto e ottimizzazione in base ai dati in tempo reale e al feedback dei corrieri. 
+
+
+Link utili:
+
+https://blog.containerize.com/top-5-open-source-google-maps-alternatives-in-2022/
