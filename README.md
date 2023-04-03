@@ -1,10 +1,7 @@
 # City Logistics ICT Platform
 ## Company name: Gruppo FOS, TALOS
 ### Small description of the project: 
-    The project aims to develop a smart routing component that can efficiently handle
-    critical situations and unforeseen events in real-time. The system will notify both the
-    central operator and individual carriers of any criticality or unforeseen events that may
-    arise during trip planning or while en route
+    The project aims to develop a web application for saving parking spaces on a certain area of a city map and a mobile application running in background for the tracking of couriers.
 
 
 Please follows the following
