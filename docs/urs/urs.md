@@ -3,17 +3,18 @@
 ##### DIBRIS – Università di Genova. Scuola Politecnica, Software Engineering Course 80154
 
 
-**VERSION : X.X**
+**VERSION : 1.0**
 
 **Authors**  
-XXXX
-YYYY
+Andrea Caliendo
+Martina Maione
 
 **REVISION HISTORY**
 
 | Version    | Date        | Authors      | Notes        |
 | ----------- | ----------- | ----------- | ----------- |
-| X.X |  | |  |
+| 1.0 | 03/04/3023 |Andrea Caliendo e Martina Maione | First description of the project |
+
 
 # Table of Contents
 
@@ -34,11 +35,13 @@ YYYY
 <a name="p1"></a>
 
 ## 1. Introduction
-
 <a name="sp1.1"></a>
+This documents is the User Requuirement Document taken from the first interview with the Group-FOS company. The document describes the functionalities of:
+- a web application that will have to manage the saving of parking spaces within an area of an urban map. In addition, it must allow you to delete previously entered parking spaces and view the history of entered parking spaces.
+- a mobile application for tracking the courier which, based on the position, will have to save the time of entry and exit of the courier from a special parking lot.
 
 ### 1.1 Document Scope
-
+The purpose of this document is to clearly and precisely express the customer's needs and requests and to keep track of changes and updates.
 
 <a name="sp1.2"></a>
 
@@ -47,7 +50,9 @@ YYYY
 
 | Acronym				| Definition | 
 | ------------------------------------- | ----------- | 
-| XXXX                                  | XXXX |
+| Group-FOS                                  | Is the client |
+| OpenStreetMap                          | [Map-visualizing software](https://www.openstreetmap.org/#map=6/42.088/12.564)|
+|Angular|                               | [Graphic tool](https://angular.io/)|
 
 <a name="sp1.3"></a>
 
