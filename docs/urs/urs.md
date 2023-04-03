@@ -6,7 +6,7 @@
 **VERSION : 1.0**
 
 **Authors**  
-Andrea Caliendo
+Andrea Caliendo  
 Martina Maione
 
 **REVISION HISTORY**
@@ -52,7 +52,8 @@ The purpose of this document is to clearly and precisely express the customer's 
 | ------------------------------------- | ----------- | 
 | Group-FOS                                  | Is the client |
 | OpenStreetMap                          | [Map-visualizing software](https://www.openstreetmap.org/#map=6/42.088/12.564)|
-|Angular|                               | [Graphic tool](https://angular.io/)|
+|Angular                              | [Grafic tool](https://angular.io)|
+
 
 <a name="sp1.3"></a>
 
