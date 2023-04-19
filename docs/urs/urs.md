@@ -68,13 +68,17 @@ The purpose of this document is to clearly and precisely express the customer's 
 
 <a name="sp2.2"></a>
 
+The client needs a system for the optimization of delivery logistics, in order to improve the delivery time and have a less fuel consumption. This system could be useful for the Public Administration or an external client to have some statistical analysis of the urban logistics. 
+The entire system includes optimization of delivery routes (with notification of unforeseen events), parking reservation (with analysis of the permanence) and behaviour scoring of the couriers. 
+
 ### 2.2 Project Obectives 
 
 <a name="p3"></a>
 
+The project consists in the creation and implementation of a web application useful for the couriers to have a map of the parking slots of a certain city and a mobile application useful for a third part to track the position of the couriers and analyze if they use the parking slots in the right way. These applications are a portion of a wider system that has to regulate and optimize the urban mobility by improving the delivery routes and making the couriers park without having or creating problems in the car mobility.
 ## 3. Requirements
 
-| Priorità | Significato | 
+| Priority | Meaning | 
 | --------------- | ----------- | 
 | M | **Mandatory:**   |
 | D | **Desiderable:** |
@@ -85,15 +89,43 @@ The purpose of this document is to clearly and precisely express the customer's 
 ### 3.1 Stakeholders
 
 <a name="sp3.2"></a>
+
+- Internal stakeholders: FOS group manager, FOS group company
+- External stakeholders: couriers and the future owner (for example Public Administration or a private company)
+
 ### 3.2 Functional Requirements 
-
-| ID | Descrizione | Priorità |
+The user of the web application should be able to:
+| ID | Description | Priority |
 | --------------- | ----------- | ---------- | 
-| 1.0 |  XXXXX |M|
+| 1.0 |  save the parking slots of a city |M|
+| 2.0 |  cancel the parking slots |M|
+| 3.0 |  list of the saved parking slots |M|
+| 4.0 |  notify an anomaly in the parking slot (inaccessibility or unavailability) |D|
+| 5.0 |  list of the used parling slots |O|
+| 6.0 |  have a statistic analysis of the used parking slots |O|
+| 7.0 |  receive a score based on his behaviour about how he parked and the route he took |E|
 
+For the mobile application:
+| ID | Description | Priority |
+| --------------- | ----------- | ---------- | 
+| 1.0 |  the user should be able to start the mobile application |M|
+| 2.0 |  the third-part client should be able to see the permanence time of a courier inside a parking slot |M|
+| 3.0 |  the application should run in background |M|
+| 4.0 |  the system should notify the courier that his available permanence time is expiring |O|
 <a name="sp3.3"></a>
+
 ### 3.2 Non-Functional Requirements 
- 
-| ID | Descrizione | Priorità |
+The user of the web application should
+| ID | Description | Priority |
 | --------------- | ----------- | ---------- | 
-| 1.0 | XXXXX |M|
+| 1.0 | save the parking slots by a simple click on the map |M|
+| 2.0 | cancel the parking slots by a double click on the map |M|
+| 3.0 | notify an anomaly by simply clicking on a specific button  |O|
+
+For the mobile application
+| ID | Description | Priority |
+| --------------- | ----------- | ---------- | 
+| 1.0 | the user has to give the permissions for his position tracking |M|
+| 2.0 | the mobile application should be implemented for android operating system |M|
+| 3.0 | the system should understand if the user entered a parking area, the permanence interval in that area and the exiting time  |M|
+
