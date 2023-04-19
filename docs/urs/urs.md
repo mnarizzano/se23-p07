@@ -14,6 +14,7 @@ Martina Maione
 | Version    | Date        | Authors      | Notes        |
 | ----------- | ----------- | ----------- | ----------- |
 | 1.0 | 03/04/3023 |Andrea Caliendo e Martina Maione | First description of the project |
+| 2.0 | 19/04/3023 |Andrea Caliendo e Martina Maione | Updating of requirements |
 
 
 # Table of Contents
