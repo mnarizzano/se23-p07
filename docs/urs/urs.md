@@ -3,7 +3,7 @@
 ##### DIBRIS – Università di Genova. Scuola Politecnica, Software Engineering Course 80154
 
 
-**VERSION : 1.0**
+**VERSION : 3.0**
 
 **Authors**  
 Andrea Caliendo  
