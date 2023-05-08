@@ -3,7 +3,7 @@
 ##### DIBRIS – Università di Genova. Scuola Politecnica, Software Engineering Course 80154
 
 
-**VERSION : 3.0**
+**VERSION : 4.0**
 
 **Authors**  
 Andrea Caliendo  
@@ -16,6 +16,7 @@ Martina Maione
 | 1.0 | 03/04/2023 |Andrea Caliendo e Martina Maione | First description of the project |
 | 2.0 | 19/04/2023 |Andrea Caliendo e Martina Maione | Updating of requirements |
 | 3.0 | 05/05/2023 |Andrea Caliendo e Martina Maione | Correction of requirements |
+| 4.0 | 08/05/2023 |Andrea Caliendo e Martina Maione | Last version of requirements |
 
 
 # Table of Contents
@@ -104,8 +105,10 @@ The user of the web application should be able to:
 | 3.0 |  list of the saved parking slots |M|
 | 4.0 |  list of the parking slot state (free, unaccessible, busy) |M|
 | 5.0 |  list of the used parking slots |M|
-| 6.0 |  have a statistic analysis of the used parking slots |O|
-| 7.0 |  receive a score based on his behaviour about how he parked and the route he took |D|
+| 6.0 |  see have a statistic analysis of the used parking slots |O|
+| 7.0 | save the parking slots by a simple click on the map |M|
+| 8.0 | cancel the parking slots by a double click on the map |M|
+
 
 For the mobile application:
 | ID | Description | Priority |
@@ -116,20 +119,17 @@ For the mobile application:
 | 4.0 |  the system should notify the courier that his available permanence time is expiring |O|
 | 5.0 |  the system user should be able to notify an anomaly in the parking slot (inaccessibility or unavailability) |D|
 | 6.0 |  the user should be able to notify the entry and exit time from a parking slot |D|
+| 7.0 |  the user should be able to see a dashboard with his score and infractions |D|
+| 8.0 | the system should understand if the user entered a parking area, the permanence interval in that area and the exiting time  |M|
+| 9.0 | notify an anomaly by simply clicking on a specific button  |O|
 <a name="sp3.3"></a>
 
 ### 3.2 Non-Functional Requirements 
-The user of the web application should
-| ID | Description | Priority |
-| --------------- | ----------- | ---------- | 
-| 1.0 | save the parking slots by a simple click on the map |M|
-| 2.0 | cancel the parking slots by a double click on the map |M|
 
 For the mobile application
 | ID | Description | Priority |
 | --------------- | ----------- | ---------- | 
 | 1.0 | the user has to give the permissions for his position tracking |M|
 | 2.0 | the mobile application should be implemented for android operating system (from O.S. 9 to the last) |M|
-| 3.0 | the system should understand if the user entered a parking area, the permanence interval in that area and the exiting time  |M|
-| 4.0 | notify an anomaly by simply clicking on a specific button  |O|
+
 
