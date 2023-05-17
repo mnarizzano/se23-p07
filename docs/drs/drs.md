@@ -1,17 +1,17 @@
-# Title of the project
+# 
 
 ## Design Requirement Specification Document
 
 DIBRIS – Università di Genova. Scuola Politecnica, Corso di Ingegneria del Software 80154
 
 
-<div align='right'> <b> Authors </b> <br> AA <br> BB  </div>
+<div align='right'> <b> Authors </b> <br> Andrea Caliendo <br> Martina Maione  </div>
 
 ### REVISION HISTORY
 
 Version | Data | Author(s)| Notes
 ---------|------|--------|------
-1 | XX/YY/ZZ | AA <br> BB | First Versionn of the document. Document Template
+1 | 17/05/2023 | Andrea Caliendo <br> Martina Maione | First Version of the document
 
 ## Table of Content
 
@@ -47,20 +47,21 @@ Version | Data | Author(s)| Notes
     
 ### <a name="purpose"></a> 1.1 Purpose and Scope
 <details> 
-    <summary> The goal of this section is to describe the purpose of this document and intended audience  </summary>
-    <p>This sub section should describe ...</p>
+    <summary> This Design Requirement Specification (DRS) is specific to City Logistics ICT Platform. Its main functions are listed as below: </summary>
+    <p>Management of parking slots used by ccouriers</p>
+    <p>Monitoring of expected parking times in a given area</p>
 </details>
 
 ### <a name="def"></a> 1.2 Definitions
 <details> 
-    <summary> Put a summary of the section
+    <summary> Here are listed some definitions used during the project development
     </summary>
-    <p>This sub section should describe ...</p>
     
-| First Header  | Second Header |
+| Acronym  | Definition |
 | ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+| WA  | Web Application  |
+| MA | Mobile Application  |
+| PS | Parking Slot |
     
 </details>
 
@@ -68,24 +69,26 @@ Version | Data | Author(s)| Notes
 <details> 
     <summary> Explain how is organized the document
     </summary>
-    <p>This sub section should describe ...</p>
+    <p>Project Description: describes what the project should do</p>
+    <p>System Overview: describes the main architecture of the system</p>
+    <p>System Module 1: describes what do we need in order to implement the module 1 and what the module 1 does</p>
 </details>
 
 ### <a name="biblio"></a> 1.4 Bibliography
 <details> 
-    <summary> Put a summary of the section
+    <summary> This section aims at listing the references for this project
     </summary>
-    <p>This sub section should describe ...</p>
 </details>
 
 ## <a name="description"></a> 2 Project Description
 
 ### <a name="project-intro"></a> 2.1 Project Introduction 
-<details> 
-    <summary>  Describe at an high level what is the goal of the project and a possible solution
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
+Describe at an high level what is the goal of the project and a possible solution
+
+The project of City Logistics ICT Platform is divided into 2 applications:
+- one web application where the client can select a desired area. In this area he can decide where he wants to park (for hid seliveries). Once this is done, he will be able to save on a map this specific point by clicking one time and see all the parking slots already saved. The client can also delete a parking slot, by clicking twice on the same point. Furthermore, the client will be able to see all the statistics regarding the parking slots already used, on another page. 
+- one mobile application that works only with the authorization of the client on his geolocalization. This application will verify that the courier has entered in a specific area (parking slot) in one specic time slot. This application should also track when the courier will exit this area and notify him if he is exceeding the available time for that PS. The exiting time from that area will be saved in a database in the system. 
+
 
 ### <a name="tech"></a> 2.2 Technologies used
 
