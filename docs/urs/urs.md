@@ -13,10 +13,10 @@ Martina Maione
 
 | Version    | Date        | Authors      | Notes        |
 | ----------- | ----------- | ----------- | ----------- |
-| 1.0 | 03/04/2023 |Andrea Caliendo e Martina Maione | First description of the project |
-| 2.0 | 19/04/2023 |Andrea Caliendo e Martina Maione | Updating of requirements |
-| 3.0 | 05/05/2023 |Andrea Caliendo e Martina Maione | Correction of requirements |
-| 4.0 | 08/05/2023 |Andrea Caliendo e Martina Maione | Last version of requirements |
+| 1.0 | 03/04/2023 |Andrea Caliendo <br> Martina Maione | First description of the project |
+| 2.0 | 19/04/2023 |Andrea Caliendo <br> Martina Maione | Updating of requirements |
+| 3.0 | 05/05/2023 |Andrea Caliendo <br>Martina Maione | Correction of requirements |
+| 4.0 | 08/05/2023 |Andrea Caliendo <br> Martina Maione | Last version of requirements |
 
 
 # Table of Contents
@@ -39,7 +39,7 @@ Martina Maione
 
 ## 1. Introduction
 <a name="sp1.1"></a>
-This documents is the User Requuirement Document taken from the first interview with the Group-FOS company. The document describes the functionalities of:
+This documents is the User Requirement Document taken from the first interview with the Group-FOS company. The document describes the functionalities of:
 - a web application that will have to manage the saving of parking spaces within an area of an urban map. In addition, it must allow you to delete previously entered parking spaces and view the history of entered parking spaces.
 - a mobile application for tracking the courier which, based on the position, will have to save the time of entry and exit of the courier from a special parking lot.
 
