@@ -98,6 +98,8 @@ The project of City Logistics ICT Platform is divided into 2 applications:
 specifications    </p>
 </details>
 
+![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/diagram.jpeg)
+
 ### <a name="constraints"></a> 2.3 Assumption and Constraint 
 <details> 
     <summary> Put a summary of the section
