@@ -118,10 +118,9 @@ For the mobile application:
 | 3.0 |  the application should run in background |M|
 | 4.0 |  the system should notify the courier that his available permanence time is expiring |O|
 | 5.0 |  the system user should be able to notify an anomaly in the parking slot (inaccessibility or unavailability) |D|
-| 6.0 |  the user should be able to notify the entry and exit time from a parking slot |D|
-| 7.0 |  the user should be able to see a dashboard with his score and infractions |D|
-| 8.0 | the system should understand if the user entered a parking area, the permanence interval in that area and the exiting time  |M|
-| 9.0 | notify an anomaly by simply clicking on a specific button  |O|
+| 6.0 |  the user should be able to see a dashboard with his score and infractions |D|
+| 7.0 |  the system should understand if the user entered a parking area, the permanence interval in that area and the exiting time  |M|
+| 8.0 | notify an anomaly by simply clicking on a specific button  |O|
 <a name="sp3.3"></a>
 
 ### 3.2 Non-Functional Requirements 
