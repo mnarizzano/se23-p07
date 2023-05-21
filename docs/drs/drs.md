@@ -101,18 +101,24 @@ specifications    </p>
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/diagram.jpeg)
 
 ### <a name="constraints"></a> 2.3 Assumption and Constraint 
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
 
+Assumptions:
+ * The geographical map of the city is given
+ * The availability of parking slots is already known
+ *  The distance from which the courier is considered to leave the parking slot is given and is always the same
+ *  The courier already knows which and where are the parking slots on the map
+ *  The statistics to be loaded on the web application are given from an external source 
+ 
+
+Constraints:
+ * The MA must need the geolocalization of the courier in order to work
+ * 
 ## <a name="system-overview"></a>  3 System Overview
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
+In this section is shown the Use Case Model of the system
+
+![image](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/User%20Case.png) 
+
+
 
 ### <a name="architecture"></a>  3.1 System Architecture
 <details> 
