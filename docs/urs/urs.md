@@ -105,7 +105,7 @@ The user of the web application should be able to:
 | 3.0 |  list of the saved parking slots |M|
 | 4.0 |  list of the parking slot state (free, unaccessible, busy) |M|
 | 5.0 |  list of the used parking slots |M|
-| 6.0 |  see have a statistic analysis of the used parking slots |O|
+| 6.0 |  have a statistic analysis of the average hours of stay, the days of the week when a single car park is, on average, more used and which car parks are more used than the others. |O|
 | 7.0 | save the parking slots by a simple click on the map |M|
 | 8.0 | cancel the parking slots by a double click on the map |M|
 
