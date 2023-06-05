@@ -91,14 +91,10 @@ The project of City Logistics ICT Platform is divided into 2 applications:
 
 
 ### <a name="tech"></a> 2.2 Technologies used
-
-<details> 
-    <summary> Description of the overall architecture. </summary>
-    <p>Graphical representation of the system architecture.  May be composed by multiple diagrams depending on the differences in the environment
-specifications    </p>
-</details>
-
-![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/diagram.jpeg)
+The technologies that the software will use are:
+* an external database for the acquisition of the saved car parking in order to print the statistics on the web application
+* an external database for the acquisition of the car parking already used by the user
+* an external database which contains the timetables of the parking slots in order to understand in which time period which parking slots are available for the user
 
 ### <a name="constraints"></a> 2.3 Assumption and Constraint 
 
@@ -128,17 +124,32 @@ Mobile application:
 
 ### <a name="architecture"></a>  3.1 System Architecture
 <details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
+    <summary> Description of the overall architecture. </summary>
+    <p>Graphical representation of the system architecture.  May be composed by multiple diagrams depending on the differences in the environment
+specifications    </p>
 </details>
 
+![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/diagram.jpeg)
+
 ### <a name="interfaces"></a>  3.2 System Interfaces
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
+As for the web application, the interface will be graphical and will be done as follows:
+there will be a drop-down menu with 4 options:
+- Personal data
+- Parking slots saved by the user
+- Statistics
+- Map
+By selecting the map,
+- with one click, the user can save a parking slot
+- with a double click on the same point, a pop-up window will come out asking the user to confirm the cancellation
+- with two icons representing magnifying glasses (+, -), the user will be able to zoom in and out of the map
+Regarding the mobile application, 
+when the user opens the mobile application, a pop-up window will automatically open asking for permission of geolocation. The user can confirm or deny the authorization by clicking on Yes or No.
+If the user denies the permission, a warning message will come out that the app cannot track him.
+Furthermore, within the application itself there will be a "report" button to report an anomaly in a parking lot.
+By clicking on this button, a window will come out in which it will be necessary to indicate:
+- the ID of the car park referred to
+- The type of problem, through a single-option list, in which the "other" option will also be present, where the user can write the type of problem in a write-box
+- the "submit" button to send the report
 
 ### <a name="data"></a>  3.3 System Data
 <details> 
