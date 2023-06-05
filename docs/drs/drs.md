@@ -142,6 +142,8 @@ By selecting the map,
 - with one click, the user can save a parking slot
 - with a double click on the same point, a pop-up window will come out asking the user to confirm the cancellation
 - with two icons representing magnifying glasses (+, -), the user will be able to zoom in and out of the map
+![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/webinterface.jpg)
+<br>
 Regarding the mobile application, 
 when the user opens the mobile application, a pop-up window will automatically open asking for permission of geolocation. The user can confirm or deny the authorization by clicking on Yes or No.
 If the user denies the permission, a warning message will come out that the app cannot track him.
@@ -150,6 +152,8 @@ By clicking on this button, a window will come out in which it will be necessary
 - the ID of the car park referred to
 - The type of problem, through a single-option list, in which the "other" option will also be present, where the user can write the type of problem in a write-box
 - the "submit" button to send the report
+
+![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/mobileinterface.jpg)
 
 ### <a name="data"></a>  3.3 System Data
 <details> 
