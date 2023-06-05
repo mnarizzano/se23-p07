@@ -108,7 +108,7 @@ Assumptions:
 
 Constraints:
  * The MA must need the geolocalization of the courier in order to work
- * 
+ 
 ## <a name="system-overview"></a>  3 System Overview
 In this section is shown the Use Case Model of the system
 <br>
@@ -134,14 +134,17 @@ specifications    </p>
 ### <a name="interfaces"></a>  3.2 System Interfaces
 As for the web application, the interface will be graphical and will be done as follows:
 there will be a drop-down menu with 4 options:
-- Personal data
-- Parking slots saved by the user
-- Statistics
-- Map
-By selecting the map,
-- with one click, the user can save a parking slot
-- with a double click on the same point, a pop-up window will come out asking the user to confirm the cancellation
-- with two icons representing magnifying glasses (+, -), the user will be able to zoom in and out of the map
+* Personal data
+*  Parking slots saved by the user
+*  Statistics
+*  Map
+<br>
+By selecting the map
+
+* with one click, the user can save a parking slot
+* with a double click on the same point, a pop-up window will come out asking the user to confirm the cancellation
+* with two icons representing magnifying glasses (+, -), the user will be able to zoom in and out of the map
+
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/webinterface.jpg)
 <br>
 Regarding the mobile application, 
