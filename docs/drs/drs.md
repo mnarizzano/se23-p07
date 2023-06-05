@@ -133,7 +133,7 @@ specifications    </p>
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/diagram.jpeg)
 
 ### <a name="interfaces"></a>  3.2 System Interfaces
-As for the web application, the interface will be graphical and will be done as follows:
+As for the **web application**, the interface will be graphical and will be done as follows:
 there will be a drop-down menu with 4 options:
 * Personal data
 *  Parking slots saved by the user
@@ -148,7 +148,7 @@ By selecting the map
 
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/webinterface.jpg)
 <br>
-Regarding the mobile application, 
+Regarding the **mobile application**, 
 when the user opens the mobile application, a pop-up window will automatically open asking for permission of geolocation. The user can confirm or deny the authorization by clicking on Yes or No.
 If the user denies the permission, a warning message will come out that the app cannot track him.
 Furthermore, within the application itself there will be a "report" button to report an anomaly in a parking lot.
