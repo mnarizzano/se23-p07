@@ -153,7 +153,7 @@ By clicking on this button, a window will come out in which it will be necessary
 - The type of problem, through a single-option list, in which the "other" option will also be present, where the user can write the type of problem in a write-box
 - the "submit" button to send the report
 
-![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/mobileinterface.jpg)
+![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/mobileinterface.png)
 
 ### <a name="data"></a>  3.3 System Data
 <details> 
