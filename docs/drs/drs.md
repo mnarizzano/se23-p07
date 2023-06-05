@@ -115,8 +115,14 @@ Constraints:
  * 
 ## <a name="system-overview"></a>  3 System Overview
 In this section is shown the Use Case Model of the system
-
-![image](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/User%20Case.png) 
+<br>
+Web application:
+<br>
+![image](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/User%20case%20model%201.jpg) 
+<br>
+Mobile application:
+<br>
+![image](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/Use%20case%20model%202.jpg) 
 
 
 
