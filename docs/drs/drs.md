@@ -12,6 +12,7 @@ DIBRIS – Università di Genova. Scuola Politecnica, Corso di Ingegneria del So
 Version | Data | Author(s)| Notes
 ---------|------|--------|------
 1 | 17/05/2023 | Andrea Caliendo <br> Martina Maione | First Version of the document
+2 | 05/06/2023 | Andrea Caliendo <br> Martina Maione | Update of the document
 
 ## Table of Content
 
