@@ -31,14 +31,18 @@ Version | Data | Author(s)| Notes
     3. [System Data](#data)
         1. [System Inputs](#inputs)
         2. [System Outputs](#outputs)
-4. [System Module 1](#sys-module-1)
+4. [Web Application](#sys-module-1)
     1. [Structural Diagrams](#sd)
         1. [Class Diagram](#cd)
             1. [Class Description](#cd-description)
         2. [Object Diagram](#od)
         3. [Dynamic Models](#dm)
-5. [System Module 2](#sys-module-2)
-   1. ...
+5. [Mobile Application](#sys-module-2)
+    1. [Structural Diagrams](#sd)
+        1. [Class Diagram](#cd)
+            1. [Class Description](#cd-description)
+        2. [Object Diagram](#od)
+        3. [Dynamic Models](#dm)
 
 ##  <a name="intro"></a>  1 Introduction
 <details>
@@ -180,7 +184,52 @@ By clicking on this button, a window will come out in which it will be necessary
     <p>This sub section should describe ...</p>
 </details>
 
-## <a name="sys-module-1"></a>  4 System Module 1
+## <a name="sys-module-1"></a>  4 Web Application
+<details> 
+    <summary> A class diagram provides a visual representation of the classes, relationships, and interactions within a system
+    </summary>
+    <p>This sub section should describe ...</p>
+</details>
+
+<br>
+![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/class%20diagram.jpg)
+
+### <a name="sd"></a>  4.1 Structural Diagrams
+<details> 
+    <summary> Put a summary of the section
+    </summary>
+    <p>This sub section should describe ...</p>
+</details>
+
+#### <a name="cd"></a>  4.1.1 Class diagram
+<details> 
+    <summary> Put a summary of the section
+    </summary>
+    <p>This sub section should describe ...</p>
+</details>
+
+##### <a name="cd-description"></a>  4.1.1.1 Class Description
+<details> 
+    <summary> Put a summary of the section
+    </summary>
+    <p>This sub section should describe ...</p>
+</details>
+
+#### <a name="od"></a>  4.1.2 Object diagram
+<details> 
+    <summary> Put a summary of the section
+    </summary>
+    <p>This sub section should describe ...</p>
+</details>
+
+#### <a name="dm"></a>  4.2 Dynamic Models
+<details> 
+    <summary> Put a summary of the section
+    </summary>
+    <p>This sub section should describe ...</p>
+</details>
+
+## <a name="sys-module-1"></a>  5 Mobile Application
 <details> 
     <summary> Put a summary of the section
     </summary>
@@ -196,10 +245,11 @@ By clicking on this button, a window will come out in which it will be necessary
 
 #### <a name="cd"></a>  4.1.1 Class diagram
 <details> 
-    <summary> Put a summary of the section
+    <summary> 
     </summary>
     <p>This sub section should describe ...</p>
 </details>
+
 
 ##### <a name="cd-description"></a>  4.1.1.1 Class Description
 <details> 
