@@ -185,6 +185,10 @@ By clicking on this button, a window will come out in which it will be necessary
 </details>
 
 ## <a name="sys-module-1"></a>  4 Web Application
+
+### <a name="sd"></a>  4.1 Structural Diagrams
+
+#### <a name="cd"></a>  4.1.1 Class diagram
 <details> 
     <summary> A class diagram provides a visual representation of the classes, relationships, and interactions within a system
     </summary>
@@ -194,33 +198,8 @@ By clicking on this button, a window will come out in which it will be necessary
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/class%20diagram.jpg)
 <br>
 
-### <a name="sd"></a>  4.1 Structural Diagrams
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
+##### <a name="cd-description"></a> Class Description
 
-#### <a name="cd"></a>  4.1.1 Class diagram
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
-
-##### <a name="cd-description"></a>  4.1.1.1 Class Description
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
-
-#### <a name="od"></a>  4.1.2 Object diagram
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
 
 #### <a name="dm"></a>  4.2 Dynamic Models
 <details> 
@@ -236,36 +215,26 @@ By clicking on this button, a window will come out in which it will be necessary
     <p>This sub section should describe ...</p>
 </details>
 
-### <a name="sd"></a>  4.1 Structural Diagrams
+### <a name="sd"></a>  5.1 Structural Diagrams
 <details> 
     <summary> Put a summary of the section
     </summary>
     <p>This sub section should describe ...</p>
 </details>
 
-#### <a name="cd"></a>  4.1.1 Class diagram
+#### <a name="cd"></a>  5.1.1 Class diagram
 <details> 
-    <summary> 
+    <summary> A class diagram provides a visual representation of the classes, relationships, and interactions within a system
     </summary>
     <p>This sub section should describe ...</p>
 </details>
 
 
-##### <a name="cd-description"></a>  4.1.1.1 Class Description
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
+##### <a name="cd-description"></a>  Class Description
 
-#### <a name="od"></a>  4.1.2 Object diagram
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
 
-#### <a name="dm"></a>  4.2 Dynamic Models
+
+#### <a name="dm"></a>  5.2 Dynamic Models
 <details> 
     <summary> Put a summary of the section
     </summary>
