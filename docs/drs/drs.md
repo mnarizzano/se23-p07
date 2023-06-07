@@ -191,8 +191,8 @@ By clicking on this button, a window will come out in which it will be necessary
     <p>This sub section should describe ...</p>
 </details>
 
-<br>
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/class%20diagram.jpg)
+<br>
 
 ### <a name="sd"></a>  4.1 Structural Diagrams
 <details> 
