@@ -13,6 +13,7 @@ Version | Data | Author(s)| Notes
 ---------|------|--------|------
 1 | 17/05/2023 | Andrea Caliendo <br> Martina Maione | First Version of the document
 2 | 05/06/2023 | Andrea Caliendo <br> Martina Maione | Update of the document
+3 | 16/06/2023 | Andrea Caliendo <br> Martina Maione | Add entity-relationship diagram 
 
 ## Table of Content
 
@@ -164,11 +165,10 @@ By clicking on this button, a window will come out in which it will be necessary
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/mobileinterface.png)
 
 ### <a name="data"></a>  3.3 System Data
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
+
+![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/entity%20relationship.jpg)
+<br>
+
 
 #### <a name="inputs"></a>  3.3.1 System Inputs
 <details> 
