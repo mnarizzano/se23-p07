@@ -13,7 +13,7 @@ Version | Data | Author(s)| Notes
 ---------|------|--------|------
 1 | 17/05/2023 | Andrea Caliendo <br> Martina Maione | First Version of the document
 2 | 05/06/2023 | Andrea Caliendo <br> Martina Maione | Update of the document
-3 | 16/06/2023 | Andrea Caliendo <br> Martina Maione | Add entity-relationship diagram 
+3 | 16/06/2023 | Andrea Caliendo <br> Martina Maione | Entity-relationship and class diagram 
 
 ## Table of Content
 
@@ -169,8 +169,8 @@ A class diagram provides a visual representation of the classes, relationships, 
 #### <a name="cd"></a>  5.1.1 Class diagram
 A class diagram provides a visual representation of the classes, relationships, and interactions within a system
     
-
-immagine da mettere
+![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/class%20diagram%20mobile.jpg)
+<br>
 
 
 
