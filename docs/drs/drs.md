@@ -30,20 +30,10 @@ Version | Data | Author(s)| Notes
     1. [System Architecture](#architecture)
     2. [System Interfaces](#interfaces)
     3. [System Data](#data)
-        1. [System Inputs](#inputs)
-        2. [System Outputs](#outputs)
 4. [Web Application](#sys-module-1)
     1. [Structural Diagrams](#sd)
-        1. [Class Diagram](#cd)
-            1. [Class Description](#cd-description)
-        2. [Object Diagram](#od)
-        3. [Dynamic Models](#dm)
 5. [Mobile Application](#sys-module-2)
     1. [Structural Diagrams](#sd)
-        1. [Class Diagram](#cd)
-            1. [Class Description](#cd-description)
-        2. [Object Diagram](#od)
-        3. [Dynamic Models](#dm)
 
 ##  <a name="intro"></a>  1 Introduction
 <details>
@@ -52,33 +42,24 @@ Version | Data | Author(s)| Notes
 </details>
     
 ### <a name="purpose"></a> 1.1 Purpose and Scope
-<details> 
-    <summary> This Design Requirement Specification (DRS) is specific to City Logistics ICT Platform. Its main functions are listed as below: </summary>
-    <p>Management of parking slots used by ccouriers</p>
-    <p>Monitoring of expected parking times in a given area</p>
-</details>
+This Design Requirement Specification (DRS) is specific to City Logistics ICT Platform. Its main functions are listed as below:
+- Management of parking slots used by ccouriers
+- Monitoring of expected parking times in a given area
 
 ### <a name="def"></a> 1.2 Definitions
-<details> 
-    <summary> Here are listed some definitions used during the project development
-    </summary>
-    
+Here are listed some definitions used during the project development
+  
 | Acronym  | Definition |
 | ------------- | ------------- |
 | WA  | Web Application  |
 | MA | Mobile Application  |
 | PS | Parking Slot |
-    
-</details>
 
 ### <a name="overview"></a> 1.3 Document Overview
-<details> 
-    <summary> Explain how is organized the document
-    </summary>
+Explain how is organized the document
     <p>Project Description: describes what the project should do</p>
     <p>System Overview: describes the main architecture of the system</p>
     <p>System Module 1: describes what do we need in order to implement the module 1 and what the module 1 does</p>
-</details>
 
 ### <a name="biblio"></a> 1.4 Bibliography
 <details> 
@@ -169,74 +150,32 @@ By clicking on this button, a window will come out in which it will be necessary
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/entity%20relationship.jpg)
 <br>
 
-
-#### <a name="inputs"></a>  3.3.1 System Inputs
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
-
-#### <a name="outputs"></a>  3.3.2 System Ouputs
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
-
 ## <a name="sys-module-1"></a>  4 Web Application
 
 ### <a name="sd"></a>  4.1 Structural Diagrams
 
 #### <a name="cd"></a>  4.1.1 Class diagram
-<details> 
-    <summary> A class diagram provides a visual representation of the classes, relationships, and interactions within a system
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
+A class diagram provides a visual representation of the classes, relationships, and interactions within a system
 
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/class%20diagram.jpg)
 <br>
 
-##### <a name="cd-description"></a> Class Description
-
-
-#### <a name="dm"></a>  4.2 Dynamic Models
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
 
 ## <a name="sys-module-1"></a>  5 Mobile Application
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
+
 
 ### <a name="sd"></a>  5.1 Structural Diagrams
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
 
 #### <a name="cd"></a>  5.1.1 Class diagram
-<details> 
-    <summary> A class diagram provides a visual representation of the classes, relationships, and interactions within a system
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
+A class diagram provides a visual representation of the classes, relationships, and interactions within a system
+    
 
-
-##### <a name="cd-description"></a>  Class Description
+immagine da mettere
 
 
 
-#### <a name="dm"></a>  5.2 Dynamic Models
-<details> 
-    <summary> Put a summary of the section
-    </summary>
-    <p>This sub section should describe ...</p>
-</details>
+
+
+
+
+
