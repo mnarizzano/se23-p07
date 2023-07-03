@@ -150,10 +150,6 @@ By clicking on this button, a window will come out in which it will be necessary
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/entity%20relationship.jpg)
 <br>
 
-Dynamic diagram
-
-![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/Dynamic%20diagram.png)
-<br>
 
 ## <a name="sys-module-1"></a>  4 Web Application
 
@@ -165,6 +161,10 @@ A class diagram provides a visual representation of the classes, relationships, 
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/class%20diagram.jpg)
 <br>
 
+#### <a name="cd"></a>  4.2 Dynamic diagram
+
+![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/Dynamic%20diagram.png)
+<br>
 
 ## <a name="sys-module-1"></a>  5 Mobile Application
 
