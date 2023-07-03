@@ -14,6 +14,7 @@ Version | Data | Author(s)| Notes
 1 | 17/05/2023 | Andrea Caliendo <br> Martina Maione | First Version of the document
 2 | 05/06/2023 | Andrea Caliendo <br> Martina Maione | Update of the document
 3 | 16/06/2023 | Andrea Caliendo <br> Martina Maione | Entity-relationship and class diagram 
+4 | 1/07/2023 | Andrea Caliendo <br> Martina Maione | Add Dynamic diagram  
 
 ## Table of Content
 
