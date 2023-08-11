@@ -38,7 +38,7 @@ Task | #Days | Start | End
 4.2 | 3| 31/08 | 02/09
 4.3 | 3| 03/09 | 05/09
 
-<br> 
+
 The plan of MA
 <br>
 Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimated
