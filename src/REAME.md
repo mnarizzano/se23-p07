@@ -9,7 +9,7 @@ Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimate
 | | 1.2 | Method for comparison | Caliendo  |1 | 4 | 3
 | | 1.3 | Sig-in box | Caliendo |1 | 2 | 1,5
 2 | | Map | 
-| | 2.1 | Load of a map | Caliendo | 1 | 5 | 4
+| | 2.1 | Load of a map | Caliendo | 1 | 5 | 3
 | | 2.2 | Creation of a box | Maione |4 | 7 | 5
 | | 2.3 | Saving of PS | Caliendo |4 | 7 | 5
 3 | | Statistics| 
