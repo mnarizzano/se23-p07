@@ -12,7 +12,14 @@ import { MapComponent } from './map/map.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home',
+   children: [
+	{ path: 'personalData', component: PersonalDataComponent},
+	{path: 'saved-ps', component: 'SavedPSComponent},
+	{path: 'Statistics', component: 'StatisticsComponent},
+	{path: 'Map', component: 'MapComponent'}
+                  ]
+}
   // Aggiungi altre route per le tue pagine
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
