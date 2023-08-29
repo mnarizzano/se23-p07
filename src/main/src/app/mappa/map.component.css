@@ -1,0 +1,34 @@
+/* Aggiungi al tuo file .css */
+.custom-search {
+    background-color: #f8f9fa; /* Colore di sfondo */
+    border: 1px solid #ced4da; /* Bordo */
+    border-radius: 5px; /* Angoli arrotondati */
+    padding: 8px 12px; /* Spaziatura interna */
+    margin-bottom: 10px;/* Aggiungi un margine inferiore per separare dalla colonna del pulsante */
+}
+  
+  .custom-search input {
+    border: none; /* Nessun bordo per l'input */
+    outline: none; /* Rimuovi l'outline quando si fa clic */
+  }
+  
+  .custom-search button {
+    border-radius: 5px 5px 5px 5px; /* Angoli arrotondati per il pulsante */
+  }
+
+  /* Posiziona il pulsante "Salva" in alto a destra */
+.text-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 95%;
+  }
+ 
+
+  /* Aggiungi al tuo file .css */
+.custom-container {
+    max-width: 1200px; /* Larghezza massima personalizzata */
+    margin: 0 auto; /* Centra il contenitore orizzontalmente */
+  }
+  
+  
