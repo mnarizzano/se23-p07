@@ -1,0 +1,35 @@
+<div class="custom-container">
+<div class="row">
+    <div class="col-md-3"> <!-- Colonna per la barra di ricerca -->
+      <div class="custom-search">
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Cerca un indirizzo" />
+        <button class="btn btn-primary" (click)="searchAddress()">Cerca</button>
+      </div>
+    </div>
+    <div class="col-md-4 text-right"> <!-- Colonna per il pulsante "Salva" -->
+      <button class="btn btn-success mt-2 custom-save-btn" (click)="salvaParcheggi()">Salva</button>
+    </div>
+  </div>
+</div>
+  
+  <!-- mappa -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div #mapContainer id="map" style="width: 100%; height: 90vh;"></div>
+      </div>
+    </div>
+  </div>
+  
+
+<div id="mapContainer" #mapContainer></div>
+
+
+<div *ngFor="let parcheggio of parcheggiSalvati">
+    <p>Indirizzo: {{ parcheggio.indirizzo }}</p>
+    <p>Coordinate: {{ parcheggio.coordinate.lat }}, {{ parcheggio.coordinate.lng }}</p>
+    <p>Data di Salvataggio: {{ parcheggio.data_salvataggio }}</p>
+    <hr>
+  </div>
+  
+  

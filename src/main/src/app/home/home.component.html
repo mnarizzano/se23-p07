@@ -1,0 +1,138 @@
+
+<html lang="it">
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Mia Home Page</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  nav {
+    background-color: #555;
+    padding: 10px;
+  }
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+  section {
+    text-align: center;
+  }
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .icon-grid a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    color: #333;
+    text-decoration: none;
+  }
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  nav {
+    background-color: #555;
+    padding: 10px;
+  }
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+  section {
+    text-align: center;
+  }
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .icon-grid a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    color: #333;
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+  <section>
+    <h1> Home page</h1>
+    <div class="icon-grid">
+      <a routerLink="/personalData">
+        <i class="fas fa-user-circle fa-3x"></i>
+        <span>Personal Area</span>
+      </a>
+      <a routerLink="/saved-ps">
+        <i class="fas fa-save fa-3x"></i>
+        <span>Saved PS</span>
+      </a>
+      <a routerLink="/statistics">
+        <i class="fas fa-chart-bar fa-3x"></i>
+        <span>Statistics</span>
+      </a>
+      <a routerLink="/map">
+        <i class="fas fa-map-marked-alt fa-3x"></i>
+        <span>Map</span>
+      </a>
+    </div>
+    
+    
+  </section>
+</body>
+</html>

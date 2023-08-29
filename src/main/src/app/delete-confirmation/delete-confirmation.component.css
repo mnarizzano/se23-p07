@@ -1,0 +1,28 @@
+.modal-content {
+    background-color: #ffcccc;
+    border: 2px solid #ff0000;
+    border-radius: 10px;
+  }
+  
+  .modal-header {
+    border-bottom: none;
+  }
+  
+  .modal-title {
+    color: #ff0000;
+  }
+  
+  .modal-footer {
+    border-top: none;
+  }
+  
+  .btn-danger {
+    background-color: #ff0000;
+    border-color: #ff0000;
+  }
+  
+  .btn-danger:hover {
+    background-color: #cc0000;
+    border-color: #cc0000;
+  }
+  
