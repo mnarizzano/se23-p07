@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -20,17 +19,18 @@ import { SavedPSComponent } from './saved-ps/saved-ps.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { MapComponent } from './mappa/map.component';
 import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
-import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import {AuthGuard} from './shared/guard/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
   { path: 'register-user', component: SignUpComponent },
   { 
-    path: 'home', component: HomeComponent, canActivate: [AuthGuard] 
+    path: 'home', component: HomeComponent, canActivate: [AuthGuard], 
     children: [
       { path: 'personalData', component: PersonalDataComponent },
       { path: 'saved-ps', component: SavedPSComponent },
