@@ -26,6 +26,7 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import {AuthGuard} from './shared/guard/auth.guard';
 import { MenuComponent } from './menu/menu.component';
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },

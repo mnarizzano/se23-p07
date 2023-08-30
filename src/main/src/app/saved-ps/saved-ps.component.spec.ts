@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SavedPsComponent } from './saved-ps.component';
+import { SavedPSComponent } from './saved-ps.component';
 
 describe('SavedPsComponent', () => {
-  let component: SavedPsComponent;
-  let fixture: ComponentFixture<SavedPsComponent>;
+  let component: SavedPSComponent;
+  let fixture: ComponentFixture<SavedPSComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SavedPsComponent]
+      declarations: [SavedPSComponent]
     });
-    fixture = TestBed.createComponent(SavedPsComponent);
+    fixture = TestBed.createComponent(SavedPSComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
