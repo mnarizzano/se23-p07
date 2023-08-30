@@ -24,6 +24,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import {AuthGuard} from './shared/guard/auth.guard';
+import { MenuComponent } from './menu/menu.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
@@ -58,7 +59,8 @@ const routes: Routes = [
     SavedPSComponent,
     StatisticsComponent,
     MapComponent,
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
