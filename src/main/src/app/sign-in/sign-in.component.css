@@ -1,4 +1,5 @@
 
+
 .authBlock {
   text-align: center;
   border: 1px solid #ccc;
@@ -69,5 +70,6 @@
       width: 100%; /* Rendi i pulsanti larghi quanto il modulo sui dispositivi mobili */
   }
 }
+
 
 

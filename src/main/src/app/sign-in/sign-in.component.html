@@ -4,6 +4,7 @@
         <h1>Welcome !</h1>
         <h3> Please login</h3>
         <div class="divider"></div>
+
         <div class="formGroup">
           <input
             type="text"
@@ -24,6 +25,7 @@
         </div>
         <!-- Calling SignIn Api from AuthService -->
         <div class="formGroup2">
+
           <input
             type="button"
             class="btn btnPrimary"
@@ -31,7 +33,6 @@
             (click)="authService.SignIn(userName.value, userPassword.value)"
           />
           <div class="divider"></div>
-
         </div>
         <div class="forgotPassword">
           <span routerLink="/forgot-password">Forgot password</span>
@@ -41,12 +42,9 @@
         <span>
           <u>Don't have an account?</u><span
             class="redirect"
-            routerLink="/register-user"
-          >
+            routerLink="/register-user">
             <u> Sign Up</u></span
-          ></span
-          
-        >
+          ></span>
       </div>
     </div>
   </div>
