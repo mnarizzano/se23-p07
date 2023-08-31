@@ -30,6 +30,7 @@ import { SaveConfirmationComponent } from './save-confirmation/save-confirmation
 
 
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
@@ -50,6 +51,7 @@ const routes: Routes = [
   { path: 'saved-ps', component: SavedPSComponent },
   { path: 'statistics', component: StatisticsComponent }
 ];
+
 
 @NgModule({
   declarations: [
