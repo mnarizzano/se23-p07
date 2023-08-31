@@ -2,15 +2,19 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {BsModalService, BsModalRef } from 'ngx-bootstrap/modal'; 
 import * as L from 'leaflet';
 import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import { FirebaseService } from '../shared/services/firebase.service'
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
+import { AuthService } from '../shared/services/auth.service';
+import { SaveConfirmationComponent } from '../save-confirmation/save-confirmation.component'
 
 
 
 
 interface Parcheggio {
+  uid: string;
   indirizzo: string;
   coordinate: {
     lat: number;
@@ -36,24 +40,22 @@ export class MapComponent implements OnInit {
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
 
   parcheggiSalvati: Parcheggio[] = []; 
+  
+ 
 
-  constructor(private modalService: BsModalService, private http: HttpClient) {}
+
+  constructor(private modalService: BsModalService, 
+    private http: HttpClient, 
+    private firebaseService: FirebaseService,
+    private authService: AuthService
+    ) {}
   
 
   ngOnInit() {
     if (this.mapContainer && this.mapContainer.nativeElement) {
     this.initMap();
   }
-  /* this.map.on('dblclick', (event: L.LeafletMouseEvent) => {
-    this.showDeleteConfirmation();
-  }); */
 
-  // Effettua una richiesta GET per recuperare i parcheggi salvati
-  this.http.get<Parcheggio[]>(`http://localhost:3000/api/parcheggiSalvati`)
-    .subscribe(parcheggi => {
-      // Fai qualcosa con i dati dei parcheggi
-      console.log('Parcheggi salvati:', parcheggi);
-    });
 }
 
   initMap() {
@@ -140,11 +142,85 @@ addBox(latlng: L.LatLng) {
 
   const bounds = L.latLngBounds([
     [latlng.lat + height, latlng.lng - width],
-    [latlng.lat - height, latlng.lng + width]
+    [latlng.lat - height, latlng.lng + width],
   ]);
 
   const rectangle = L.rectangle(bounds, { color: 'red', weight: 2 }).addTo(this.mappa);
 }
+
+
+
+salvaParcheggi() {
+  this.mappa.eachLayer((layer: L.Layer) => {
+    if (layer instanceof L.Rectangle) {
+      const bounds = layer.getBounds();
+      const center = bounds.getCenter();
+
+      this.getAddress(center.lat, center.lng).subscribe(indirizzo => {
+        const user = this.authService.userData;
+
+        if (user){
+          const parcheggio: Parcheggio = {
+            uid: user.uid,
+            indirizzo: indirizzo,
+            coordinate: {
+              lat: center.lat,
+              lng: center.lng
+            },
+            data_salvataggio: new Date().toISOString() 
+          };
+          this.firebaseService.addParcheggio(parcheggio).then(() => {
+            console.log('Parking add and saved to database', parcheggio);
+          });
+
+        } else {
+        console.error('Utente non autenticato.');
+      }
+
+        
+      });
+    }
+    
+  });
+}
+
+onSaveButtonClick() {
+  const initialState = {}; // Puoi passare dati iniziali alla finestra modale se necessario
+
+  // Apre la finestra modale di conferma
+  const modalRef: BsModalRef = this.modalService.show(SaveConfirmationComponent, { initialState });
+
+  // Gestisci l'evento emesso dalla finestra modale al momento della conferma
+  modalRef.content.onConfirm.subscribe((result: boolean) => {
+    if (result) {
+      // Esegui l'azione di salvataggio dei dati del parcheggio nel database
+      this.salvaParcheggi(); // Personalizza questa funzione in base al tuo codice
+    }
+  });
+}
+
+getAddress(lat: number, lng: number): Observable<string> {
+  const geocodeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
+
+  return this.http.get<any>(geocodeUrl).pipe(
+    map((response: any) => { 
+      if (response && response.display_name) {
+        return response.display_name;
+      } else {
+        return 'Indirizzo non trovato';
+      }
+    }),
+    catchError(error => {
+      console.error('Errore durante la geocodifica:', error);
+      return('Errore nella geocodifica');
+    })
+  );
+}
+
+
+
+
+
 
 // Eliminare rettangolo
   delBox(latlng: L.LatLng){
@@ -167,73 +243,9 @@ addBox(latlng: L.LatLng) {
   });
  }
 
+ showNotice(){
  
-
-// salvataggio parcheggio 
-salvaParcheggi() {
-  const parcheggiDaSalvare: Parcheggio[] = [];
-
-  this.mappa.eachLayer((layer: L.Layer) => {
-    if (layer instanceof L.Rectangle) {
-      const bounds = layer.getBounds();
-      const center = bounds.getCenter();
-
-      this.getAddress(center.lat, center.lng).subscribe(indirizzo => {
-        const parcheggio: Parcheggio = {
-          indirizzo: indirizzo,
-          coordinate: {
-            lat: center.lat,
-            lng: center.lng
-          },
-          data_salvataggio: new Date().toISOString() // Add the date here 
-        };
-        parcheggiDaSalvare.push(parcheggio);
-      });
-    }
-  });
-
-  // Send the data to the backend for saving
-  this.http.post('http://localhost:3000/api/salvaParcheggi', parcheggiDaSalvare)
-    .subscribe(response => {
-      console.log('Parcheggi salvati con successo!', response);
-    });
-    console.log('Parcheggi:', parcheggiDaSalvare);
-
-
-
-
 }
-
-
-getAddress(lat: number, lng: number): Observable<string> {
-  const geocodeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
-
-  return this.http.get<any>(geocodeUrl).pipe(
-    map((response: any) => { // Definisci il tipo di 'response' come 'any'
-      if (response && response.display_name) {
-        return response.display_name;
-      } else {
-        return 'Indirizzo non trovato';
-      }
-    }),
-    catchError(error => {
-      console.error('Errore durante la geocodifica:', error);
-      return('Errore nella geocodifica');
-    })
-  );
-}
-
-
-
-  // DATABASE
-caricaParcheggiNelDatabase() {
-  this.http.post(`http://localhost:3000/api/caricaParcheggiNelDatabase`, this.parcheggiSalvati)
-    .subscribe(response => {
-      console.log('Parcheggi caricati nel database con successo!', response);
-    });
-}
-
-
 
 }
 
