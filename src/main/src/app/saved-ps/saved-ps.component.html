@@ -1,4 +1,25 @@
 <div>
     <app-menu></app-menu>
   </div>
-<p>saved-ps works!</p>
+
+  
+  <div class="parking-list-container">
+    <h2>Here are your saved parking slots!</h2>
+    <ul class="parking-list">
+      <li class="parking-header header-row">
+        <span class="parking-id"><strong>User ID</strong></span>
+        <span class="parking-address"><strong>Address</strong></span>
+        <span class="parking-date"><strong>Save date</strong></span>
+      </li>
+      <li *ngFor="let parking of userParkings" class="parking-item">
+        <span class="parking-id">{{ parking.id }}</span>
+        <span class="parking-address">   <a href="javascript:void(0);" (click)="navigateToMap(parking.indirizzo)">
+          {{ parking.indirizzo }}
+        </a></span>
+        <span class="parking-date">{{ parking.data }}</span>
+       
+      </li>
+    </ul>
+  </div>
+  
+
