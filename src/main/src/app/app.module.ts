@@ -12,7 +12,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { environment } from '../environments/environment';
+import { firebaseConfig } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { PersonalDataComponent } from './personal-data/personal-data.component';
 import { SavedPSComponent } from './saved-ps/saved-ps.component';
@@ -25,6 +25,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import {AuthGuard} from './shared/guard/auth.guard';
 import { MenuComponent } from './menu/menu.component';
+import { SaveConfirmationComponent } from './save-confirmation/save-confirmation.component';
+
+
 
 
 
@@ -63,17 +66,19 @@ const routes: Routes = [
     StatisticsComponent,
     MapComponent,
     DeleteConfirmationComponent,
-    MenuComponent
+    MenuComponent,
+    SaveConfirmationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     FlexLayoutModule,
+    
     FormsModule,
     ModalModule.forRoot(),
     HttpClientModule,

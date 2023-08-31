@@ -2,38 +2,38 @@
   <app-menu></app-menu>
 </div>
 
-<div class="custom-container">
-<div class="row">
-    <div class="col-md-3"> <!-- Colonna per la barra di ricerca -->
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-3">
       <div class="custom-search">
-        <input type="text" [(ngModel)]="searchQuery" placeholder="Cerca un indirizzo" />
-        <button class="btn btn-primary" (click)="searchAddress()">Cerca</button>
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Cerca un indirizzo" class="form-control" />
+        <button class="btn btn-primary mt-2" (click)="searchAddress()">Cerca</button>
       </div>
     </div>
-    <div class="col-md-4 text-right"> <!-- Colonna per il pulsante "Salva" -->
-      <button class="btn btn-success mt-2 custom-save-btn" (click)="salvaParcheggi()">Salva</button>
+    <div class="col-md-6 text-center">
+      <button class="btn btn-success mt-2 custom-save-btn" (click)='onSaveButtonClick()'>Salva</button>
     </div>
   </div>
 </div>
-  
-  <!-- mappa -->
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div #mapContainer id="map" style="width: 100%; height: 90vh;"></div>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12">
+      <div #mapContainer id="map" style="width: 100%; height: 70vh;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngFor="let parcheggio of parcheggiSalvati" class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Indirizzo: {{ parcheggio.indirizzo }}</h5>
+          <p class="card-text">Coordinate: {{ parcheggio.coordinate.lat }}, {{ parcheggio.coordinate.lng }}</p>
+          <p class="card-text">Data di Salvataggio: {{ parcheggio.data_salvataggio }}</p>
+        </div>
       </div>
     </div>
   </div>
-  
-
-<div id="mapContainer" #mapContainer></div>
-
-
-<div *ngFor="let parcheggio of parcheggiSalvati">
-    <p>Indirizzo: {{ parcheggio.indirizzo }}</p>
-    <p>Coordinate: {{ parcheggio.coordinate.lat }}, {{ parcheggio.coordinate.lng }}</p>
-    <p>Data di Salvataggio: {{ parcheggio.data_salvataggio }}</p>
-    <hr>
-  </div>
-  
-  
+</div>
