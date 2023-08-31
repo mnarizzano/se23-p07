@@ -1,4 +1,41 @@
 <div>
     <app-menu></app-menu>
   </div>
-<p>personal-data works!</p>
+
+  <div class="page-container">
+    <img src="assets/corriere.png" alt="Corriere Image" class="corriere-img"> 
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Data</title>
+  </head>
+
+<body>
+  <h2>Personal Data</h2>
+  <p>Name: {{ userData.firstName }} {{ userData.lastName }}</p>
+  <p>Email: {{ userData.email }}</p>
+  
+  <!-- Address -->
+  <p>Address: {{ userData.address }} </p>
+  
+  <!-- Phone Number -->
+  <p>Phone Number: {{ userData.phoneNumber }}</p>
+  
+  <button class="btn btn-primary" (click)="updateInfo()">Update Info</button>
+
+  
+  <!-- Address Edit Mode -->
+<p *ngIf="editingAddress">Address:
+  <input [(ngModel)]="editedAddress" />
+  <button class="btn btn-success" (click)="saveEditedAddress()">Save</button>
+</p>
+
+<!-- Phone Number Edit Mode -->
+<p *ngIf="editingPhoneNumber">Phone Number:
+  <input [(ngModel)]="editedPhoneNumber" />
+  <button class="btn btn-success" (click)="saveEditedPhoneNumber()">Save</button>
+</p>
+</body>
+</div>
+  
+

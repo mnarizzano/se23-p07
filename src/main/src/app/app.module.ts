@@ -27,6 +27,7 @@ import {AuthGuard} from './shared/guard/auth.guard';
 import { MenuComponent } from './menu/menu.component';
 
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
@@ -48,6 +49,7 @@ const routes: Routes = [
   { path: 'statistics', component: StatisticsComponent }
 ];
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +68,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
