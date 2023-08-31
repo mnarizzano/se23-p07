@@ -1,0 +1,22 @@
+.logo-img {
+    width: 150px; /* Imposta la larghezza desiderata */
+    height: auto; /* Altezza automatica mantenendo l'aspetto originale */
+    margin-right: 10px; /* Spazio tra il logo e il testo */
+}
+
+.immagine-contenitore {
+    background-color: white; /* Imposta il colore dello sfondo */
+    padding: 20px; /* Aggiunge uno spazio intorno all'immagine */
+  }
+  
+  .immagine-contenitore img {
+    display: block; /* Impedisce il comportamento inline dell'immagine */
+    max-width: 100%; /* Assicura che l'immagine non superi la larghezza del contenitore */
+    height: auto; /* Imposta l'altezza automaticamente per mantenere le proporzioni */
+  }
+
+  .navbar-nav .nav-link {
+    cursor: pointer;
+  }
+  
+  
