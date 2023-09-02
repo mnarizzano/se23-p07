@@ -137,15 +137,20 @@ By selecting the map
 <br>
 
 User mode:
-there will be access to 3 pages:
+there will be access to 2 pages:
 * Personal data
 * Saved parking slots and map
-<br>
 
 By selecting the map
 
 * the user is able to reserve a parking slot, with a right-click on the rectangle
 * the user is able to see the state of the parking slot, with the mouse over the parking slot
+<br>
+
+Visualizer mode:
+there will be access to 1 page: saved parkign slots and map
+
+By selecting the map, the visualizer is able to see all the saved parking slots on the map
 
 
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/webinterface.jpg)
