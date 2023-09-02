@@ -17,6 +17,7 @@ Martina Maione
 | 2.0 | 19/04/2023 |Andrea Caliendo <br> Martina Maione | Updating of requirements |
 | 3.0 | 05/05/2023 |Andrea Caliendo <br>Martina Maione | Correction of requirements |
 | 4.0 | 08/05/2023 |Andrea Caliendo <br> Martina Maione | Last version of requirements |
+| 5.0 | 02/09/2023 |Andrea Caliendo <br> Martina Maione | Updating of requirements (meeting with the company) |
 
 
 # Table of Contents
@@ -97,18 +98,21 @@ The project consists in the creation and implementation of a web application use
 - External stakeholders: couriers and the future owner (for example Public Administration or a private company)
 
 ### 3.2 Functional Requirements 
-The user of the web application should be able to:
+The web application should be built in this way:
 | ID | Description | Priority |
 | --------------- | ----------- | ---------- | 
-| 1.0 |  save the parking slots of a city |M|
-| 2.0 |  cancel the parking slots |M|
-| 3.0 |  list of the saved parking slots |M|
-| 4.0 |  list of the parking slot state (free, unaccessible, busy) |M|
-| 5.0 |  list of the used parking slots |M|
-| 6.0 |  have a statistic analysis of the average hours of stay, the days of the week when a single car park is, on average, more used and which car parks are more used than the others. |O|
-| 7.0 | save the parking slots by a simple click on the map |M|
-| 8.0 | cancel the parking slots by a double click on the map |M|
-
+| 1.0 |  There should be 3 roles with different permissions: manager, user and visualizer |M|
+| 2.0 |  The manager should be able to save the parking slots of a city, by a right-click on the map, and to add the relative properties |M|
+| 3.0 |  The manager should be able to delete the parking slots from the map, by a double click on the rectangle |M|
+| 4.0 |  The visualizer should be able to access the list of the saved parking slots |M|
+| 5.0 |  The visualizer should be able to see the properties of each parking slot, simply clicking on the rectangle |M|
+| 6.0 |  The user should be able to reserve a parking slot, if this is not taken by another user, by a right-click on the rectangle |M|
+| 7.0 |  Each parking slot should have associated the state (free, unaccessible, busy) |M|
+| 8.0 |  The color of the parking slot depends on its state (green: reserved by the user, yellow: free, red: occupied by someone else) |M|
+| 9.0 |  The manager should have access to a statistic analysis of the average hours of stay, the days of the week when a single car park is, on average, more used and which car parks are more used than the others. |O|
+| 10.0 |  The rectangle should be rotatable |M|
+| 11.0 |  The manager should be able to move the rectangle on the map using drang and drop |M|
+| 12.0 | The visualizer should be able to see the zoomable map with all the parking slots |M|
 
 For the mobile application:
 | ID | Description | Priority |
