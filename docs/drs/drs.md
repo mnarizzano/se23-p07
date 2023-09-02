@@ -14,7 +14,8 @@ Version | Data | Author(s)| Notes
 1 | 17/05/2023 | Andrea Caliendo <br> Martina Maione | First Version of the document
 2 | 05/06/2023 | Andrea Caliendo <br> Martina Maione | Update of the document
 3 | 16/06/2023 | Andrea Caliendo <br> Martina Maione | Entity-relationship and class diagram 
-4 | 1/07/2023 | Andrea Caliendo <br> Martina Maione | Add Dynamic diagram  
+4 | 01/07/2023 | Andrea Caliendo <br> Martina Maione | Add Dynamic diagram  
+5 | 02/09/2023 | Andrea Caliendo <br> Martina Maione | Updating 
 
 ## Table of Content
 
@@ -121,17 +122,31 @@ specifications    </p>
 
 ### <a name="interfaces"></a>  3.2 System Interfaces
 As for the **web application**, the interface will be graphical and will be done as follows:
-there will be a drop-down menu with 4 options:
-* Personal data
-*  Parking slots saved by the user
-*  Statistics
-*  Map
+
+Manager mode: 
+there will be access to 2 pages:
+* Saved parking slots and map
+* Statistics
+
+By selecting the map
+* with one right-click, the manager can save a parking slot confirm its intent with a pop-up window
+* with a double click on the same point, a pop-up window will come out asking the manager to confirm the cancellation
+* with two icons representing magnifying glasses (+, -), the user will be able to zoom in and out of the map
+* with a drang and drop, the manager is able to move a parking slot on the map
+* with an icon, the manager is able to rotate the rectangle of the parking slot
 <br>
+
+User mode:
+there will be access to 3 pages:
+* Personal data
+* Saved parking slots and map
+<br>
+
 By selecting the map
 
-* with one click, the user can save a parking slot
-* with a double click on the same point, a pop-up window will come out asking the user to confirm the cancellation
-* with two icons representing magnifying glasses (+, -), the user will be able to zoom in and out of the map
+* the user is able to reserve a parking slot, with a right-click on the rectangle
+* the user is able to see the state of the parking slot, with the mouse over the parking slot
+
 
 ![diagram](https://github.com/mnarizzano/se23-p07/blob/main/docs/drs/imgs/webinterface.jpg)
 <br>
