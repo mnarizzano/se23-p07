@@ -123,7 +123,7 @@ specifications    </p>
 ### <a name="interfaces"></a>  3.2 System Interfaces
 As for the **web application**, the interface will be graphical and will be done as follows:
 
-Manager mode: 
+Administrator mode: 
 there will be access to 2 pages:
 * Saved parking slots and map
 * Statistics
