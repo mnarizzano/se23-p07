@@ -12,14 +12,21 @@ Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimate
 | | 2.1 | Load of a map | Maione | 1 | 5 | 3
 | | 2.2 | Creation of a box | Maione |4 | 7 | 5
 | | 2.3 | Saving of PS | Maione |4 | 7 | 5
-3 | | Statistics| 
-| | 3.1| Creation of database| Maione | 1 | 2 | 1,5
-| | 3.2| Query of database| Maione |1 | 2 | 1,5
-| | 3.3| Graphics and view| Maione |2 | 3 | 2,5
-4 | | Personal data | 
-| | 4.1| Creation of database| Caliendo | 1 | 2 | 1,5
-| | 4.2| Query of database| Caliendo |1 | 2 | 1,5
-| | 4.3| Data view| Caliendo |2 | 3 | 2,5
+3 | | Personal data | 
+| | 3.1| Creation of database| Caliendo | 1 | 2 | 1,5
+| | 3.2| Connection to database| Caliendo |1 | 2 | 1,5
+| | 3.3| Data visualization| Caliendo |2 | 3 | 2,5
+4 | | Roles management | 
+| | 4.1| Definition of roles| Caliendo | 1 | 2 | 1,5
+| | 4.2| Assignment of functionalities| Maione |2 | 4 | 3
+5 | | Reservation management | 
+| | 5.1| Reservation by the user| Maione | 1 | 2 | 1,5
+| | 5.2| Update of the PS state in the database| Maione |1 | 2 | 1,5
+| | 5.3| Change of colors| Maione |1 | 1 | 1,5
+6 | | Statistics| 
+| | 6.1| Creation of database| Caliendo | 1 | 1 | 1
+| | 6.2| Connection to database| Caliendo |1 | 1 | 1
+| | 6.3| Data visualization| Caliendo |1 | 2 | 1,5
 
 
 <br>
@@ -33,10 +40,17 @@ Task | #Days | Start | End
 2.1 | 3| 23/08 | 25/08
 2.2 | 5| 26/08 | 30/08
 2.3 | 6| 31/08 | 05/09
-3 | 2| 06/09 | 07/09
-4.1 | 3| 28/08 | 30/08
-4.2 | 3| 31/08 | 02/09
-4.3 | 3| 03/09 | 05/09
+3.1 | 3| 28/08 | 30/08
+3.2 | 3| 31/08 | 02/09
+3.3 | 3| 03/09 | 05/09
+4.1 | 1| 06/09 | 07/09
+4.2 | 3| 11/09 | 13/09
+5.1 | 2| 06/09 | 07/09
+5.2 | 2| 08/09 | 09/09
+5.3 | 1| 10/09 | 10/09
+6 | 3| 08/09 | 10/09
+
+
 
 
 The plan of MA
