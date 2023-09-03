@@ -10,7 +10,7 @@ Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimate
 | | 1.3 | Sign-in box | Caliendo |2 | 4 | 4
 2 | | Map | 
 | | 2.1 | Load of a map | Maione | 1 | 5 | 3
-| | 2.2 | Creation of a box | Maione |4 | 7 | 5
+| | 2.2 | Creation and deletion of a box | Maione |4 | 7 | 5
 | | 2.3 | Saving of PS | Maione |4 | 7 | 5
 3 | | Personal data | 
 | | 3.1| Creation of database| Caliendo | 1 | 2 | 1,5
