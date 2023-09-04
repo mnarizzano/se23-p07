@@ -14,7 +14,6 @@ import { Parcheggio } from './parking.interface';
       firebase.initializeApp(firebaseConfig);
     }
   
-    // Aggiungi un parcheggio al database Firebase
     addParcheggio(parcheggio: Parcheggio): Promise<void> {
       const parcheggiRef = firebase.database().ref('parcheggi');
       

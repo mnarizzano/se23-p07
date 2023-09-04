@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { User } from '../services/user';
+import { User } from '../services/user.model';
 import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
@@ -7,27 +7,35 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  userData: any; // Save logged in user data
+  userData: User | null = null; // Save logged in user data
+  
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning
   ) {
-    /* Saving user data in localstorage when 
+    /* Saving user data in local storage when 
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.userData = user;
+        this.userData = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName || '',
+          photoURL: user.photoURL || '',
+          phoneNumber: user.phoneNumber || '',
+        
+        };
         localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user')!);
       } else {
         localStorage.setItem('user', 'null');
-        JSON.parse(localStorage.getItem('user')!);
+        this.userData = null;
       }
     });
   }
@@ -36,39 +44,61 @@ export class AuthService {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.SetUserData(result.user);
-        this.afAuth.authState.subscribe((user) => {
-          if (user) {
-            this.router.navigate(['home']);
-          }
-        });
+        if (result.user) {
+          
+          this.afAuth.authState.subscribe((user) => {
+            if (user) {
+              this.router.navigate(['home']);
+            }
+          });
+        } else {
+          window.alert('L\'utente non è stato trovato.');
+        }
       })
       .catch((error) => {
         window.alert(error.message);
       });
   }
-  // Sign up with email/password
-  SignUp(email: string, password: string) {
+  
+  SignUp(email: string, password: string, user: User) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign 
-        up and returns promise */
-        this.SendVerificationMail();
-        this.SetUserData(result.user);
+        if (result.user) {
+          // Se result.user è valido
+          user.uid = result.user.uid;
+          this.SetUserData(user);
+          /* Call the SendVerificationMail() function when a new user signs 
+          up and returns a promise */
+          return this.SendVerificationMail(); // Restituisci la promessa dal metodo
+        } else {
+          // Se result.user è null o undefined, gestisci l'errore qui
+          window.alert('Errore durante la creazione dell\'account.');
+          throw new Error('Errore durante la creazione dell\'account.');
+        }
       })
       .catch((error) => {
+        // Gestisci gli errori relativi alla creazione dell'account qui
         window.alert(error.message);
+        throw error;
       });
   }
-  // Send email verfificaiton when new user sign up
+  
+  
   SendVerificationMail() {
     return this.afAuth.currentUser
-      .then((u: any) => u.sendEmailVerification())
+      .then((user: any) => user.sendEmailVerification())
       .then(() => {
         this.router.navigate(['verify-email-address']);
+        return;
+      })
+      .catch((error) => {
+        // Gestisci gli errori relativi all'invio dell'email di verifica
+        console.error('Errore durante l\'invio della verifica dell\'email:', error);
+        throw error;
       });
   }
+
   // Reset Forggot password
   ForgotPassword(passwordResetEmail: string) {
     return this.afAuth
@@ -96,36 +126,46 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        this.router.navigate(['home']);
-        this.SetUserData(result.user);
+        if (result.user) {
+          this.router.navigate(['home']);
+          this.SetUserData(result.user);
+        } else {
+          window.alert('L\'utente non è stato trovato.');
+        }
       })
       .catch((error) => {
         window.alert(error);
       });
   }
+  
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user: any) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+  SetUserData(user: User) {
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${user.uid}`
     );
-    const userData: User = {
+    const userData = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
+      phoneNumber: user.phoneNumber,
     };
-    return userRef.set(userData, {
-      merge: true,
-    });
+  
+    return userRef.set(userData, { merge: true });
   }
+  
   // Sign out
   SignOut() {
-    return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['sign-in']);
-    });
+    return this.afAuth.signOut()
+      .then(() => {
+        localStorage.removeItem('user');
+        this.router.navigate(['sign-in']);
+      })
+      .catch((error) => {
+        console.error('Errore durante il logout:', error);
+      });
   }
+  
 }

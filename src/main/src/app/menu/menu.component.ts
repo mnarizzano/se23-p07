@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../shared/services/auth.service'; 
 
 @Component({
   selector: 'app-menu',
@@ -7,11 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   redirectToPage(page: string) {
-    this.router.navigate(['/' + page]);
+    if (page === 'sign-in') {
+      // Esegui il logout dell'utente quando si fa clic su "Logout"
+      this.authService.SignOut();
+    } else {
+      // Altrimenti, navighiamo verso la pagina desiderata
+      this.router.navigate(['/' + page]);
+    }
   }
-  
-  
 }

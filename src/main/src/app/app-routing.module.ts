@@ -12,26 +12,19 @@ import { MapComponent } from './mappa/map.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 
 const routes: Routes = [
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  { path: 'personalData', component: PersonalDataComponent, canActivate: [AuthGuard] },
+  { path: 'saved-ps', component: SavedPSComponent , canActivate: [AuthGuard]},
+  { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
+  { path: 'map', component: MapComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'register-user', component: SignUpComponent },
-  { 
-    path: 'home', component: HomeComponent, canActivate: [AuthGuard] ,
-    children: [
-      { path: 'personalData', component: PersonalDataComponent },
-      { path: 'saved-ps', component: SavedPSComponent },
-      { path: 'statistics', component: StatisticsComponent },
-      { path: 'map', component: MapComponent }
-    ]
-  },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
-  { path: 'map', component: MapComponent },
-  { path: 'personalData', component: PersonalDataComponent },
-  { path: 'saved-ps', component: SavedPSComponent },
-  { path: 'statistics', component: StatisticsComponent }
 ];
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
