@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from "../shared/services/auth.service";
-import { UserDataService } from '../user-data.service';
+import { AuthService } from '../shared/services/auth.service';
+import { User } from '../shared/services/user.model'; 
 
 @Component({
   selector: 'app-sign-up',
@@ -8,37 +8,48 @@ import { UserDataService } from '../user-data.service';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  constructor( public authService: AuthService, private userDataService: UserDataService ) { }
-  firstName: string = '';  
+  
+  constructor(public authService: AuthService) { }
+
+  user: User = new User(); 
+  firstName: string = '';
   lastName: string = '';
   email: string = '';
   address: string = '';
   phoneNumber: string = '';
+  userPwd: string = '';
+  isAdmin: boolean = false; // Impostalo su false per impostazione predefinita
+
 
   ngOnInit() {
     const state = history.state;
-    if (state && state.userData) {
-      const userData = state.userData;
-      this.firstName = userData.firstName;
-      this.lastName = userData.lastName;
-      this.email = userData.email;
-      this.address = userData.address;
-      this.phoneNumber = userData.phoneNumber;
+    if (state && state.user) {
+      this.user = state.user;
+      this.email = this.user.email || '';
     }
+  }
+
+  toggleAdmin() {
+    this.isAdmin = !this.isAdmin;
   }
   
   
-  onSubmit() {
-    // Elabora i dati del form e salvali
-    const userData = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      email: this.email,
-      address: this.address,
-      phoneNumber: this.phoneNumber
-    };
+  onSignUp() {
+    if (this.firstName && this.lastName && this.email && this.phoneNumber && this.userPwd) {
+      const user: User = {
+        uid: '', // Lascia vuoto uid poiché verrà generato da Firebase
+        email: this.email,
+        displayName: this.firstName + ' ' + this.lastName,
+        photoURL: '',
+        phoneNumber: this.phoneNumber,
+      };
 
-    // Salva i dati nel servizio UserDataService
-    this.userDataService.setUserData(userData);
-}
+      const role: string = this.isAdmin ? 'admin' : 'user';
+      
+      // Chiama la funzione SignUp del servizio AuthService
+      this.authService.SignUp(this.email, this.userPwd, user, role)
+    } else {
+      console.log("Compila tutti i campi obbligatori");
+    }
+  }
 }

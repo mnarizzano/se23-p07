@@ -8,7 +8,7 @@
           type="email"
           class="formControl"
           placeholder="Email Address *"
-          #userEmail
+          [(ngModel)]="email"
           required
         />
       </div>
@@ -18,7 +18,7 @@
           type="text"
           class="formControl"
           placeholder="First name *"
-          #name
+          [(ngModel)]="firstName"
           required
         />
       </div>
@@ -28,7 +28,7 @@
           type="text"
           class="formControl"
           placeholder="Last name *"
-          #surname
+          [(ngModel)]="lastName"
           required
         />
       </div>
@@ -37,17 +37,9 @@
         <input
           type="text"
           class="formControl"
-          placeholder="Address"
-          #address
-        />
-      </div>
-
-      <div class="formGroup">
-        <input
-          type="text"
-          class="formControl"
-          placeholder="Phone Number"
-          #phoneNumber
+          placeholder="Phone Number *"
+          [(ngModel)]="phoneNumber"
+          required
         />
       </div>
 
@@ -56,24 +48,30 @@
           type="password"
           class="formControl"
           placeholder="Password *"
-          #userPwd
+          [(ngModel)]="userPwd"
           required
         />
       </div>
+
+      <mat-slide-toggle [(ngModel)]="isAdmin">Admin</mat-slide-toggle>
+      
       <div class="formGroup">
         <input
           type="button"
           class="btn btnPrimary"
           value="Sign Up"
-          (click)="authService.SignUp(userEmail.value, userPwd.value)"
+          (click)="onSignUp()"
         />
-      </div>
       <div class="formGroup">
         <span class="or"><span class="orInner">Or</span></span>
       </div>
       <div class="redirectToLogin">
         <span
           ><u>Already have an account? </u
-          ><span class="redirect" routerLink="./sign-in"
+          ><span class="redirect" routerLink="../sign-in"
             ><u>Log In </u>
-            </span></span></div>
+            </span></span>
+      </div>
+    </div>
+  </div>
+</div>
