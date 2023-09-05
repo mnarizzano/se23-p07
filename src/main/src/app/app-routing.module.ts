@@ -6,7 +6,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { HomeComponent } from './home/home.component';
 import { PersonalDataComponent } from './personal-data/personal-data.component';
-import { SavedPSComponent } from './saved-ps/saved-ps.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { MapComponent } from './mappa/map.component';
 import { AuthGuard } from './shared/guard/auth.guard';
@@ -20,7 +19,6 @@ const routes: Routes = [
     path: 'home', component: HomeComponent, canActivate: [AuthGuard] ,
     children: [
       { path: 'personalData', component: PersonalDataComponent },
-      { path: 'saved-ps', component: SavedPSComponent },
       { path: 'statistics', component: StatisticsComponent },
       { path: 'map', component: MapComponent }
     ]
@@ -29,7 +27,6 @@ const routes: Routes = [
   { path: 'verify-email-address', component: VerifyEmailComponent },
   { path: 'map', component: MapComponent },
   { path: 'personalData', component: PersonalDataComponent },
-  { path: 'saved-ps', component: SavedPSComponent },
   { path: 'statistics', component: StatisticsComponent }
 ];
 @NgModule({

@@ -1,9 +1,10 @@
 export interface Parcheggio {
-    uid: string;
+    pid: string,
     indirizzo: string;
     coordinate: {
       lat: number;
       lng: number;
     };
     data_salvataggio: string;
+    state: 'disponibile' | 'occupato' | 'inaccessibile';
   }
