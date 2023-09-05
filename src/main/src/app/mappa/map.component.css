@@ -1,4 +1,3 @@
-/* Aggiungi al tuo file .css */
 .custom-search {
     background-color: #f8f9fa; /* Colore di sfondo */
     border: 1px solid #ced4da; /* Bordo */
@@ -25,10 +24,25 @@
   }
  
 
-  /* Aggiungi al tuo file .css */
 .custom-container {
     max-width: 1200px; /* Larghezza massima personalizzata */
     margin: 0 auto; /* Centra il contenitore orizzontalmente */
   }
   
-  
+.parcheggi-list {
+  max-height: 300px; /* Altezza massima della casella con la barra di scorrimento */
+  overflow-y: auto; /* Aggiungi una barra di scorrimento verticale se il contenuto supera l'altezza massima */
+}
+
+.parcheggi-list-item:hover {
+  background-color: #3498db; /* Colore di sfondo azzurro quando passi il mouse sopra */
+  color: #fff; /* Colore del testo in bianco */
+  cursor: pointer; /* Cambia il cursore del mouse quando passi il mouse sopra */
+}
+
+.selected {
+  background-color: #f0f0f0; /* Cambia il colore di sfondo */
+  color: #000; /* Cambia il colore del testo */
+}
+
+

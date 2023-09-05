@@ -6,7 +6,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { HomeComponent } from './home/home.component';
 import { PersonalDataComponent } from './personal-data/personal-data.component';
-import { SavedPSComponent } from './saved-ps/saved-ps.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { MapComponent } from './mappa/map.component';
 import { AuthGuard } from './shared/guard/auth.guard';
@@ -23,6 +22,7 @@ const routes: Routes = [
   { path: 'register-user', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
+
 ];
 
 @NgModule({

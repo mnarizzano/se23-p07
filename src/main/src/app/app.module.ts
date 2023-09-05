@@ -15,7 +15,6 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { firebaseConfig } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { PersonalDataComponent } from './personal-data/personal-data.component';
-import { SavedPSComponent } from './saved-ps/saved-ps.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { MapComponent } from './mappa/map.component';
 import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
@@ -29,6 +28,9 @@ import { SaveConfirmationComponent } from './save-confirmation/save-confirmation
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { AddBoxConfirmationComponent } from './add-box-confirmation/add-box-confirmation.component';
+import { DeleteAllConfirmationComponent } from './delete-all-confirmation/delete-all-confirmation.component';
+
 
 
 
@@ -42,7 +44,6 @@ const routes: Routes = [
     path: 'home', component: HomeComponent, canActivate: [AuthGuard], 
     children: [
       { path: 'personalData', component: PersonalDataComponent },
-      { path: 'saved-ps', component: SavedPSComponent },
       { path: 'statistics', component: StatisticsComponent },
       { path: 'map', component: MapComponent }
     ]
@@ -51,7 +52,6 @@ const routes: Routes = [
   { path: 'verify-email-address', component: VerifyEmailComponent },
   { path: 'map', component: MapComponent },
   { path: 'personalData', component: PersonalDataComponent },
-  { path: 'saved-ps', component: SavedPSComponent },
   { path: 'statistics', component: StatisticsComponent }
 ];
 
@@ -65,14 +65,18 @@ const routes: Routes = [
     ForgotPasswordComponent,
     VerifyEmailComponent,
     PersonalDataComponent,
-    SavedPSComponent,
     StatisticsComponent,
     MapComponent,
     DeleteConfirmationComponent,
     MenuComponent,
-    SaveConfirmationComponent
+    SaveConfirmationComponent,
+    AddBoxConfirmationComponent,
+    DeleteAllConfirmationComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(firebaseConfig), // Assicurati di aver definito firebaseConfig
+    AngularFirestoreModule,
+    AngularFireAuthModule,
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
