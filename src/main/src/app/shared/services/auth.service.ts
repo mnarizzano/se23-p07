@@ -7,6 +7,8 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -60,31 +62,37 @@ export class AuthService {
       });
   }
   
-  SignUp(email: string, password: string, user: User) {
+  SignUp(email: string, password: string, user: User, role: string) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         if (result.user) {
-          // Se result.user è valido
           user.uid = result.user.uid;
           this.SetUserData(user);
-          /* Call the SendVerificationMail() function when a new user signs 
-          up and returns a promise */
-          return this.SendVerificationMail(); // Restituisci la promessa dal metodo
+  
+          // Ora, imposta il ruolo dell'utente nel Firestore
+          this.afs.doc(`users/${user.uid}`).update({ role: role });
+  
+          return this.SendVerificationMail();
         } else {
-          // Se result.user è null o undefined, gestisci l'errore qui
           window.alert('Errore durante la creazione dell\'account.');
           throw new Error('Errore durante la creazione dell\'account.');
         }
       })
       .catch((error) => {
-        // Gestisci gli errori relativi alla creazione dell'account qui
         window.alert(error.message);
         throw error;
       });
   }
-  
-  
+
+  getRole(userId: string): Observable<string | null> {
+    return this.afs.doc(`users/${userId}`).valueChanges().pipe(
+      map((userData: any) => {
+        return userData && userData.role ? userData.role : null;
+      })
+    );
+  }
+
   SendVerificationMail() {
     return this.afAuth.currentUser
       .then((user: any) => user.sendEmailVerification())
@@ -155,7 +163,7 @@ export class AuthService {
   
     return userRef.set(userData, { merge: true });
   }
-  
+
   // Sign out
   SignOut() {
     return this.afAuth.signOut()

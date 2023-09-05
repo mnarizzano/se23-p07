@@ -70,4 +70,24 @@
   }
 }
 
+/* Cambia il colore del mat-slide-toggle a arancione */
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #FFA500; /* Cambia il colore del toggle quando è attivo */
+}
 
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #FFA500; /* Cambia il colore del cursore quando è attivo */
+}
+
+.mat-slide-toggle.mat-checked:not([disabled]) .mat-slide-toggle-bar::before {
+  background-color: #FFA500; /* Cambia il colore del bar sotto il cursore quando è attivo */
+}
+
+/* Cambia il colore del mat-slide-toggle quando non è attivo */
+.mat-slide-toggle:not(.mat-checked) .mat-slide-toggle-bar {
+  background-color: #FFCC80; /* Cambia il colore del toggle quando non è attivo */
+}
+
+.mat-slide-toggle:not(.mat-checked) .mat-slide-toggle-thumb {
+  background-color: #FFA500; /* Cambia il colore del cursore quando non è attivo */
+}

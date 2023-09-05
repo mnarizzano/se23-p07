@@ -52,6 +52,9 @@
           required
         />
       </div>
+
+      <mat-slide-toggle [(ngModel)]="isAdmin">Admin</mat-slide-toggle>
+      
       <div class="formGroup">
         <input
           type="button"
@@ -59,7 +62,6 @@
           value="Sign Up"
           (click)="onSignUp()"
         />
-      </div>
       <div class="formGroup">
         <span class="or"><span class="orInner">Or</span></span>
       </div>

@@ -26,6 +26,9 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import {AuthGuard} from './shared/guard/auth.guard';
 import { MenuComponent } from './menu/menu.component';
 import { SaveConfirmationComponent } from './save-confirmation/save-confirmation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 
@@ -78,11 +81,13 @@ const routes: Routes = [
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     FlexLayoutModule,
-    
+    MatButtonToggleModule,
     FormsModule,
     ModalModule.forRoot(),
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    BrowserAnimationsModule,
+    MatSlideToggleModule
   ],
  
   bootstrap: [AppComponent]
