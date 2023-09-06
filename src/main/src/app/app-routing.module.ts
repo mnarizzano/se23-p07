@@ -9,12 +9,12 @@ import { PersonalDataComponent } from './personal-data/personal-data.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { MapComponent } from './mappa/map.component';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { AdminGuard } from './shared/guard/admin.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'personalData', component: PersonalDataComponent, canActivate: [AuthGuard] },
-  { path: 'saved-ps', component: SavedPSComponent , canActivate: [AuthGuard]},
-  { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
+  { path: 'statistics', component: StatisticsComponent, canActivate: [AdminGuard] },
   { path: 'map', component: MapComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },

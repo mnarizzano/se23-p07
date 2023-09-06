@@ -40,6 +40,7 @@ interface Parcheggio {
 
 
 export class MapComponent implements OnInit {
+  isAdmin = false;
   mappa: any;
   searchQuery: string = '';
   lastClickTime: number = 0;
@@ -71,6 +72,10 @@ customIcon = L.icon({
 
 
     ngOnInit() {
+      // Controlla che l'utente sia un amministratore
+      this.authService.isAdmin().subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
       if (this.mapContainer && this.mapContainer.nativeElement) {
       this.initMap();
       this.caricaParcheggiSalvati();
@@ -102,14 +107,17 @@ customIcon = L.icon({
         if (isInsideRectangle) {
           this.handleRectangleRightClick(event.latlng); // Mostra la finestra "Prenota"
         } else {
+          if (this.isAdmin) {
           this.showAddBoxConfirmation(event); // Mostra la finestra "Aggiungi"
+          }
         }
   });
 
       // Double click -> delBox
       this.mappa.on('click', (event: L.LeafletMouseEvent) => {
           const currentTime = new Date().getTime();
-
+          
+          if (this.isAdmin) {
           if (currentTime - this.lastClickTime < 300) {
             clearTimeout(this.clickTimeout);
             this.delBox(event.latlng); // double click sinistro sul rettangolo -> delBox
@@ -125,7 +133,7 @@ customIcon = L.icon({
               }
             }
           this.lastClickTime = currentTime;
-          
+      }
       });
     }
 

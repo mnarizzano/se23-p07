@@ -30,6 +30,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AddBoxConfirmationComponent } from './add-box-confirmation/add-box-confirmation.component';
 import { DeleteAllConfirmationComponent } from './delete-all-confirmation/delete-all-confirmation.component';
+import { MapUserComponent } from './map-user/map-user.component';
 
 
 
@@ -71,7 +72,8 @@ const routes: Routes = [
     MenuComponent,
     SaveConfirmationComponent,
     AddBoxConfirmationComponent,
-    DeleteAllConfirmationComponent
+    DeleteAllConfirmationComponent,
+    MapUserComponent
   ],
   imports: [
     AngularFireModule.initializeApp(firebaseConfig), // Assicurati di aver definito firebaseConfig

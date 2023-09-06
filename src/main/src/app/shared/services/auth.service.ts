@@ -7,8 +7,11 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { switchMap,  catchError} from 'rxjs/operators';
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -175,5 +178,30 @@ export class AuthService {
         console.error('Errore durante il logout:', error);
       });
   }
+
+  getUserId(): Observable<string | null> {
+    return this.afAuth.authState.pipe(
+      map((user) => (user ? user.uid : null))
+    );
+  }
+  
+
+   // Metodo per verificare se l'utente è un amministratore
+   isAdmin(): Observable<boolean> {
+    return this.getUserId().pipe(
+      switchMap((userId) => {
+        if (userId) {
+          return this.getRole(userId).pipe(map((role) => role === 'admin'));
+        } else {
+          return of(false);
+        }
+      }),
+      catchError((error) => {
+        console.error('Errore durante il recupero del ruolo dell\'utente:', error);
+        return of(false);
+      })
+    );
+  }
+
   
 }
