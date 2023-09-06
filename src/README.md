@@ -56,7 +56,7 @@ The plan of MA
 Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimated
 ---------|------|--------|------|------|------|------
 1 |  |  App graphics | Maione| 1 | 3 | 2
-2 |  |  Geolocalization permission | Caliendo | 3 | 5 | 4
+2 |  |  Geolocalization permission | Maione | 3 | 5 | 4
 3 | | Main function| 
 | | 3.1| Geolocalization | Caliendo | 3 | 5 | 4
 | | 3.2| Load of data | Caliendo | 2 | 4 | 3
