@@ -10,7 +10,7 @@ Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimate
 | | 1.3 | Sign-in box | Caliendo |2 | 4 | 4
 2 | | Map | 
 | | 2.1 | Load of a map | Maione | 1 | 5 | 3
-| | 2.2 | Creation and deletion of a box | Maione |4 | 7 | 5
+| | 2.2 | Creation and deletion of a PS | Maione |4 | 7 | 5
 | | 2.3 | Saving of PS | Maione |4 | 7 | 5
 3 | | Personal data | 
 | | 3.1| Creation of database| Caliendo | 1 | 2 | 1,5
@@ -18,15 +18,13 @@ Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimate
 | | 3.3| Data visualization| Caliendo |2 | 3 | 2,5
 4 | | Roles management | 
 | | 4.1| Definition of roles| Caliendo | 1 | 2 | 1,5
-| | 4.2| Assignment of functionalities| Maione |2 | 4 | 3
+| | 4.2| Assignment of functionalities| Maione |2 | 5 | 3
 5 | | Reservation management | 
-| | 5.1| Reservation by the user| Maione | 1 | 2 | 1,5
-| | 5.2| Update of the PS state in the database| Maione |1 | 2 | 1,5
-| | 5.3| Change of colors| Maione |1 | 1 | 1,5
+| | 5.1| Reservation by the user| Maione | 1 | 5 | 3
+| | 5.2| Update of the PS state in the database| Maione |2 | 5 | 3
+| | 5.3| Change of colors| Maione |1 | 1 | 1
 6 | | Statistics| 
-| | 6.1| Creation of database| Caliendo | 1 | 1 | 1
-| | 6.2| Connection to database| Caliendo |1 | 1 | 1
-| | 6.3| Data visualization| Caliendo |1 | 2 | 1,5
+| | 6.1| Creation of database and data visualization| Caliendo | 1 | 1 | 1
 
 
 <br>
@@ -43,12 +41,12 @@ Task | #Days | Start | End
 3.1 | 3| 28/08 | 30/08
 3.2 | 3| 31/08 | 02/09
 3.3 | 3| 03/09 | 05/09
-4.1 | 1| 06/09 | 07/09
-4.2 | 3| 11/09 | 13/09
-5.1 | 2| 06/09 | 07/09
-5.2 | 2| 08/09 | 10/09
-5.3 | 1| 10/09 | 10/09
-6 | 3| 08/09 | 11/09
+4.1 | 1| 06/09 | 06/09
+4.2 | 3| 14/09 | 16/09
+5.1 | 2| 06/09 | 08/09
+5.2 | 2| 10/09 | 12/09
+5.3 | 1| 13/09 | 13/09
+6 | 1| 10/09 | 10/09
 
 
 
@@ -57,19 +55,19 @@ The plan of MA
 <br>
 Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimated
 ---------|------|--------|------|------|------|------
-1 |  |  Creation of app | Maione| 1 | 3 | 2
+1 |  |  App graphics | Maione| 1 | 3 | 2
 2 |  |  Geolocalization permission | Caliendo | 3 | 5 | 4
 3 | | Main function| 
 | | 3.1| Geolocalization | Caliendo | 3 | 5 | 4
 | | 3.2| Load of data | Caliendo | 2 | 4 | 3
-| | 3.3| Notification | Maione |5 | 7 | 6
+| | 3.3| Notification | Caliendo |1 | 5 | 3
 
 <br>
 
 Task | #Days | Start | End
 ---------|------|--------|------
-1 | 2| 10/09 | 11/09
-2 | 4| 06/09 | 09/09
-3.1 | 4| 10/09 | 13/09
-3.2 | 3| 14/09 | 16/09
-3.3 | 6| 12/09 | 17/09
+1 | 2| 17/09 | 18/09
+2 | 4| 19/09 | 22/09
+3.1 | 4| 11/09 | 14/09
+3.2 | 3| 15/09 | 17/09
+3.3 | 6| 18/09 | 20/09
