@@ -18,11 +18,10 @@ Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimate
 | | 3.3| Data visualization| Caliendo |2 | 3 | 2,5
 4 | | Roles management | 
 | | 4.1| Definition of roles| Caliendo | 1 | 2 | 1,5
-| | 4.2| Assignment of functionalities| Maione |2 | 5 | 3
+| | 4.2| Assignment of functionalities| Maione |1 | 1 | 1
 5 | | Reservation management | 
 | | 5.1| Reservation by the user| Maione | 1 | 5 | 3
-| | 5.2| Update of the PS state in the database| Maione |2 | 5 | 3
-| | 5.3| Change of colors| Maione |1 | 1 | 1
+| | 5.2| Update of the PS state in the database| Maione |2 | 4 | 3
 6 | | Statistics| 
 | | 6.1| Creation of database and data visualization| Caliendo | 1 | 1 | 1
 
@@ -42,11 +41,10 @@ Task | #Days | Start | End
 3.2 | 3| 31/08 | 02/09
 3.3 | 3| 03/09 | 05/09
 4.1 | 1| 06/09 | 06/09
-4.2 | 3| 07/09 | 10/09
-5.1 | 3| 11/09 | 13/09
-5.2 | 3| 14/09 | 16/09
-5.3 | 1| 17/09 | 17/09
-6 | 1| 10/09 | 10/09
+4.2 | 3| 07/09 | 07/09
+5.1 | 3| 08/09 | 11/09
+5.2 | 3| 12/09 | 14/09
+6 | 1| 07/09 | 07/09
 
 
 
@@ -58,16 +56,16 @@ Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimate
 1 |  |  App graphics | Maione| 1 | 3 | 2
 2 |  |  Geolocalization permission | Maione | 3 | 5 | 4
 3 | | Main function| 
-| | 3.1| Geolocalization | Caliendo | 3 | 5 | 4
-| | 3.2| Load of data | Caliendo | 2 | 4 | 3
+| | 3.1| Geolocalization | Caliendo | 2 | 4 | 3
+| | 3.2| Load of data | Caliendo | 1 | 3 | 2
 | | 3.3| Notification | Caliendo |1 | 5 | 3
 
 <br>
 
 Task | #Days | Start | End
 ---------|------|--------|------
-1 | 2| 17/09 | 18/09
-2 | 4| 19/09 | 22/09
-3.1 | 4| 11/09 | 14/09
-3.2 | 3| 15/09 | 17/09
-3.3 | 6| 18/09 | 20/09
+1 | 2| 07/09 | 08/09
+2 | 4| 10/09 | 13/09
+3.1 | 3| 08/09 | 11/09
+3.2 | 2| 12/09 | 13/09
+3.3 | 3| 14/09 | 16/09
