@@ -1,4 +1,29 @@
 <div>
-    <app-menu></app-menu>
+  <app-menu></app-menu>
+</div>
+<div class="statistics-container">
+  <h2>Statistiche Parcheggio</h2>
+
+  <div>
+    <h3>Ore medie di permanenza</h3>
+    <p>Ore medie: {{ averageDuration }}</p>
   </div>
-  <p>statistics works!</p>
+
+  <div>
+    <h3>Giorni della settimana più utilizzati</h3>
+    <ul>
+      <li *ngFor="let day of daysOfWeek" class="day-item">
+        <span [ngClass]="{'highlighted-day': mostUsedDay.includes(day)}">{{ day }}: {{ mostUsedDays[day] }}</span> 
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <h3>Parcheggi più utilizzati</h3>
+    <ul>
+      <li *ngFor="let parkingLot of mostUsedParkingLotsSorted">
+        Parcheggio: {{ getParkingLotAddress(parkingLot.key) }} -  <strong> {{ parkingLot.value }} volte </strong>
+      </li>
+    </ul>
+  </div>
+</div>
