@@ -13,7 +13,6 @@ import { AuthGuard } from './shared/guard/auth.guard';
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'personalData', component: PersonalDataComponent, canActivate: [AuthGuard] },
-  { path: 'saved-ps', component: SavedPSComponent , canActivate: [AuthGuard]},
   { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
   { path: 'map', component: MapComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },

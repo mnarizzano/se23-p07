@@ -1,0 +1,16 @@
+.statistics-container {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .day-item {
+    list-style: none;
+    margin: 5px 0;
+  }
+  
+  .highlighted-day {
+    font-weight: bold;
+    color: #007bff; /* Cambia il colore in quello desiderato */
+  }
+  

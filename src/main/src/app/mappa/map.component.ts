@@ -553,7 +553,6 @@ updateState(parcheggio: Parcheggio) {
 - se elimino un parcheggio, rimane il marker. Devo aggiornare la pagina manualmente. Idem se faccio drag and drop, rimane il marker precedente.
 - aggiustare il colore dei bordi del rettangolo quando diventa occupato
 - fare in modo che dopo che è diventato occupato, venga visualizzato sempre rosso.
-- aggiungere un tasto in fondo alla pagina per selezionare alcuni parcheggi ed eliminarli tutti assieme dal database
 - far si che il rettangolo possa ruotare
 */
 
