@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service'; 
 
@@ -7,8 +7,16 @@ import { AuthService } from '../shared/services/auth.service';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
+  isAdmin = false;
   constructor(private router: Router, private authService: AuthService) {}
+ngOnInit(): void {
+  // Controlla che l'utente sia un amministratore
+  this.authService.isAdmin().subscribe((isAdmin) => {
+    this.isAdmin = isAdmin;
+  });
+  this.redirectToPage;
+}
 
   redirectToPage(page: string) {
     if (page === 'sign-in') {

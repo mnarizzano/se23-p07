@@ -8,8 +8,17 @@ import { AuthService } from "../shared/services/auth.service";
 })
 
 export class SignInComponent implements OnInit {
+  userNameValue: string = '';
+  userPasswordValue: string = '';
   constructor(
     public authService: AuthService
   ) { }
-  ngOnInit() { }
+  ngOnInit() {
+    this.signInOnEnter;
+   }
+
+  signInOnEnter() {
+    // Chiamare la funzione di accesso quando l'utente preme "Invio"
+    this.authService.SignIn(this.userNameValue, this.userPasswordValue);
+  }
 }
