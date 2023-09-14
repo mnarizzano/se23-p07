@@ -31,6 +31,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AddBoxConfirmationComponent } from './add-box-confirmation/add-box-confirmation.component';
 import { DeleteAllConfirmationComponent } from './delete-all-confirmation/delete-all-confirmation.component';
 import { MapUserComponent } from './map-user/map-user.component';
+import { BookingComponent } from './booking/booking.component';
 
 
 
@@ -73,7 +74,8 @@ const routes: Routes = [
     SaveConfirmationComponent,
     AddBoxConfirmationComponent,
     DeleteAllConfirmationComponent,
-    MapUserComponent
+    MapUserComponent,
+    BookingComponent
   ],
   imports: [
     AngularFireModule.initializeApp(firebaseConfig), // Assicurati di aver definito firebaseConfig

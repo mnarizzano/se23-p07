@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h4 class="modal-title">Seleziona una fascia oraria</h4>
+    <button type="button" class="close" (click)="chiudiFinestraModale()">&times;</button>
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let fasciaOraria of fasceOrarie">
+      <label>
+        <input type="checkbox" [(ngModel)]="fasciaOraria.selezionata"> {{ fasciaOraria.oraInizio }} - {{ fasciaOraria.oraFine }}:  
+        {{ fasceOrarieService.getStatoFasciaOraria( parcheggioId, fasciaOraria.oraInizio, fasciaOraria.oraFine) }}
+      </label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="confermaPrenotazione()">Conferma</button>
+    <button type="button" class="btn btn-secondary" (click)="chiudiFinestraModale()">Chiudi</button>
+  </div>
+  
