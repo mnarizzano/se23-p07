@@ -12,8 +12,10 @@
     </div>
 
     <div class = "col-md-1"><button class="btn btn-primary mt-2" (click)="searchAddress()">Cerca</button></div>
-    <div class="col-md-7 text-right">
-      <button class="btn btn-success mt-2 custom-save-btn" (click)="onSaveButtonClick()">Salva</button>
+    
+      <div class="col-md-7 text-right" *ngIf="isAdmin">
+        <button class="btn btn-success mt-2 custom-save-btn" (click)="onSaveButtonClick()">Salva</button>
+      
     </div>
     
   </div>
@@ -47,9 +49,12 @@
     </div>
 
   </div>
-  <!-- Aggiungi questo pulsante alla fine della tua pagina -->
-<button class="btn btn-danger" (click)="confirmDeleteAllParcheggi()">Elimina tutti i parcheggi</button>
 
+  <div *ngIf="isAdmin">
+    <button class="btn btn-danger" (click)="confirmDeleteAllParcheggi()">Elimina tutti i parcheggi</button>
+  </div>
 </div>
+
+
 
 

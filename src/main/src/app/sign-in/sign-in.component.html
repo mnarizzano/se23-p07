@@ -10,6 +10,8 @@
             type="text"
             class="formControl"
             placeholder="Username"
+            [(ngModel)]="userNameValue"
+            (keyup.enter)="signInOnEnter()"
             #userName
             required
           />
@@ -19,6 +21,8 @@
             type="password"
             class="formControl"
             placeholder="Password"
+            [(ngModel)]="userPasswordValue"
+            (keyup.enter)="signInOnEnter()"
             #userPassword
             required
           />

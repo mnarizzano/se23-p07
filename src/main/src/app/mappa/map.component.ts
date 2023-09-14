@@ -13,6 +13,11 @@ import { AddBoxConfirmationComponent } from '../add-box-confirmation/add-box-con
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeleteAllConfirmationComponent } from '../delete-all-confirmation/delete-all-confirmation.component';
+import { BookingComponent } from '../booking/booking.component';
+import 'leaflet-rotatedmarker';
+import { Parcheggio } from '../shared/services/parking.interface';
+import { FasceOrarieService } from '../fasce-orarie.service';
+// import { RotatableRectangle } from './rotatableRectangle';
 
 
 
@@ -20,6 +25,8 @@ import { DeleteAllConfirmationComponent } from '../delete-all-confirmation/delet
 
 
 
+
+/*
 interface Parcheggio {
   pid: string;
   indirizzo: any;
@@ -29,7 +36,14 @@ interface Parcheggio {
   }, 
   data_salvataggio: string;
   state: 'disponibile' | 'occupato' | 'inaccessibile';
+}*/
+
+interface TimeSlot {
+  startTime: string;
+  endTime: string;
+  selected: boolean;
 }
+
 
 @Component({
   selector: 'app-map',
@@ -40,6 +54,8 @@ interface Parcheggio {
 
 
 export class MapComponent implements OnInit {
+  // rotatableRectangle: RotatableRectangle | null = null;
+  isAdmin = false;
   mappa: any;
   searchQuery: string = '';
   lastClickTime: number = 0;
@@ -47,6 +63,8 @@ export class MapComponent implements OnInit {
   rectangleMarkerMap: Map<L.Rectangle, L.Marker> = new Map();
   width = 0.000021;
   length = 0.00003;
+  showBookingModal: boolean = false;
+  selectedTimeSlots: TimeSlot[] = [];
 
   // Crea un'icona personalizzata utilizzando l'immagine "icona.png"
 customIcon = L.icon({
@@ -59,6 +77,7 @@ customIcon = L.icon({
 
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
 
+
   
 
   constructor(private modalService: BsModalService, 
@@ -67,10 +86,14 @@ customIcon = L.icon({
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private fasceOrarieService: FasceOrarieService,
     ) {}
 
-
     ngOnInit() {
+      // Controlla che l'utente sia un amministratore
+      this.authService.isAdmin().subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
       if (this.mapContainer && this.mapContainer.nativeElement) {
       this.initMap();
       this.caricaParcheggiSalvati();
@@ -100,16 +123,21 @@ customIcon = L.icon({
         }
 
         if (isInsideRectangle) {
+          if (!this.isAdmin) {
           this.handleRectangleRightClick(event.latlng); // Mostra la finestra "Prenota"
+          }
         } else {
+          if (this.isAdmin) {
           this.showAddBoxConfirmation(event); // Mostra la finestra "Aggiungi"
+          }
         }
   });
 
       // Double click -> delBox
       this.mappa.on('click', (event: L.LeafletMouseEvent) => {
           const currentTime = new Date().getTime();
-
+          
+          if (this.isAdmin) {
           if (currentTime - this.lastClickTime < 300) {
             clearTimeout(this.clickTimeout);
             this.delBox(event.latlng); // double click sinistro sul rettangolo -> delBox
@@ -125,10 +153,9 @@ customIcon = L.icon({
               }
             }
           this.lastClickTime = currentTime;
-          
+      }
       });
     }
-
 
     handleRectangleRightClick(latlng: L.LatLng) {
       // Itera attraverso i rettangoli esistenti per verificare quale è stato cliccato
@@ -141,16 +168,18 @@ customIcon = L.icon({
           break; 
         }
       }
-    }
-
-    
+    } 
 
 // Aggiunta del rettangolo
 bsModalRef!: BsModalRef;
 
-
 rectangleParcheggioMap: Map<L.Rectangle, Parcheggio> = new Map();
 
+/*
+rotateRectangle(rectangle: L.Rectangle, degrees: number) {
+  const rotation = `rotate(${degrees}deg)`;
+  rectangle.setRotationAngle(degrees);
+}*/
 
 addBox(coordinate: { lat: number; lng: number }) {
   const latlng = new L.LatLng(coordinate.lat, coordinate.lng);
@@ -164,7 +193,9 @@ addBox(coordinate: { lat: number; lng: number }) {
   const id =  this.firebaseService.generateParcheggioID(latlng);  
   const stato = 'disponibile';
 
-  const rectangle = L.rectangle(bounds, { color: 'yellow', weight: 2 }).addTo(this.mappa);
+  const rectangle = new L.Rectangle(bounds, { color: 'yellow', weight: 2}).addTo(this.mappa);
+ //this.rotatableRectangle = rotatableRectangle;
+ // this.rotatableRectangle.setRotationAngle(45);
 
   // Crea il marker utilizzando l'icona personalizzata
   const marker = L.marker(latlng, { icon: this.customIcon, draggable: true }).addTo(this.mappa);
@@ -188,6 +219,18 @@ addBox(coordinate: { lat: number; lng: number }) {
       },
       data_salvataggio: new Date().toISOString(),
       state: stato,
+     /* statiFasceOrarie: {
+        '1': 'disponibile',
+        '2': 'disponibile',
+        '3': 'disponibile',
+        '4': 'disponibile',
+        '5': 'disponibile',
+        '6': 'disponibile',
+        '7': 'disponibile',
+        '8': 'disponibile',
+        '9': 'disponibile',
+        '10': 'disponibile',
+      },*/
     };
     this.rectangleParcheggioMap.set(rectangle, parcheggio);
   });
@@ -232,7 +275,7 @@ moveParcheggio(marker: L.Marker, newLatLng: L.LatLng) {
     // Nuovo parcheggio
     const new_latlng = new L.LatLng(newLatLng.lat, newLatLng.lng);
     const new_id = this.firebaseService.generateParcheggioID(new_latlng);
-    const new_address = this.getAddress(newLatLng.lat, newLatLng.lng);
+    const new_address = String(this.getAddress(newLatLng.lat, newLatLng.lng));
     console.log("new_address creato:", new_address);
 
     const new_parcheggio: Parcheggio = {
@@ -244,6 +287,18 @@ moveParcheggio(marker: L.Marker, newLatLng: L.LatLng) {
       },
       data_salvataggio: new Date().toISOString(),
       state: 'disponibile',
+      /*statiFasceOrarie: {
+        '1': 'disponibile',
+        '2': 'disponibile',
+        '3': 'disponibile',
+        '4': 'disponibile',
+        '5': 'disponibile',
+        '6': 'disponibile',
+        '7': 'disponibile',
+        '8': 'disponibile',
+        '9': 'disponibile',
+        '10': 'disponibile',
+      },*/
     };
 
     this.rectangleParcheggioMap.set(newRectangle, new_parcheggio);
@@ -251,7 +306,6 @@ moveParcheggio(marker: L.Marker, newLatLng: L.LatLng) {
     console.log("Parcheggio con indirizzo aggiornato:", new_parcheggio.indirizzo);
   }
 }
-
 
 // Eliminare rettangolo
 delBox(latlng: L.LatLng){
@@ -323,6 +377,18 @@ async saveParking() {
             },
             data_salvataggio: new Date().toISOString(),
             state: 'disponibile',
+            /*statiFasceOrarie: {
+              '1': 'disponibile',
+              '2': 'disponibile',
+              '3': 'disponibile',
+              '4': 'disponibile',
+              '5': 'disponibile',
+              '6': 'disponibile',
+              '7': 'disponibile',
+              '8': 'disponibile',
+              '9': 'disponibile',
+              '10': 'disponibile',
+            },*/
           };
 
           parcheggio.pid = this.firebaseService.generateParcheggioID(parcheggio.coordinate);  
@@ -370,7 +436,6 @@ onSaveButtonClick() {
     }
   });
 }
-
 
 // Ricerca dell'indirizzo
 searchAddress() {
@@ -464,8 +529,6 @@ mostraParcheggiSullaMappa() {
   }
 }
 
-
-
 addMarker(parcheggio: Parcheggio) { 
   // Aggiungi un marker nella posizione del parcheggio 
   const marker = L.marker([parcheggio.coordinate.lat, parcheggio.coordinate.lng], {
@@ -479,15 +542,11 @@ addMarker(parcheggio: Parcheggio) {
   marker.bindPopup(popupContent);
 }
 
-
-
 // Interazione parcheggi - mappa
 selectParking(parcheggio: Parcheggio) {
   this.parcheggioSelezionato = parcheggio;
   this.updateMap(parcheggio);
 }
-
-
 
 updateMap(parcheggio: Parcheggio) {
   // Centra la mappa sulla posizione del parcheggio
@@ -499,8 +558,8 @@ updateMap(parcheggio: Parcheggio) {
   this.showPropertyPopup(parcheggio);
 }
 
-
 showBookPopup(rectangle: L.Rectangle, parcheggio: Parcheggio) {
+  const initialState = { parcheggio }; // Passa il parcheggio come parte dello stato iniziale
   const popupContent = `
     <button id="prenotaButton">Prenota</button>
   `;
@@ -513,18 +572,60 @@ showBookPopup(rectangle: L.Rectangle, parcheggio: Parcheggio) {
 
   // Aggiungi un gestore di eventi per il clic sul pulsante "Prenota"
   const prenotaButton = document.getElementById('prenotaButton');
-  if (prenotaButton) {
+  if (prenotaButton) {  
     prenotaButton.addEventListener('click', () => {
-      this.updateState(parcheggio); // Passa il parcheggio corretto quando il pulsante viene cliccato
-      this.mappa.closePopup(popup); // Chiudi la popup dopo aver cliccato sul pulsante
-      // Aggiorna la lista dei parcheggi salvati
-     this.caricaParcheggiSalvati();
-    });
+      
+      this.openBookingModal(parcheggio); // Apre la finestra modale
+      this.mappa.closePopup(popup); // Chiude la finestra pop up     
+  });
   }
 }
 
+openBookingModal(parcheggio: Parcheggio) {
+   // const initialState = { parcheggio };
+    const initialState = { parcheggioId: parcheggio.pid };
+    const modalRef: BsModalRef = this.modalService.show(BookingComponent, {initialState});
+    modalRef.content?.onConferma.subscribe((result: boolean) => {
+      if (result) {
+        // cambia lo stato del parcheggio 
+        this.updateState(parcheggio)
+      }
+    });
+}
+
 updateState(parcheggio: Parcheggio) {
-  if (parcheggio.state === 'disponibile') {
+  console.log('sto chiamando la funzione updateState');
+  const parcheggioId = parcheggio.pid;
+ //const tutteOccupate = this.bookingComponent.sonoTutteOccupatePerParcheggio(parcheggioId);
+ const modalRef: BsModalRef = this.modalService.show(BookingComponent);
+ modalRef.content?.onTutteOccupate.subscribe((result: boolean) => {
+  if (result){
+    if (parcheggio.state === 'disponibile'){
+      parcheggio.state = 'occupato';
+      // Aggiorna lo stato nel database
+      this.firebaseService.updateParcheggioState(parcheggio.pid, 'occupato').then(() => {
+        console.log('Stato del parcheggio aggiornato a "occupato" nel database.');
+        this.caricaParcheggiSalvati();
+
+        // Trova il rettangolo associato al parcheggio
+        const rectangle = Array.from(this.rectangleMarkerMap.keys()).find((rect) => {
+          const associatedParcheggio = this.rectangleParcheggioMap.get(rect);
+          return associatedParcheggio && associatedParcheggio.pid === parcheggio.pid;
+        });
+
+        // Cambia il colore del rettangolo in rosso
+        if (rectangle) {
+          rectangle.setStyle({ fillColor: 'red', color: 'red' });
+        }
+      });
+    }
+  }
+ });
+ 
+    
+  
+
+  /*if (parcheggio.state === 'disponibile') {
     console.log('Parcheggio:', parcheggio);
     parcheggio.state = 'occupato';
     // Aggiorna lo stato nel database
@@ -544,8 +645,10 @@ updateState(parcheggio: Parcheggio) {
     }
   });    
     
-  }
+  }*/
 }
+
+
 
 
 /* Cose da aggiustare:
@@ -590,8 +693,19 @@ confirmDeleteAllParcheggi() {
   });
 }
 
-
+/* 
+Prenotazione: cose da fare:
+- se tutte le fasce orarie sono occupate lo stato del parcheggio diventa occupato
+- se c'è almeno una fascia oraria disponibile, lo stato del parcheggio diventa disponibile
+- fare in modo che ogni volta all'interno della finestra modale si possano selezionare solo le fasce orarie disponibili per quel parcheggio
+- ogni giorno lo stato delle fasce orarie diventa di nuovo "disponibile" (forse fatto)
+*/
 
 
 
 }
+
+
+// Stavo ruotando il rettangolo: ho creato una nuova classe estesa e devo 
+// usare il metodo setRotationAngle sui rettangoli all'interno
+// della classe Map
