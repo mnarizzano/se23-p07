@@ -24,7 +24,9 @@ Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimate
 | | 5.2| Update of the PS state in the database| Maione |2 | 4 | 3
 | | 5.3| Load of a huge amount of data| Maione |3 | 6 | 5
 6 | | Statistics| 
-| | 6.1| Creation of database and data visualization| Caliendo | 1 | 1 | 1
+| | 6.1| Creation of database | Caliendo | 1 | 1 | 1
+| | 6.2| Data visualization| Maione | 1 | 2 | 1
+
 
 
 <br>
@@ -46,7 +48,8 @@ Task | #Days | Start | End
 5.1 | 3| 08/09 | 11/09
 5.2 | 3| 12/09 | 14/09
 5.3 | 5| 20/09 | 27/09
-6 | 1| 07/09 | 07/09
+6.1 | 1| 07/09 | 07/09
+6.2 | 1| 28/09 | 28/09
 
 
 
