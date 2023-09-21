@@ -22,6 +22,7 @@ Task | Subtask | Description | Task Leader | Optimistic | Pessimistic | Estimate
 5 | | Reservation management | 
 | | 5.1| Reservation by the user| Maione | 1 | 5 | 3
 | | 5.2| Update of the PS state in the database| Maione |2 | 4 | 3
+| | 5.3| Load of a huge amount of data| Maione |2 | 4 | 3
 6 | | Statistics| 
 | | 6.1| Creation of database and data visualization| Caliendo | 1 | 1 | 1
 
@@ -44,6 +45,7 @@ Task | #Days | Start | End
 4.2 | 3| 07/09 | 07/09
 5.1 | 3| 08/09 | 11/09
 5.2 | 3| 12/09 | 14/09
+5.3 | 3| 20/09 | 22/09
 6 | 1| 07/09 | 07/09
 
 
