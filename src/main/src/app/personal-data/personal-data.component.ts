@@ -27,11 +27,9 @@ export class PersonalDataComponent implements OnInit {
         const userId = user.uid;
         this.userDataService.getUserData(userId).subscribe((userData) => {
           if (userData) {
-            this.userData = userData; // Assegna i dati dell'utente alla variabile userData
+            this.userData = userData; 
           }
         });
-      } else {
-        // L'utente non è autenticato, puoi gestire questo caso in base alle tue esigenze
       }
     });
   }

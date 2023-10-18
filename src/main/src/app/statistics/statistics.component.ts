@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore }  from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat/app';
 import { firebaseConfig } from '../../environments/environment'; 
+import { Chart, CategoryScale, BarController, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+
+
 
 
 @Component({
@@ -18,6 +21,7 @@ export class StatisticsComponent implements OnInit {
   mostUsedDay: string[] = []; 
   mostUsedParkingLotsSorted: { key: string, value: number }[] = [];
   
+  
 
 
 
@@ -31,6 +35,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    Chart.register(CategoryScale, BarController, LinearScale, Title, Tooltip, Legend);
     this.getParkingLotAddresses(); 
     this.calculateStatistics();
   }
@@ -38,8 +43,13 @@ export class StatisticsComponent implements OnInit {
 
   calculateStatistics() {
     this.calculateAverageParkingDuration();
-    this.calculateMostUsedDays();
-    this.calculateMostUsedParkingLots();
+    this.calculateMostUsedDays(() => {
+      // Chiamato quando i dati dei giorni più utilizzati sono stati calcolati
+      this.createBarChart();
+    });
+    this.calculateMostUsedParkingLots(() => {
+      this.createParkingLotBarChart();
+    });
   }
 
   calculateAverageParkingDuration() {
@@ -63,7 +73,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   getParkingLotAddresses() {
-    // Ora puoi accedere ai dati dei parcheggi dall'altro database Firebase
     const database = firebase.database();
     const parcheggiRef = database.ref('/parcheggi');
 
@@ -76,13 +85,14 @@ export class StatisticsComponent implements OnInit {
       });
     });
   }
+
   getParkingLotAddress(parkingLotId: string): string {
     const address = this.parkingLotAddresses[parkingLotId];
     return address || 'Indirizzo non disponibile';
   }
   
 
-  calculateMostUsedDays() {
+  calculateMostUsedDays(callback: () => void) {
     const daysOfWeek = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'];
     const dayCount: Record<string, number> = {};
     let maxCount: number = 0;
@@ -103,24 +113,91 @@ export class StatisticsComponent implements OnInit {
         
         if (dayCount[dayOfWeek] > maxCount) {
           maxCount = dayCount[dayOfWeek];
-          mostUsedDays.length = 0; // Cancella l'array se trovi un nuovo massimo
+          mostUsedDays.length = 0; 
         }
         
         if (dayCount[dayOfWeek] === maxCount) {
-          mostUsedDays.push(dayOfWeek); // Aggiungi il giorno al massimo
+          mostUsedDays.push(dayOfWeek); 
         }
       });
   
       this.mostUsedDays = dayCount;
       this.mostUsedDay = mostUsedDays; // Ora mostUsedDay è un array di giorni più utilizzati
+      callback();
     });
   }
-  
-  calculateMostUsedParkingLots() {
+
+  createBarChart() {
+    const chartData = {
+      labels: this.daysOfWeek,
+      datasets: [{
+        label: 'Parcheggi utilizzati',
+        data: this.daysOfWeek.map(day => this.mostUsedDays[day]),
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }]
+    };
+    
+    const ctx = document.getElementById('barChart') as HTMLCanvasElement;
+    
+    const barChart = new Chart(ctx, {
+      type: 'bar',
+      data: chartData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Parcheggi utilizzati'
+            }
+          },
+          x: {
+            type: 'category',
+          },
+        }
+      }
+    });
+  }
+
+  createParkingLotBarChart() {
+    const parkingLotChartData = {
+      labels: this.mostUsedParkingLotsSorted.map(parkingLot => this.getParkingLotAddress(parkingLot.key)),
+      datasets: [{
+        label: 'Parcheggi più utilizzati',
+        data: this.mostUsedParkingLotsSorted.map(parkingLot => parkingLot.value),
+        backgroundColor: 'rgba(30, 144, 255, 0.2)',
+        borderColor: 'rgba(30, 144, 255, 1)',
+        borderWidth: 1
+      }]
+    };
+
+    const parkingLotCtx = document.getElementById('parkingLotChart') as HTMLCanvasElement;
+    const parkingLotChart = new Chart(parkingLotCtx, {
+      type: 'bar',
+      data: parkingLotChartData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Frequenza'
+            }
+          },
+          x: {
+            type: 'category'
+          }
+        }
+      }
+    });
+}
+
+  calculateMostUsedParkingLots(callback: () => void) {
     const parkingLotCount: Record<string, number> = {};
-    const parkingLotAddresses: Record<string, string> = {}; // Manteniamo una mappa ID parcheggio -> Indirizzo
+    const parkingLotAddresses: Record<string, string> = {}; // mappa ID parcheggio -> Indirizzo
   
-    // Prima, recuperiamo le informazioni sugli indirizzi dei parcheggi
     this.firestore.collection('parcheggi').get().subscribe(parcheggiSnapshot => {
       parcheggiSnapshot.forEach(parcheggioDoc => {
         const parcheggioData: any = parcheggioDoc.data();
@@ -129,7 +206,7 @@ export class StatisticsComponent implements OnInit {
         parkingLotAddresses[parkingLotId] = parkingLotAddress;
       });
   
-      // Ora, calcoliamo il conteggio dei parcheggi e otteniamo gli indirizzi
+      // Conteggio dei parcheggi 
       this.firestore.collection('transazioni').get().subscribe(querySnapshot => {
         querySnapshot.forEach(doc => {
           const data: any = doc.data();
@@ -137,11 +214,9 @@ export class StatisticsComponent implements OnInit {
           parkingLotCount[parkingLotId] = (parkingLotCount[parkingLotId] || 0) + 1;
         });
   
-        // Adesso puoi accedere agli indirizzi dei parcheggi usando parkingLotAddresses
-        // Ad esempio, per ottenere l'indirizzo del parcheggio più utilizzato:
         const mostUsedParkingLotIds = Object.keys(parkingLotCount)
-          .sort((a, b) => parkingLotCount[b] - parkingLotCount[a]) // Ordina in base all'utilizzo decrescente
-          .slice(0, 10); // Prendi solo i primi 10
+          .sort((a, b) => parkingLotCount[b] - parkingLotCount[a]) 
+          .slice(0, 10); // Prende solo i primi 10
   
         const mostUsedParkingLotsSorted = mostUsedParkingLotIds.map(parkingLotId => ({
           key: parkingLotId,
@@ -150,7 +225,9 @@ export class StatisticsComponent implements OnInit {
   
         this.mostUsedParkingLotsSorted = mostUsedParkingLotsSorted;
         this.mostUsedParkingLots = parkingLotCount;
+        callback();
       });
+      
     });
   }
   

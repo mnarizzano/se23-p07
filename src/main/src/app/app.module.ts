@@ -32,6 +32,7 @@ import { AddBoxConfirmationComponent } from './add-box-confirmation/add-box-conf
 import { DeleteAllConfirmationComponent } from './delete-all-confirmation/delete-all-confirmation.component';
 import { MapUserComponent } from './map-user/map-user.component';
 import { BookingComponent } from './booking/booking.component';
+import { NgChartsModule} from 'ng2-charts';
 
 
 
@@ -95,7 +96,8 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    NgChartsModule 
   ],
  
   bootstrap: [AppComponent]

@@ -2,7 +2,7 @@
   <app-menu></app-menu>
 </div>
 
-<div class="container mt-2">
+<div class="container-fluid mt-2">
   <div class="row">
 
     <div class="col-md-4">
@@ -11,22 +11,21 @@
       </div>
     </div>
 
-    <div class = "col-md-1"><button class="btn btn-primary mt-2" (click)="searchAddress()">Cerca</button></div>
+    <div class="col-md-1"><button class="btn btn-primary mt-2" (click)="searchAddress()">Cerca</button></div>
     
-      <div class="col-md-7 text-right" *ngIf="isAdmin">
-        <button class="btn btn-success mt-2 custom-save-btn" (click)="onSaveButtonClick()">Salva</button>
-      
+    <div class="col-md-7 text-right" *ngIf="isAdmin">
+      <button class="btn btn-success mt-2 custom-save-btn" (click)="onSaveButtonClick()">Salva</button>
     </div>
     
   </div>
 </div>
 
-<div class="container mt-3">
+<div class="container-fluid mt-2">
   <div class="row">
 
     <div class="col-md-4">
       <h2>Parcheggi Salvati</h2>
-      <div class="parcheggi-list">
+      <div class="parcheggi-list" style="max-height: 450px; overflow-y: auto;">
         
         <ul>
           <li *ngFor="let parcheggio of parcheggiSalvati" 
@@ -37,24 +36,29 @@
             <strong>Stato:</strong> {{ parcheggio.state }}<br>
           </li>
         </ul>
-        
-        
+      </div>
+
+      <div class="text-right" *ngIf="isAdmin">
+        <div class="mt-5 custom-search">
+          <input type="file" (change)="onFileSelected($event)" accept=".csv" />
+        </div>
       </div>
       
     </div>
 
     <div class="col-md-8">
       <div #mapContainer id="map" style="width: 100%; height: 70vh;"></div>
-      
     </div>
 
+    <div class="text-right" *ngIf="isAdmin">
+      <button class="btn btn-danger" (click)="confirmDeleteAllParcheggi()">Elimina tutti i parcheggi</button>
+    </div>
+
+
+
   </div>
 
-  <div *ngIf="isAdmin">
-    <button class="btn btn-danger" (click)="confirmDeleteAllParcheggi()">Elimina tutti i parcheggi</button>
-  </div>
+
+  
+
 </div>
-
-
-
-

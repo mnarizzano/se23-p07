@@ -13,13 +13,13 @@ export class SaveConfirmationComponent {
 
   // Funzione chiamata quando si conferma il salvataggio
   confirmSave() {
-    this.onConfirm.emit(true); // Emetti l'evento di conferma
-    this.bsModalRef.hide(); // Chiudi la finestra modale
+    this.onConfirm.emit(true); 
+    this.bsModalRef.hide(); 
   }
 
   // Funzione chiamata quando si annulla il salvataggio
   cancelSave() {
-    this.onConfirm.emit(false); // Emetti l'evento di annullamento
-    this.bsModalRef.hide(); // Chiudi la finestra modale
+    this.onConfirm.emit(false); 
+    this.bsModalRef.hide(); 
   }
 }

@@ -1,19 +1,41 @@
-// firebase.service.ts
-
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
 import { firebaseConfig } from '../../../environments/environment'; 
 import { Parcheggio } from './parking.interface';
 import { SHA256 } from 'crypto-js';
-import { MapComponent } from '../../mappa/map.component';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
     providedIn: 'root',
   })
   export class FirebaseService {
+
     constructor() {
       firebase.initializeApp(firebaseConfig);
+    }
+
+    async updateFasciaOraria(parcheggio: Parcheggio, fasciaOraria: string, stato: string) {
+      try {
+        const fasciaKey = `${fasciaOraria}`;
+        const parcheggioRef = firebase.database().ref(`parcheggi/${parcheggio.pid}/FasceOrarie/${fasciaKey}`);
+        // Aggiorna lo stato nel database 
+        await parcheggioRef.update({ stato });
+        console.log(`Stato della fascia oraria ${fasciaKey} aggiornato a ${stato}`);
+        // Aggiorna lo stato anche nell'oggetto this.parcheggio.FasceOrarie
+        if (parcheggio && parcheggio.FasceOrarie) {
+          parcheggio.FasceOrarie[fasciaKey].stato = stato;
+        }
+      } catch (error) {
+        console.error('Errore nell\'aggiornamento dello stato della fascia oraria:', error);
+      }
+    }
+
+    async getFasceOrarieParcheggio(parcheggioId: string): Promise<any> {
+      const fasceOrarieRef = firebase.database().ref(`parcheggi/${parcheggioId}/FasceOrarie`);
+      const snapshot = await fasceOrarieRef.once('value');
+      return snapshot.val();
     }
   
     generateParcheggioID(coordinate: { lat: number, lng: number }): string {
@@ -24,27 +46,21 @@ import { MapComponent } from '../../mappa/map.component';
       return `parcheggio_${hashed}`;
     }
 
-    // Aggiungi un parcheggio al database Firebase
+    // Aggiungi un parcheggio al database 
     addParcheggio(parcheggio: Parcheggio): Promise<void> {
       const parcheggiRef = firebase.database().ref('parcheggi');
-
       // Genera un ID univoco 
       const id = this.generateParcheggioID(parcheggio.coordinate);
       parcheggio.pid = id;
-
-    // Aggiungi l'ID al parcheggio prima di salvarlo
-    parcheggio.pid = id;
-      
-     // Salva il parcheggio nel database
-    return parcheggiRef.child(id).set(parcheggio).then(() => {
+      // Salva il parcheggio nel database
+      return parcheggiRef.child(id).set(parcheggio).then(() => {
       console.log('Parcheggio aggiunto e salvato su Firebase:', parcheggio);
     });
   }
 
-    // Recupera tutti i parcheggi dal database Firebase
-  getParcheggi(): Promise<Parcheggio[]> {
+    // Recupera tutti i parcheggi dal database 
+  async getParcheggi(): Promise<Parcheggio[]> {
     const parcheggiRef = firebase.database().ref('parcheggi');
-    
     return parcheggiRef.once('value').then((snapshot) => {
       const parcheggi: Parcheggio[] = [];
       snapshot.forEach((childSnapshot) => {
@@ -57,7 +73,7 @@ import { MapComponent } from '../../mappa/map.component';
 
   deleteParcheggio(parcheggio: Parcheggio): Promise<void> {
     if (!parcheggio || !parcheggio.pid) {
-      // Gestisci il caso in cui parcheggio.uid sia mancante o non valido
+      // Gestisci il caso in cui parcheggio.pid sia mancante o non valido
       console.error('ID del parcheggio non valido o mancante.');
       return Promise.reject('ID del parcheggio non valido o mancante.');
     }
@@ -72,18 +88,17 @@ import { MapComponent } from '../../mappa/map.component';
     });
   }
   
-
   async updateParcheggioState(pid: string, newState: string) {
     try {
-      // Ottieni il riferimento al nodo del database per il parcheggio specifico
+      // Ottiene il riferimento al nodo del database per il parcheggio specifico
       const parcheggioRef = firebase.database().ref(`parcheggi/${pid}`);
   
-      // Leggi il parcheggio dal database
+      // Legge il parcheggio dal database
       const snapshot = await parcheggioRef.once('value');
       const parcheggio = snapshot.val();
   
       // Aggiorna lo stato del parcheggio
-      parcheggio.state = newState;
+      parcheggio.state = 'occupato';
   
       // Effettua l'aggiornamento nel database
       await parcheggioRef.update(parcheggio);  
@@ -93,16 +108,13 @@ import { MapComponent } from '../../mappa/map.component';
     }
   }
 
-  // Aggiungi questa funzione per aggiornare il parcheggio nel database
+  // Aggiorna il parcheggio nel database
   updateParcheggio(parcheggio: Parcheggio) {
     // Ottieni un riferimento al nodo specifico del database che contiene il tuo parcheggio
     const parcheggioRef = firebase.database().ref(`parcheggi/${parcheggio.pid}`);
-
-
     // Effettua l'aggiornamento nel database
     return parcheggioRef.update(parcheggio);
   }
-
 
   async deleteAllParcheggi() {
   try {
@@ -110,11 +122,8 @@ import { MapComponent } from '../../mappa/map.component';
     const deletePromises: Promise<void>[] = [];
 
     parcheggiSalvati.forEach((parcheggio) => {
-      // Aggiungi la promise di eliminazione alla lista delle promesse
       deletePromises.push(this.deleteParcheggio(parcheggio));
     });
-
-    // Esegui tutte le promesse di eliminazione in parallelo
     await Promise.all(deletePromises);
 
     console.log('Tutti i parcheggi sono stati eliminati con successo.');
@@ -125,11 +134,15 @@ import { MapComponent } from '../../mappa/map.component';
 
 }
 
+getParcheggioById(parcheggioId: string): Promise<Parcheggio | null> {
+  const parcheggiRef = firebase.database().ref('parcheggi').child(parcheggioId);
 
+  return parcheggiRef.once('value').then((snapshot) => {
+    const parcheggio = snapshot.val();
+    return parcheggio as Parcheggio;
+  });
+}
 
-  
-  
-  
 
   
 }
