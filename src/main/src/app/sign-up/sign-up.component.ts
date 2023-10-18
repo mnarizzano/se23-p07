@@ -18,7 +18,7 @@ export class SignUpComponent implements OnInit {
   address: string = '';
   phoneNumber: string = '';
   userPwd: string = '';
-  isAdmin: boolean = false; // Impostalo su false per impostazione predefinita
+  isAdmin: boolean = false; 
 
 
   ngOnInit() {
@@ -37,7 +37,7 @@ export class SignUpComponent implements OnInit {
   onSignUp() {
     if (this.firstName && this.lastName && this.email && this.phoneNumber && this.userPwd) {
       const user: User = {
-        uid: '', // Lascia vuoto uid poiché verrà generato da Firebase
+        uid: '', 
         email: this.email,
         displayName: this.firstName + ' ' + this.lastName,
         photoURL: '',

@@ -20,10 +20,10 @@ ngOnInit(): void {
 
   redirectToPage(page: string) {
     if (page === 'sign-in') {
-      // Esegui il logout dell'utente quando si fa clic su "Logout"
+      // Esegue il logout dell'utente quando si fa clic su "Logout"
       this.authService.SignOut();
     } else {
-      // Altrimenti, navighiamo verso la pagina desiderata
+      // Naviga verso la pagina desiderata
       this.router.navigate(['/' + page]);
     }
   }

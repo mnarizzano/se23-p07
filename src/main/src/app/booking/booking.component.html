@@ -1,17 +1,26 @@
 <div class="modal-header">
-    <h4 class="modal-title">Seleziona una fascia oraria</h4>
-    <button type="button" class="close" (click)="chiudiFinestraModale()">&times;</button>
+  <h4 class="modal-title">Seleziona una fascia oraria</h4>
+  <button type="button" class="close" (click)="chiudiFinestraModale()">&times;</button>
+</div>
+
+
+<div class="modal-body" *ngIf="parcheggio && parcheggio.FasceOrarie">
+  <div *ngFor="let fasciaOraria of parcheggio.FasceOrarie | keyvalue">
+    {{ fasciaOraria.key }}: 
+    <label>
+      <input type="checkbox"
+      [(ngModel)]="!fasciaOraria.value.stato" 
+      [ngModelOptions]="{standalone: true}" 
+      [disabled]="fasciaOraria.value.stato === 'occupato'"
+      (change)="updateSelectedFasce(fasciaOraria.key)"
+      >
+      {{ fasciaOraria.value.stato === 'disponibile' ? 'Disponibile' : 'Occupato' }}
+    </label>
   </div>
-  <div class="modal-body">
-    <div *ngFor="let fasciaOraria of fasceOrarie">
-      <label>
-        <input type="checkbox" [(ngModel)]="fasciaOraria.selezionata"> {{ fasciaOraria.oraInizio }} - {{ fasciaOraria.oraFine }}:  
-        {{ fasceOrarieService.getStatoFasciaOraria( parcheggioId, fasciaOraria.oraInizio, fasciaOraria.oraFine) }}
-      </label>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="confermaPrenotazione()">Conferma</button>
-    <button type="button" class="btn btn-secondary" (click)="chiudiFinestraModale()">Chiudi</button>
-  </div>
-  
+</div>
+
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="confermaPrenotazione()">Conferma</button>
+  <button type="button" class="btn btn-secondary" (click)="chiudiFinestraModale()">Chiudi</button>
+</div>

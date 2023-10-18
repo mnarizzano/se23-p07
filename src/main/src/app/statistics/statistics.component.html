@@ -1,29 +1,58 @@
 <div>
   <app-menu></app-menu>
 </div>
+
+
+
 <div class="statistics-container">
-  <h2>Statistiche Parcheggio</h2>
+  
 
-  <div>
+  <div class="container mt-3">
     <h3>Ore medie di permanenza</h3>
-    <p>Ore medie: {{ averageDuration }}</p>
+    <p>Le ore medie di permanenza all'interno di un parcheggio sono: <strong><span style="color: #ee2116;">{{ averageDuration }} h</span></strong></p>
   </div>
 
-  <div>
-    <h3>Giorni della settimana più utilizzati</h3>
-    <ul>
-      <li *ngFor="let day of daysOfWeek" class="day-item">
-        <span [ngClass]="{'highlighted-day': mostUsedDay.includes(day)}">{{ day }}: {{ mostUsedDays[day] }}</span> 
-      </li>
-    </ul>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-4">  
+          <h3>Giorni della settimana più utilizzati</h3>
+          <ul>
+            <li *ngFor="let day of daysOfWeek" class="day-item">
+              <span [ngClass]="{'highlighted-day': mostUsedDay.includes(day)}">{{ day }}: {{ mostUsedDays[day] }}</span>
+            </li>
+          </ul>
+      </div>
+
+      <div class="col-md-8">
+        <canvas id="barChart" width="400" height="200"></canvas>
+      </div>
+
+    </div>
   </div>
 
-  <div>
-    <h3>Parcheggi più utilizzati</h3>
-    <ul>
-      <li *ngFor="let parkingLot of mostUsedParkingLotsSorted">
-        Parcheggio: {{ getParkingLotAddress(parkingLot.key) }} -  <strong> {{ parkingLot.value }} volte </strong>
-      </li>
-    </ul>
+
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-4">  
+          <h3>Parcheggi più utilizzati</h3>
+          <ul>
+            <li *ngFor="let parkingLot of mostUsedParkingLotsSorted">
+              Parcheggio: {{ getParkingLotAddress(parkingLot.key) }} -  <strong> <span style="color: #ee2116;">{{ parkingLot.value }} volte </span></strong>
+            </li>
+          </ul>
+      </div>
+
+      <div class="col-md-8">
+        <canvas id="parkingLotChart" width="400" height="200"></canvas>
+      </div>
+      
+    </div>
   </div>
+
+
+
+  
 </div>
+
+
+

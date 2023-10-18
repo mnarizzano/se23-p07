@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Mobile_app</string>
+    <string name="conferma">Conferma</string>
+    <string name="richiedi_permesso_di_geolocalizzazione">Richiedi Permesso di Geolocalizzazione</string>
+</resources>

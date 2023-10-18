@@ -7,14 +7,14 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 
 })
 export class AddBoxConfirmationComponent {
-  public onAddBox: EventEmitter<void> = new EventEmitter<void>(); // Definisci un evento
+  public onAddBox: EventEmitter<void> = new EventEmitter<void>(); 
 
   constructor(public bsModalRef: BsModalRef) {}
 
   onAddBoxClick() {
-    // Emetti l'evento quando si fa clic su "Aggiungi"
+    // Emette l'evento quando si fa clic su "Aggiungi"
     this.onAddBox.emit();
-    this.bsModalRef.hide(); // Chiudi il modale
+    this.bsModalRef.hide();
   }
 }
 

@@ -45,5 +45,25 @@
   color: #000; /* Cambia il colore del testo */
 }
 
+/* CSS per i marker */
+.parcheggio-marker {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
+}
 
+/* CSS per il marker verde (disponibile) */
+.green-marker {
+  background-color: green;
+  color: green;
+}
+
+/* CSS per il marker rosso (occupato) */
+.red-marker {
+  background-color: red;
+  color: red;
+}
 
