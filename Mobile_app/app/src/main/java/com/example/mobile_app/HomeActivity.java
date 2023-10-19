@@ -1,158 +1,394 @@
 package com.example.mobile_app;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
+import android.net.ParseException;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
+import androidx.core.content.ContextCompat;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import org.osmdroid.views.overlay.Polygon;
 
-import pub.devrel.easypermissions.EasyPermissions;
-import pub.devrel.easypermissions.PermissionRequest;
-
-public class HomeActivity extends Activity implements EasyPermissions.PermissionCallbacks {
-
-    private static final int LOCATION_PERMISSION_REQUEST = 1;
+public class HomeActivity extends AppCompatActivity {
     private static final String CHANNEL_ID = "my_channel";
+    private static final int NOTIFICATION_ID = 1;
+
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
+    private static final long CHECK_INTERVAL = 5000; // Intervallo di controllo in millisecondi (5 secondi)
+
+    private MapView mapView;
+    private final Handler handler = new Handler();
+
+    private static final double PARKING_RADIUS_METERS = 50.0; // Raggio del parcheggio in metri
+
+    private MyLocationNewOverlay locationOverlay;
+
+
+    private String utenteId;
+
+    private Polygon currentParkingPolygon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Inizializza il canale di notifica
+        FirebaseApp.initializeApp(this);
+
         createNotificationChannel();
 
-        // Verifica i permessi di geolocalizzazione
-        checkLocationPermission();
+        Configuration.getInstance().load(getApplicationContext(), getSharedPreferences("osmdroid", MODE_PRIVATE));
+        mapView = findViewById(R.id.mapView);
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
 
-        // ... altri codici per inizializzare la mappa o altre funzionalità ...
-    }
-
-    private void createNotificationChannel() {
-        // Controlla se il dispositivo è eseguito su Android Oreo o versioni successive
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Definisci il nome e la descrizione del canale di notifica
-            CharSequence channelName = "My Channel";
-            String channelDescription = "My Notification Channel";
-
-            // Imposta l'importanza del canale di notifica (IMPORTANCE_DEFAULT o IMPORTANCE_HIGH, a seconda delle tue esigenze)
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-
-            // Crea un oggetto NotificationChannel
-            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, channelName, importance);
-
-            // Imposta la descrizione del canale
-            notificationChannel.setDescription(channelDescription);
-
-            // Abilita le luci nella notifica
-            notificationChannel.enableLights(true);
-
-            // Imposta il colore delle luci
-            notificationChannel.setLightColor(Color.BLUE);
-
-            // Ottieni il NotificationManager dal sistema
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-
-            // Crea il canale di notifica
-            notificationManager.createNotificationChannel(notificationChannel);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            utenteId = currentUser.getUid();
         }
-    }
 
 
-    private void checkLocationPermission() {
-        // Verifica se hai il permesso di geolocalizzazione
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // Il permesso è già stato concesso, puoi procedere con l'uso della geolocalizzazione
-            showLocationAccessGrantedNotification();
+        // Verifica le autorizzazioni per l'accesso alla posizione
+        if (checkPermissions()) {
+            setupMap();
+            // Esegui la verifica della posizione ogni tot tempo
+            handler.postDelayed(checkParkingRunnable, CHECK_INTERVAL);
         } else {
-            // Richiedi il permesso di geolocalizzazione
-            EasyPermissions.requestPermissions(
-                    new PermissionRequest.Builder(this, LOCATION_PERMISSION_REQUEST, Manifest.permission.ACCESS_FINE_LOCATION)
-                            .setRationale("L'app ha bisogno del permesso di geolocalizzazione per...")
-                            .setPositiveButtonText("Concedi")
-                            .setNegativeButtonText("Annulla")
-                            .build()
-            );
+            requestPermissions();
         }
     }
+
+    private boolean checkPermissions() {
+        int permissionState = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                REQUEST_PERMISSIONS_REQUEST_CODE);
+    }
+
+    private void setupMap() {
+        mapView.setMultiTouchControls(true);
+        mapView.getController().setZoom(15.0);
+
+        // Inizializza l'overlay della posizione attuale
+        locationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this), mapView);
+        locationOverlay.enableMyLocation();
+
+        // Aggiungi l'overlay della posizione attuale all'OverlayManager
+        mapView.getOverlayManager().add(locationOverlay);
+
+        // Imposta un listener per la posizione attuale
+        locationOverlay.enableFollowLocation();
+        locationOverlay.enableMyLocation();
+
+
+        // Imposta il centro della mappa sulla tua posizione attuale 
+        GeoPoint myLocation = locationOverlay.getMyLocation();
+        if (myLocation != null) {
+            mapView.getController().setCenter(myLocation);
+        } else {
+            mapView.getController().setCenter(new GeoPoint(44.405650, 8.946256)); // Coordinate di default
+        }
+    }
+
+
+    private double calculateDistance(GeoPoint point1, GeoPoint point2) {
+        double earthRadius = 6371000; // Raggio medio della Terra in metri
+        double dLat = Math.toRadians(point2.getLatitude() - point1.getLatitude());
+        double dLon = Math.toRadians(point2.getLongitude() - point1.getLongitude());
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(point1.getLatitude())) * Math.cos(Math.toRadians(point2.getLatitude())) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return earthRadius * c;
+    }
+
+    private final Runnable checkParkingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            // Recupera tutte le prenotazioni dell'utente e ordina per data di prenotazione
+            FirebaseFirestore.getInstance().collection("prenotazioni")
+                    .whereEqualTo("utenteId", utenteId) // Sostituisci 'utenteId' con l'ID dell'utente corrente
+                    .orderBy("orarioPrenotazioneIn", Query.Direction.ASCENDING)
+                    .get()
+                    .addOnSuccessListener(querySnapshot -> {
+                        for (QueryDocumentSnapshot document : querySnapshot) {
+                            // Verifica e gestisci l'ingresso e l'uscita per ciascuna prenotazione
+                            handleParkingEntryExit(document);
+
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        // Gestisci eventuali errori nel recupero dei dati da Firestore
+                    });
+
+            // Esegui il controllo nuovamente dopo l'intervallo specificato
+            handler.postDelayed(this, CHECK_INTERVAL);
+        }
+    };
+
+
+    private String getCurrentTime() {
+        // Restituisci l'orario attuale come una stringa nel formato desiderato
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date());
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        // Passa i risultati di EasyPermissions all'helper EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // L'utente ha concesso l'autorizzazione
+                setupMap();
+            } else {
+                // L'utente ha negato l'autorizzazione
+                Toast.makeText(this, "Permission denied. App cannot access location.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        // Permesso di geolocalizzazione concesso
-        showLocationAccessGrantedNotification();
-
-        MapView mapView = findViewById(R.id.mapView);
-        mapView.setVisibility(View.VISIBLE);
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
     }
 
     @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        // Permesso di geolocalizzazione negato, mostra una notifica all'utente
-        showLocationAccessDeniedNotification();
+    protected void onPause() {
+        super.onPause();
+        mapView.onPause();
     }
 
-    private void showLocationAccessGrantedNotification() {
-        // Crea un intent per avviare l'attività quando l'utente tocca la notifica (puoi personalizzare l'intent come preferisci)
-        Intent intent = new Intent(this, HomeActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Rimuovi il callback per evitare memory leak
+        handler.removeCallbacks(checkParkingRunnable);
+    }
 
-        // Crea la notifica utilizzando NotificationCompat.Builder
+    private Polygon createParkingAreaPolygon(GeoPoint center) {
+        Polygon polygon = new Polygon();
+
+        double radiusDegrees = PARKING_RADIUS_METERS / (111.32 * 1000.0); // Conversione da metri a gradi (approssimativa)
+        int numPoints = 100; // Numero di punti per rappresentare il cerchio
+        double circleStep = 360.0 / numPoints;
+
+        List<GeoPoint> circlePoints = new ArrayList<>();
+
+        for (int i = 0; i < numPoints; i++) {
+            double angle = i * circleStep;
+            double lat = center.getLatitude() + (radiusDegrees * Math.cos(Math.toRadians(angle)));
+            double lon = center.getLongitude() + (radiusDegrees * Math.sin(Math.toRadians(angle)));
+            circlePoints.add(new GeoPoint(lat, lon));
+        }
+
+        polygon.setPoints(circlePoints);
+        polygon.getFillPaint().setColor(0x301080E0); // Colore blu con opacità
+        polygon.getOutlinePaint().setColor(0xFF1080E0); // Colore del bordo blu
+
+        mapView.getController().setCenter(center);
+
+        return polygon;
+    }
+
+
+    private void sendNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.notification_icon) // Icona della notifica (assicurati di avere un'immagine con questo nome nella cartella res/drawable)
-                .setContentTitle("Accesso alla geolocalizzazione") // Titolo della notifica
-                .setContentText("Permesso di geolocalizzazione concesso.") // Testo della notifica
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT) // Priorità della notifica
-                .setContentIntent(pendingIntent) // Intent da avviare quando si tocca la notifica
-                .setAutoCancel(true); // Chiudi automaticamente la notifica quando viene toccata
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle("Notifica di Prenotazione")
+                .setContentText("Il tempo della prenotazione sta per scadere!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true); // Imposta il flag per cancellare la notifica quando viene aperta
 
-        // Ottieni il NotificationManagerCompat e mostra la notifica
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, builder.build());
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
 
-    private void showLocationAccessDeniedNotification() {
-        // Crea un intent per avviare l'attività quando l'utente tocca la notifica (puoi personalizzare l'intent come preferisci)
-        Intent intent = new Intent(this, HomeActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "My Channel";
+            String description = "Canale di notifica per le prenotazioni";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
 
-        // Crea la notifica utilizzando NotificationCompat.Builder
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.negate_icon) // Icona della notifica (assicurati di avere un'immagine con questo nome nella cartella res/drawable)
-                .setContentTitle("Accesso Negato alla geolocalizzazione") // Titolo della notifica
-                .setContentText("Permesso di geolocalizzazione negato.") // Testo della notifica
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT) // Priorità della notifica
-                .setContentIntent(pendingIntent) // Intent da avviare quando si tocca la notifica
-                .setAutoCancel(true); // Chiudi automaticamente la notifica quando viene toccata
-
-        // Ottieni il NotificationManagerCompat e mostra la notifica
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(2, builder.build());
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
+    private void handleParkingEntryExit(QueryDocumentSnapshot document) {
+        if (locationOverlay != null) {
+            GeoPoint myLocation = locationOverlay.getMyLocation();
+            if (myLocation != null) {
+                com.google.firebase.firestore.GeoPoint firestoreGeoPoint = document.getGeoPoint("coordinate");
+                Timestamp prenotazioneInTimestamp = document.getTimestamp("orarioPrenotazioneIn");
+                Timestamp prenotazioneOutTimestamp = document.getTimestamp("orarioPrenotazioneOut");
+
+                if (firestoreGeoPoint != null && prenotazioneInTimestamp != null && prenotazioneOutTimestamp != null) {
+                    GeoPoint parkingLocation = new GeoPoint(
+                            firestoreGeoPoint.getLatitude(),
+                            firestoreGeoPoint.getLongitude()
+                    );
+
+                    double distance = calculateDistance(parkingLocation, myLocation);
+
+                    Timestamp entryTimestamp = document.getTimestamp("orarioArrivo");
+                    Timestamp exitTimestamp = document.getTimestamp("orarioUscita");
+
+                    if (distance <= PARKING_RADIUS_METERS) {
+                        // L'utente è all'interno del raggio del parcheggio.
+                        if (entryTimestamp == null) {
+                            // Registra l'orario di entrata
+                            registerEntranceInDatabase(getCurrentTime(), document.getId());
+                        }
+
+                    } else {
+                            if( entryTimestamp != null && exitTimestamp == null){
+                                boolean userExitedParking = isUserOutsideParking(myLocation, parkingLocation);
+
+                                if (userExitedParking) {
+                                    // L'utente è uscito dall'area del parcheggio, quindi registra l'orario di uscita
+                                    registerExitInDatabase(getCurrentTime(), document.getId());
+                                }
+
+                            }
+                        }
+
+                        // Calcola il tempo rimanente nella prenotazione
+                        long currentTimeMillis = System.currentTimeMillis();
+                        long prenotazioneEndTimeMillis = prenotazioneOutTimestamp.toDate().getTime();
+                        long timeRemainingMinutes = (prenotazioneEndTimeMillis - currentTimeMillis) / (1000 * 60);
+
+                        // Se mancano meno di 2 minuti alla scadenza, invia una notifica
+                        if (timeRemainingMinutes <= 2) {
+                            sendNotification();
+                        }
+
+                        // Rimuovi il poligono del parcheggio precedente, se presente
+                        if (currentParkingPolygon != null) {
+                            mapView.getOverlayManager().remove(currentParkingPolygon);
+                        }
+
+                        // Crea e aggiungi il poligono del parcheggio attuale
+                        currentParkingPolygon = createParkingAreaPolygon(parkingLocation);
+                        mapView.getOverlayManager().add(currentParkingPolygon);
+                    }
+                }
+            }
+        }
+
+
+
+
+
+    private boolean isUserOutsideParking(GeoPoint userLocation, GeoPoint parkingLocation) {
+        double distance = calculateDistance(userLocation, parkingLocation);
+        return distance > HomeActivity.PARKING_RADIUS_METERS;
+    }
+
+    private void registerEntranceInDatabase(String arrivalTime, String parkingId) {
+        // Ottieni l'orario di arrivo come oggetto Timestamp
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        try {
+            Date arrivalDate = sdf.parse(arrivalTime);
+            assert arrivalDate != null;
+            Timestamp arrivalTimestamp = new Timestamp(arrivalDate);
+
+            // Aggiorna l'orario di arrivo nel documento specifico nel tuo caso
+            // Utilizza 'parkingId' per identificare il parcheggio specifico
+            DocumentReference parkingDocRef = FirebaseFirestore.getInstance()
+                    .collection("prenotazioni")
+                    .document(parkingId);
+
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("orarioArrivo", arrivalTimestamp);
+
+            // Esegui l'aggiornamento nel documento specifico
+            parkingDocRef.update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        // L'aggiornamento è avvenuto con successo
+                        Log.d("Firestore", "Orario di arrivo registrato con successo");
+                    })
+                    .addOnFailureListener(e -> {
+                        // Si è verificato un errore durante l'aggiornamento
+                        Log.e("Firestore", "Errore durante l'aggiornamento dell'orario di arrivo: " + e.getMessage());
+                    });
+        } catch (ParseException e) {
+            // Gestisci eventuali errori di parsing dell'orario
+            Log.e("Timestamp", "Errore durante il parsing dell'orario di arrivo: " + e.getMessage());
+        } catch (java.text.ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void registerExitInDatabase(String exitTime, String parkingId) {
+        // Ottieni l'orario di uscita come oggetto Timestamp
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        try {
+            Date exitDate = sdf.parse(exitTime);
+            assert exitDate != null;
+            Timestamp exitTimestamp = new Timestamp(exitDate);
+
+            // Aggiorna l'orario di uscita nel documento specifico nel tuo caso
+            // Utilizza 'parkingId' per identificare il parcheggio specifico
+            DocumentReference parkingDocRef = FirebaseFirestore.getInstance()
+                    .collection("prenotazioni")
+                    .document(parkingId);
+
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("orarioUscita", exitTimestamp);
+
+            // Esegui l'aggiornamento nel documento specifico
+            parkingDocRef.update(updates)
+                    .addOnSuccessListener(aVoid -> {
+                        // L'aggiornamento è avvenuto con successo
+                        Log.d("Firestore", "Orario di uscita registrato con successo");
+                    })
+                    .addOnFailureListener(e -> {
+                        // Si è verificato un errore durante l'aggiornamento
+                        Log.e("Firestore", "Errore durante l'aggiornamento dell'orario di uscita: " + e.getMessage());
+                    });
+        } catch (ParseException e) {
+            // Gestisci eventuali errori di parsing dell'orario
+            Log.e("Timestamp", "Errore durante il parsing dell'orario di uscita: " + e.getMessage());
+        } catch (java.text.ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
