@@ -2,4 +2,11 @@
     <string name="app_name">Mobile_app</string>
     <string name="conferma">Conferma</string>
     <string name="richiedi_permesso_di_geolocalizzazione">Richiedi Permesso di Geolocalizzazione</string>
+    <string name="openstreetmap_attribution">© OpenStreetMap contributors</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="accedi">Accedi</string>
+    <string name="non_hai_un_account_registrati">Non hai un account? Registrati</string>
+
+
 </resources>
