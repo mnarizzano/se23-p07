@@ -27,6 +27,9 @@ This table serves as a powerful tool for tracking progress in the testing proces
 |  | Set isAdmin  | Should set isAdmin to false when user is not an admin      | Passed | when the user isn't an administrator |
 | map-user | Create the component   | Test to check the correct creation of the component     | Passed |  |
 | map | Create the component   | Test to check the correct creation of the component     | Passed |  |
+|  | Initialize the map    | Test to check if the map is well initialized     | Passed |  |
+|  | Load data from CSV file    | Test to check the correct data loading from a CSV file     | Passed |  |
+|  | Parse a CSV file    | Test to check the correct file parsing     | Passed |  |
 | menù | Create the component   | Test to check the correct creation of the component     | Passed |  |
 |  | Set isAdmin   | Should call AuthService.isAdmin and set isAdmin to true     | Passed |  |
 |  | Set isAdmin   | Should call AuthService.isAdmin and set isAdmin to false      | Passed |  |
