@@ -19,3 +19,4 @@ describe('MapUserComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

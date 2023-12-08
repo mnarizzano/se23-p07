@@ -1,12 +1,24 @@
 <resources>
-    <string name="app_name">Mobile_app</string>
+    <string name="app_name">mobile_app_2</string>
     <string name="conferma">Conferma</string>
-    <string name="richiedi_permesso_di_geolocalizzazione">Richiedi Permesso di Geolocalizzazione</string>
+    <string name="permission">Richiedi Permesso di Geolocalizzazione</string>
     <string name="openstreetmap_attribution">© OpenStreetMap contributors</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="accedi">Accedi</string>
-    <string name="non_hai_un_account_registrati">Non hai un account? Registrati</string>
-
-
+    <string name="login">Accedi</string>
+    <string name="singUp">Non hai un account? Registrati</string>
+    <string name="auth_done">Autenticazione riuscita</string>
+    <string name="credentials">Inserisci l\'email e la password</string>
+    <string name="auth_failed">Autenticazione fallita</string>
+    <string name="back_to_login">"Hai già un account? Log In "</string>
+    <string name="signup_">Sign Up</string>
+    <string name="address">Address</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="surname">Surname</string>
+    <string name="name">Name</string>
+    <string name="Signup_done">Registrazione avvenuta con successo</string>
+    <string name="Signup_failed">"Registrazione fallita: "</string>
+    <string name="Firestore_error">"Registrazione avvenuta con successo, ma impossibile aggiungere informazioni utente a Firestore: "</string>
+    <string name="complete_form">Completa tutti i campi</string>
+    <string name="notice_text">Il tempo della prenotazione sta per scadere!</string>
 </resources>
