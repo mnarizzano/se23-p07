@@ -67,7 +67,7 @@ export class MapComponent implements OnInit {
 
   constructor(private modalService: BsModalService, 
     private http: HttpClient, 
-    private firebaseService: FirebaseService,
+    public firebaseService: FirebaseService,
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef,
@@ -85,7 +85,7 @@ export class MapComponent implements OnInit {
       this.initMap();
       await this.caricaParcheggiSalvati();
     }
-  }
+  } //OK
 
 
   documentName: string = ''; 
@@ -99,10 +99,10 @@ export class MapComponent implements OnInit {
         this.saveParking();
         this.caricaParcheggiSalvati();
       }); 
-  }
-
+  } // OK
+ 
   // Lettura del file CSV 
-  private parseCsv(csvText: string): void {
+  parseCsv(csvText: string): void {
       const rows = csvText.split('\n');
       const headers = rows[0].split(',');
 
@@ -118,7 +118,7 @@ export class MapComponent implements OnInit {
       }
 
       console.log('Lettura del file CSV completata:', this.csvData);
-  }
+  } // OK
     
   initMap() {
     // Inizializza la mappa
@@ -177,7 +177,7 @@ export class MapComponent implements OnInit {
           this.lastClickTime = currentTime;
         } 
     });
-  }
+  } // OK
 
   makeInaccessible(latlng: L.LatLng) {
     // Itera attraverso i rettangoli esistenti per verificare quale è stato cliccato
@@ -249,7 +249,7 @@ export class MapComponent implements OnInit {
         break; 
       }
     }
-  } 
+  } // OK
 
   bsModalRef!: BsModalRef;
   rectangleParcheggioMap: Map<L.Rectangle, Parcheggio> = new Map();
@@ -311,7 +311,7 @@ export class MapComponent implements OnInit {
   
     }
     console.log('loadParking() completato');
-  }
+  } // OK
 
   addBox(coordinate: { lat: number; lng: number }) {
     const latlng = new L.LatLng(coordinate.lat, coordinate.lng);
@@ -698,7 +698,7 @@ export class MapComponent implements OnInit {
         return('');
       })
     );
-  }
+  } // OK
 
   parcheggiSalvati: Parcheggio[] = []; 
   parcheggioSelezionato: Parcheggio | null = null;
@@ -752,40 +752,6 @@ export class MapComponent implements OnInit {
       }
     });
   }
-  
-  /*
-  setColorsBasedOnState(){
-    this.parcheggiSalvati.forEach((parcheggio) => {
-      const rectangle = this.findRectangleByParcheggio(parcheggio);
-      if (rectangle) {
-        switch (parcheggio.state) {
-          case 'disponibile':
-            rectangle.setStyle({ fillColor: 'green', color: 'green' });
-            break;
-          case 'inaccessibile':
-            rectangle.setStyle({ fillColor: 'yellow', color: 'yellow' });
-            break;
-          case 'occupato':
-            rectangle.setStyle({ fillColor: 'red', color: 'red' });
-            break;
-          default:
-            // Gestione degli stati non previsti
-            break;
-        }
-      }
-    });
-  }
-
-  findRectangleByParcheggio(parcheggio: Parcheggio): L.Rectangle | undefined {
-    // Iterate through the rectangleMarkerMap to find the rectangle associated with the given parking space
-    for (const [rectangle, marker] of this.rectangleMarkerMap.entries()) {
-      const associatedParcheggio = this.rectangleParcheggioMap.get(rectangle);
-      if (associatedParcheggio && associatedParcheggio.pid === parcheggio.pid) {
-        return rectangle; // Return the rectangle if found
-      }
-    }
-    return undefined; // Return undefined if not found
-  } */
 
   addMarker(parcheggio: Parcheggio) { 
     // Aggiungi un marker nella posizione del parcheggio 

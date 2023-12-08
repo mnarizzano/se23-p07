@@ -15,7 +15,6 @@ ngOnInit(): void {
   this.authService.isAdmin().subscribe((isAdmin) => {
     this.isAdmin = isAdmin;
   });
-  this.redirectToPage;
 }
 
   redirectToPage(page: string) {

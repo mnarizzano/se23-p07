@@ -39,6 +39,7 @@ import { NgChartsModule} from 'ng2-charts';
 
 
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
@@ -77,9 +78,9 @@ const routes: Routes = [
     DeleteAllConfirmationComponent,
     MapUserComponent,
     BookingComponent
-  ],
+    ],
   imports: [
-    AngularFireModule.initializeApp(firebaseConfig), // Assicurati di aver definito firebaseConfig
+    AngularFireModule.initializeApp(firebaseConfig), 
     AngularFirestoreModule,
     AngularFireAuthModule,
     BrowserModule,
@@ -97,7 +98,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    NgChartsModule 
+    NgChartsModule
   ],
  
   bootstrap: [AppComponent]
