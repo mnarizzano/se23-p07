@@ -7,7 +7,7 @@ import { Parcheggio } from './shared/services/parking.interface';
 })
 
 export class FasceOrarieService {
-  private statoParcheggio: { [key: string]: string } = {};
+ // private statoParcheggio: { [key: string]: string } = {};
   fasceOrarie: { [key: string]: { stato: string} } = {
 
     '09:00-10:00': { stato: 'disponibile'},

@@ -3,9 +3,7 @@ import { AngularFirestore }  from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat/app';
 import { firebaseConfig } from '../../environments/environment'; 
 import { Chart, CategoryScale, BarController, LinearScale, Title, Tooltip, Legend } from 'chart.js';
-
-
-
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-statistics',

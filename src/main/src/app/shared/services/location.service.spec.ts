@@ -1,18 +1,16 @@
-/*
 import { TestBed } from '@angular/core/testing';
 
-import { UserDataService } from './user-data.service';
+import { LocationService } from './location.service';
 
-describe('UserDataService', () => {
-  let service: UserDataService;
+describe('LocationService', () => {
+  let service: LocationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(UserDataService);
+    service = TestBed.inject(LocationService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 });
-*/

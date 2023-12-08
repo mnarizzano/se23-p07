@@ -51,7 +51,7 @@ describe('BookingComponent', () => {
   });
 
   it('should call onConfermaClick and hide modal', () => {
-    spyOn(component, 'onConfermaClick');
+    spyOn(component, 'onConfermaClick').and.callThrough(); 
     spyOn(bsModalRef, 'hide');  
     component.onConfermaClick(true);
     expect(component.onConfermaClick).toHaveBeenCalledWith(true);
