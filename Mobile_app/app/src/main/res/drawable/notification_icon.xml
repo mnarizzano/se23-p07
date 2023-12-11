@@ -1,0 +1,8 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Stato predefinito (non selezionato) -->
+
+
+    <!-- Stato selezionato -->
+    <item android:state_selected="true" android:state_focused="true"
+        android:drawable="@android:drawable/ic_notification_overlay"/>
+</selector>
