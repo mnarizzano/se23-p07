@@ -7,5 +7,5 @@
     <item name="signUpButton" type="id" />
     <item name="progressBar" type="id" />
     <item name="mapView" type="id"  />
-
+    <item name="btnConferma" type="id" />
 </resources>
