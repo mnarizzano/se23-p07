@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,22 +7,21 @@
     tools:context=".LoginActivity">
 
 
-
     <EditText
         android:id="@+id/emailEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="377dp"
+        android:layout_height="76dp"
         android:layout_marginTop="32dp"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/passwordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="377dp"
+        android:layout_height="73dp"
         android:layout_below="@id/emailEditText"
-        android:layout_marginTop="16dp"
-        android:hint="Password"
+        android:layout_marginTop="57dp"
+        android:hint="@string/password"
         android:inputType="textPassword" />
 
     <Button
@@ -31,18 +29,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/passwordEditText"
-        android:layout_marginTop="24dp"
-        android:text="Accedi" />
+        android:layout_marginTop="108dp"
+        android:text="@string/login"
+        tools:ignore="VisualLintButtonSize" />
 
     <Button
         android:id="@+id/signUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/loginButton"
-        android:layout_marginTop="16dp"
-        android:text="Non hai un account? Registrati"
+        android:layout_marginTop="34dp"
         android:gravity="center"
-        android:textColor="@android:color/darker_gray" />
+        android:text="@string/singUp"
+        android:textColor="#D7CCC8"
+        tools:ignore="VisualLintButtonSize" />
 
     <ProgressBar
         android:id="@+id/progressBar"
