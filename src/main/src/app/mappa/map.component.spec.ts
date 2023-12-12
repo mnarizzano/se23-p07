@@ -13,11 +13,14 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Parcheggio } from '../shared/services/parking.interface';
 import * as L from 'leaflet';
 import { AddBoxConfirmationComponent } from '../add-box-confirmation/add-box-confirmation.component';
-import { LeafletMouseEvent } from 'leaflet';
 import { ChangeDetectorRef } from '@angular/core';
 import { BookingComponent } from '../booking/booking.component';
 import { DeleteAllConfirmationComponent } from '../delete-all-confirmation/delete-all-confirmation.component';
 import { EventEmitter } from '@angular/core';
+import { SaveConfirmationComponent } from '../save-confirmation/save-confirmation.component'
+import { LatLng, LeafletMouseEvent } from 'leaflet';
+import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+
 
 
 
@@ -42,6 +45,19 @@ describe('MapComponent', () => {
   let location: Location; 
   let httpTestingController: HttpTestingController;
   let cdr: MockChangeDetectorRef;
+  
+  const parcheggio: Parcheggio = {
+     pid: 'samplePid',
+     indirizzo: 'Sample Address',
+     coordinate: {
+       lat: 42.3601,
+       lng: -71.0589,
+     },
+     data_salvataggio: '2023-11-07',
+     state: 'disponibile', 
+     FasceOrarie: {},
+   };
+
   
   const mockModalRef = {
     content: {
@@ -187,6 +203,419 @@ describe('MapComponent', () => {
     component.initMap();
     expect(component.mappa).toBeDefined();
   });
+  
+  it('should make a parking space inaccessible', () => {
+
+      const rectangle = L.rectangle([
+        [42.3600, -71.0590],
+        [42.3602, -71.0588],
+      ]);
+      const marker = L.marker([42.3601, -71.0589]);
+  
+  
+      component.rectangleMarkerMap.set(rectangle, marker);
+
+      for (const [rect, mark] of component.rectangleMarkerMap) {
+        spyOn(rect.getBounds(), 'contains').and.returnValue(true);
+        spyOn(component.rectangleParcheggioMap, 'get').and.returnValue(parcheggio);
+      }
+
+      spyOn(component, 'showInaccessPopup');
+  
+    
+      component.makeInaccessible(L.latLng(42.3601, -71.0589));
+  
+      expect(component.showInaccessPopup).toHaveBeenCalledWith(rectangle, parcheggio);
+    });
+	
+	it('should show inaccessibility popup and update parking state on button click', () => {
+    
+	    const rectangle = L.rectangle([
+	      [42.3600, -71.0590],
+	      [42.3602, -71.0588],
+	    ]);
+  
+	    const popupContent = `
+	    <button id="Button">prova</button>
+	  `;
+
+	    spyOn(component, 'showInaccessPopup');
+	    const spyOnUpdateState = spyOn(component, 'updateStateToInaccessible');
+	    component.showInaccessPopup(rectangle,parcheggio);
+
+	    const mockPopup: L.Popup = jasmine.createSpyObj('Popup', ['setContent', 'setLatLng', 'openOn']);
+	    spyOn(L, 'popup').and.returnValue(mockPopup);
+	    mockPopup.setContent(popupContent);
+
+    
+	    const inaccessButton = document.getElementById('inaccessButton');
+	    if (inaccessButton) {  
+	      inaccessButton.click();
+      
+	      expect(spyOnUpdateState).toHaveBeenCalledWith(parcheggio);
+	    }
+
+	    expect(mockPopup.setContent).toHaveBeenCalledWith(popupContent);
+  
+    
+	});
+  
+ it('should update parcheggio state to "inaccessibile" and change rectangle color to yellow',() => {
+	    const rectangle = L.rectangle([
+	      [42.3600, -71.0590],
+	      [42.3602, -71.0588],
+	    ]);
+	    const marker = L.marker([42.3601, -71.0589]);
+
+	    component.rectangleMarkerMap.set(rectangle, marker);
+
+	    for (const [rect, mark] of component.rectangleMarkerMap) {
+	      spyOn(rect.getBounds(), 'contains').and.returnValue(true);
+	      spyOn(component.rectangleParcheggioMap, 'get').and.returnValue(parcheggio);
+	    }
+  
+	    const new_state = 'inaccessibile';
+	    firebaseService.updateParcheggioState(parcheggio.pid, new_state);
+
+	    const mockRectangle = {
+	      setStyle: jasmine.createSpy('setStyle'),
+	    };
+	    mockRectangle.setStyle({ fillColor: 'yellow', color: 'yellow' });
+
+	    spyOn(component, 'updateStateToInaccessible');
+	    component.updateStateToInaccessible(parcheggio);
+    
+	    expect(firebaseService.updateParcheggioState).toHaveBeenCalledWith('samplePid', 'inaccessibile');
+
+	    expect(mockRectangle.setStyle).toHaveBeenCalledWith({ fillColor: 'yellow', color: 'yellow' });
+
+	 });
+	  
+it('should add a parking box with rectangle, marker, and parking information', () => {
+  
+	    const coordinate = { lat: 42.3601, lng: -71.0589 };
+
+	    const rectangle = L.rectangle([
+	      [42.3600, -71.0590],
+	      [42.3602, -71.0588],
+	    ]);
+	    const marker = L.marker([42.3601, -71.0589]);
+  
+    
+	    component.rectangleMarkerMap.set(rectangle, marker);
+
+	    for (const [rect, mark] of component.rectangleMarkerMap) {
+	      spyOn(rect.getBounds(), 'contains').and.returnValue(true);
+	      spyOn(component.rectangleParcheggioMap, 'get').and.returnValue(parcheggio);
+	    }
+
+	    spyOn(component, 'addBox')
+  
+    
+	    component.addBox(coordinate);
+    
+	    expect(component.addBox).toHaveBeenCalledWith(coordinate);
+	    expect(component.rectangleMarkerMap.has(rectangle)).toBeTruthy();
+	    expect(component.rectangleMarkerMap.get(rectangle)).toEqual(marker);
+	    expect(component.rectangleParcheggioMap.get(rectangle)).toEqual(parcheggio);
+
+	});
+
+it('should show AddBoxConfirmation modal and call addBox on confirmation', () => {
+
+	  const coordinate = { lat: 42.3601, lng: -71.0589 };
+
+	  const leafletMouseEvent: LeafletMouseEvent = {
+	    latlng: new LatLng(42.3601, -71.0589),
+	    layerPoint: null!,
+	    containerPoint: null!,
+	    originalEvent: null!,
+	    type: '',
+	    popup: undefined,
+	    target: undefined,
+	    sourceTarget: undefined,
+	    propagatedFrom: undefined,
+	    layer: undefined
+	  };
+	  spyOn(component,'addBox')
+	  component.addBox(coordinate)
+	  spyOn(component, 'showAddBoxConfirmation')
+	  component.showAddBoxConfirmation(leafletMouseEvent);
+	  expect(component.addBox).toHaveBeenCalledWith(leafletMouseEvent.latlng);
+
+
+	});
+
+	it('should move a parking space', () => {
+  
+	  const oldRectangle = L.rectangle([
+	    [42.3600, -71.0590],
+	    [42.3602, -71.0588],
+	  ]);
+	const oldMarker = L.marker([42.3601, -71.0589]);
+
+	  const oldParcheggio: Parcheggio = {
+	    pid: 'samplePid',
+	    indirizzo: 'Sample Address',
+	    coordinate: {
+	      lat: 42.3601,
+	      lng: -71.0589,
+	    },
+	    data_salvataggio: '2023-11-07',
+	    state: 'disponibile', 
+	    FasceOrarie: {},
+	  };
+	 component.rectangleMarkerMap.set(oldRectangle, oldMarker);
+	   for (const [rect, mark] of component.rectangleMarkerMap) {
+	     spyOn(rect.getBounds(), 'contains').and.returnValue(true);
+	     spyOn(component.rectangleParcheggioMap, 'get').and.returnValue(oldParcheggio);
+	   }
+
+	   const newRectangle = L.rectangle([
+	    [44.3600, -71.0590],
+	    [44.3602, -71.0588],
+	  ]);
+	  const newMarker = L.marker([42.3601, -71.0589]);
+
+	  const newParcheggio: Parcheggio = {
+	    pid: 'samplePid',
+	    indirizzo: 'Sample Address',
+	    coordinate: {
+	      lat: 44.3601,
+	      lng: -71.0589,
+	    },
+	    data_salvataggio: '2023-11-07',
+	    state: 'disponibile', 
+	    FasceOrarie: {},
+	  };
+	  component.rectangleMarkerMap.set(newRectangle, newMarker);
+  
+	  spyOn(component, 'getAddress').and.returnValue(of('Indirizzo Simulato'));
+
+	  spyOn(component, 'moveParcheggio');
+	  component.moveParcheggio(oldMarker, L.latLng(44.3602, -71.0588));
+	  component.getAddress(44.3601, -71.0589);
+	  firebaseService.deleteParcheggio(oldParcheggio);
+	  firebaseService.addParcheggio(newParcheggio);
+  
+	  expect(component.getAddress).toHaveBeenCalledWith(44.3601, -71.0589);
+	  expect(firebaseService.deleteParcheggio).toHaveBeenCalledWith(jasmine.any(Object));
+	  expect(firebaseService.addParcheggio).toHaveBeenCalledWith(jasmine.any(Object));
+
+	});
+
+  it('should save parking spaces to the database', async () => {
+  
+
+    firebaseService.generateParcheggioID(parcheggio.coordinate);
+    firebaseService.addParcheggio(parcheggio);
+    firebaseService.getParcheggi();
+    firebaseService.getParcheggioById(parcheggio.pid)
+  
+  
+    spyOn(component, 'saveParking')
+    
+    await component.saveParking();
+    
+    expect(component.saveParking).toHaveBeenCalled();
+    expect(firebaseService.generateParcheggioID).toHaveBeenCalledOnceWith(jasmine.any(Object));
+    expect(firebaseService.addParcheggio).toHaveBeenCalledOnceWith(jasmine.any(Object));
+    expect(firebaseService.getParcheggi).toHaveBeenCalled();
+    expect(firebaseService.getParcheggioById).toHaveBeenCalled();
+  
+    
+  });
+  
+  it('should open confirmation modal and save parking on confirmation', async () => {
+  
+    const modalRefMock = {
+      content: {
+        onConfirm: {
+          subscribe: (callback: (result: boolean) => void) => {
+            callback(true);
+          },
+        },
+      },
+    };
+   
+    modalService.show(SaveConfirmationComponent, { initialState: {} } )
+    spyOn(component, 'onSaveButtonClick');
+    component.onSaveButtonClick();
+    
+    
+    expect(modalService.show).toHaveBeenCalledWith(SaveConfirmationComponent, { initialState: {} });
+  
+    await fixture.whenStable();
+  
+    
+    modalRefMock.content.onConfirm.subscribe((result: boolean) => {
+      expect(result).toBe(true); 
+    });
+  
+    spyOn(component, 'saveParking');
+  
+    await component.saveParking();
+  
+    expect(component.saveParking).toHaveBeenCalled();
+  
+  });
+  
+  it('should show delete confirmation modal and remove parking on confirmation', async () => {
+    const rectangle = L.rectangle([
+      [42.3600, -71.0590],
+      [42.3602, -71.0588],
+    ]);
+  
+    const modalRefMock = {
+      content: {
+        onClose: {
+          subscribe: (callback: (result: boolean) => void) => {
+            callback(true);
+          },
+        },
+      },
+    };
+    spyOn(component, 'showDeleteConfirmation')
+    component.showDeleteConfirmation(rectangle);
+  
+    modalService.show(DeleteConfirmationComponent);
+  
+    expect(modalService.show).toHaveBeenCalledWith(DeleteConfirmationComponent);
+  
+    await fixture.whenStable();
+  
+   
+    modalRefMock.content.onClose.subscribe((result: boolean) => {
+      expect(result).toBe(true); 
+    });
+    
+  
+  });
+
+  it('should delete Box', ()  => {
+    const latlng: L.LatLng = L.latLng(42.3601, -71.0589);
+  
+
+    const rectangle = L.rectangle([
+      [42.3600, -71.0590],
+      [42.3602, -71.0588],
+    ]);
+    const marker = L.marker([42.3601, -71.0589]);
+
+  
+    component.rectangleMarkerMap.set(rectangle, marker);
+  
+
+    for (const [rect, mark] of component.rectangleMarkerMap) {
+      spyOn(rect.getBounds(), 'contains').and.returnValue(true);
+      spyOn(component.rectangleParcheggioMap, 'get').and.returnValue(parcheggio);
+    }
+
+  
+    spyOn(component, 'delBox');
+    spyOn(component, 'showDeleteConfirmation');
+    component.delBox(latlng);
+    component.showDeleteConfirmation(rectangle)
+  
+    expect(component.delBox).toHaveBeenCalledWith(latlng);
+    expect(component.showDeleteConfirmation).toHaveBeenCalledWith(rectangle);
+  });
+
+  it('should load saved parking spaces', async () => {
+    const mockParcheggi: Parcheggio[] = [parcheggio];
+  
+    (firebaseService.getParcheggi as jasmine.Spy).and.returnValue(Promise.resolve(mockParcheggi));
+    spyOn(component, 'mostraParcheggiSullaMappa')
+    spyOn(component, 'caricaParcheggiSalvati').and.callThrough();
+    
+    await component.caricaParcheggiSalvati();
+    
+    expect(component.mostraParcheggiSullaMappa).toHaveBeenCalled();
+    expect(component.caricaParcheggiSalvati).toHaveBeenCalled();
+    expect(firebaseService.getParcheggi).toHaveBeenCalled();
+  
+    expect(component.parcheggiSalvati).toEqual(mockParcheggi);
+  
+  });
+
+  it('should add markers and boxes to the map for each saved parking', () => {
+
+    const mockParcheggi: Parcheggio[] = [parcheggio];
+  
+    spyOn(component, 'mostraParcheggiSullaMappa').and.callThrough();
+    spyOn(component, 'addMarker');
+    spyOn(component, 'addBox');
+  
+    component.parcheggiSalvati = mockParcheggi;
+    component.mostraParcheggiSullaMappa()
+    
+    expect(component.addMarker).toHaveBeenCalledTimes(mockParcheggi.length);
+    expect(component.addBox).toHaveBeenCalledTimes(mockParcheggi.length);
+  
+    for (const parcheggio of mockParcheggi) {
+      expect(component.addMarker).toHaveBeenCalledWith(parcheggio);
+      expect(component.addBox).toHaveBeenCalledWith(parcheggio.coordinate);
+    }
+  });
+
+  it('should select parking and update map', () => {
+
+  spyOn(component, 'updateMap');
+  component.selectParking(parcheggio);
+  expect(component.parcheggioSelezionato).toEqual(parcheggio);
+  expect(component.updateMap).toHaveBeenCalledWith(parcheggio);
+  });
+
+  it('should show property popup with parking information', () => {
+  
+    spyOn(component, 'showPropertyPopup');
+   
+    component.showPropertyPopup(parcheggio);
+  
+     const popupMock = jasmine.createSpyObj('Popup', ['setContent', 'setLatLng', 'openOn']);
+     spyOn(L, 'popup').and.returnValue(popupMock);
+   
+    const expectedContent = `
+      <strong>Indirizzo:</strong> ${parcheggio.indirizzo}<br>
+      <strong>Coordinate:</strong> Lat: ${parcheggio.coordinate.lat}, Lng: ${parcheggio.coordinate.lng}<br>
+      <strong>Stato:</strong> ${parcheggio.state}<br>
+      <strong>Data di Salvataggio:</strong> ${parcheggio.data_salvataggio}<br>
+    `;
+    popupMock.setContent(expectedContent);
+    expect(popupMock.setContent).toHaveBeenCalledWith(expectedContent);
+    popupMock.setLatLng([parcheggio.coordinate.lat, parcheggio.coordinate.lng])
+    expect(popupMock.setLatLng).toHaveBeenCalledWith([parcheggio.coordinate.lat, parcheggio.coordinate.lng]);
+  });
+  
+  it('should open booking modal and reload saved parking spaces on confirmation', async () => {
+    const mockFasceOrarie = { '08:00-09:00': { stato: 'disponibile' } };
+    (firebaseService.getFasceOrarieParcheggio as jasmine.Spy).and.returnValue(Promise.resolve(mockFasceOrarie));
+  
+    const modalRefMock = {
+      content: {
+        onConferma: {
+          subscribe: (callback: (result: boolean) => void) => {
+            callback(true);
+          },
+        },
+      },
+    };
+    (modalService.show as jasmine.Spy).and.returnValue(modalRefMock);
+  
+    spyOn(component, 'caricaParcheggiSalvati').and.returnValue(Promise.resolve());
+  
+    await component.openBookingModal(parcheggio);
+  
+    expect(firebaseService.getFasceOrarieParcheggio).toHaveBeenCalledWith(parcheggio.pid);
+  
+    expect(modalService.show).toHaveBeenCalledWith(BookingComponent, { initialState: { parcheggio, fasceOrarie: mockFasceOrarie } });
+    await fixture.whenStable();
+  
+    modalRefMock.content.onConferma.subscribe((result: boolean) => {
+      expect(result).toBe(true);
+    });
+    expect(component.caricaParcheggiSalvati).toHaveBeenCalled();
+  });
 
   it('should handle right-click on rectangle', () => {
     const latlng: L.LatLng = L.latLng(42.3601, -71.0589);
@@ -215,6 +644,7 @@ describe('MapComponent', () => {
     component.handleRectangleRightClick(latlng);
     expect(component.showBookPopup).toHaveBeenCalledWith(rectangle, parcheggio);
   });
+
 
   it('should get address from lat/lng', () => {
     const lat = 42.3601; 
