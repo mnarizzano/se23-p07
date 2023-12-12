@@ -1,21 +1,20 @@
 .custom-search {
-    background-color: #f8f9fa; /* Colore di sfondo */
-    border: 1px solid #ced4da; /* Bordo */
-    border-radius: 5px; /* Angoli arrotondati */
-    padding: 8px 12px; /* Spaziatura interna */
-    margin-bottom: 10px;/* Aggiungi un margine inferiore per separare dalla colonna del pulsante */
+    background-color: #f8f9fa; 
+    border: 1px solid #ced4da; 
+    border-radius: 5px; 
+    padding: 8px 12px; 
+    margin-bottom: 10px;
 }
   
   .custom-search input {
-    border: none; /* Nessun bordo per l'input */
-    outline: none; /* Rimuovi l'outline quando si fa clic */
+    border: none; 
+    outline: none; 
   }
   
   .custom-search button {
-    border-radius: 5px 5px 5px 5px; /* Angoli arrotondati per il pulsante */
+    border-radius: 5px 5px 5px 5px; 
   }
 
-  /* Posiziona il pulsante "Salva" in alto a destra */
 .text-right {
     display: flex;
     justify-content: flex-end;
@@ -25,27 +24,26 @@
  
 
 .custom-container {
-    max-width: 1200px; /* Larghezza massima personalizzata */
-    margin: 0 auto; /* Centra il contenitore orizzontalmente */
+    max-width: 1200px; 
+    margin: 0 auto; 
   }
   
 .parcheggi-list {
-  max-height: 300px; /* Altezza massima della casella con la barra di scorrimento */
-  overflow-y: auto; /* Aggiungi una barra di scorrimento verticale se il contenuto supera l'altezza massima */
+  max-height: 300px; 
+  overflow-y: auto; 
 }
 
 .parcheggi-list-item:hover {
-  background-color: #3498db; /* Colore di sfondo azzurro quando passi il mouse sopra */
-  color: #fff; /* Colore del testo in bianco */
-  cursor: pointer; /* Cambia il cursore del mouse quando passi il mouse sopra */
+  background-color: #3498db; 
+  color: #fff; 
+  cursor: pointer; 
 }
 
 .selected {
-  background-color: #f0f0f0; /* Cambia il colore di sfondo */
-  color: #000; /* Cambia il colore del testo */
+  background-color: #f0f0f0; 
+  color: #000; 
 }
 
-/* CSS per i marker */
 .parcheggio-marker {
   border-radius: 50%;
   width: 30px;
@@ -55,13 +53,11 @@
   line-height: 30px;
 }
 
-/* CSS per il marker verde (disponibile) */
 .green-marker {
   background-color: green;
   color: green;
 }
 
-/* CSS per il marker rosso (occupato) */
 .red-marker {
   background-color: red;
   color: red;

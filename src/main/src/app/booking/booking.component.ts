@@ -25,32 +25,16 @@ export class BookingComponent implements OnInit {
   constructor(
    public bsModalRef: BsModalRef,
    public firebaseService: FirebaseService, 
-   public fasceOrarieService: FasceOrarieService,) {
-    /*
-    interval(86400000).subscribe(() => { // Per aggiornare lo stato delle fasce orarie ogni giorno 
-      this.turnFasceDisponibili();
-    }); */
-   }
+   public fasceOrarieService: FasceOrarieService,) {}
    ngOnInit(): void {
     this.firebaseService.getFasceOrarieParcheggio(this.parcheggio.pid).then(fasceOrarie => {
-      this.parcheggio.FasceOrarie = fasceOrarie; // Assegna i dati a parcheggio.FasceOrarie
+      this.parcheggio.FasceOrarie = fasceOrarie; 
     });
   }
 
   onConfermaClick(result: boolean) {
     this.onConferma.emit(result);
     this.bsModalRef.hide();
-  }
-
-  turnFasceDisponibili(parcheggio: Parcheggio): void {
-    if (parcheggio && parcheggio.FasceOrarie) {
-      const fasceOrarie = parcheggio.FasceOrarie;
-      for (const fasciaOraria in fasceOrarie) {
-        if (fasceOrarie.hasOwnProperty(fasciaOraria)) {
-          fasceOrarie[fasciaOraria].stato = 'disponibile';
-        }
-      }
-    }
   }
   
   updateSelectedFasce(fascia: string) {
@@ -64,7 +48,6 @@ export class BookingComponent implements OnInit {
   async confermaPrenotazione() {  
     for (const fascia of this.selectedFasce) {
       await this.firebaseService.updateFasciaOraria(this.parcheggio, fascia, 'occupato');
-      // Ora chiama la funzione per aggiornare lo stato nell'oggetto parcheggio.FasceOrarie
       this.fasceOrarieService.setStatoFasciaOraria(this.parcheggio, fascia, 'occupato');
     }
     if (this.fasceOrarieService.areAllFasceOccupate(this.parcheggio.FasceOrarie)) {
@@ -78,7 +61,7 @@ export class BookingComponent implements OnInit {
     console.log('sto chiamando la funzione updateStateToOccupato');
     const parcheggioId = parcheggio.pid;
     parcheggio.state = 'occupato';
-    // Aggiorna lo stato nel database
+    // Update state into the database lo stato nel database
     this.firebaseService.updateParcheggioState(parcheggio.pid, 'occupato');
   }
 

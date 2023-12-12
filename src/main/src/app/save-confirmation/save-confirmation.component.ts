@@ -11,13 +11,11 @@ export class SaveConfirmationComponent {
 
   constructor(public bsModalRef: BsModalRef) {}
 
-  // Funzione chiamata quando si conferma il salvataggio
   confirmSave() {
     this.onConfirm.emit(true); 
     this.bsModalRef.hide(); 
   }
 
-  // Funzione chiamata quando si annulla il salvataggio
   cancelSave() {
     this.onConfirm.emit(false); 
     this.bsModalRef.hide(); 

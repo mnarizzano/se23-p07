@@ -12,13 +12,11 @@ export class DeleteAllConfirmationComponent {
   constructor(public bsModalRef: BsModalRef, private firebaseService: FirebaseService, private cdr: ChangeDetectorRef, private locationService: LocationService) {}
 
   onCancel() {
-    this.bsModalRef.hide(); // Chiude la finestra di conferma senza eliminare i parcheggi
+    this.bsModalRef.hide(); 
   }
 
   onConfirm() {
-    // Chiude la finestra di conferma
     this.bsModalRef.hide(); 
-    // Elimina tutti i parcheggi
     this.firebaseService.deleteAllParcheggi().then(() => {
       console.log('Tutti i parcheggi eliminati con successo.');
       this.locationService.reload();

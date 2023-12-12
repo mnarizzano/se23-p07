@@ -36,10 +36,7 @@ describe('SignUpComponent', () => {
     component.phoneNumber = '1234567890';
     component.userPwd = 'password';
     component.isAdmin = true;
-
     component.onSignUp();
-
-    // Verifica che il metodo SignUp dell'authService sia stato chiamato con i valori corretti
     expect(authService.SignUp).toHaveBeenCalledWith('john.doe@example.com', 'password', jasmine.objectContaining({
       email: 'john.doe@example.com',
       displayName: 'John Doe',
@@ -54,10 +51,11 @@ describe('SignUpComponent', () => {
   });
 
   it('toggleAdmin should toggle the value of isAdmin', () => {
-    expect(component.isAdmin).toBe(false); // Verifica che isAdmin sia inizialmente false
-    component.toggleAdmin(); // Chiamata per attivare il toggle
-    expect(component.isAdmin).toBe(true); // Verifica che ora isAdmin sia true
-    component.toggleAdmin(); // Chiamata per disattivare il toggle
-    expect(component.isAdmin).toBe(false); // Verifica che ora isAdmin sia nuovamente false
+    expect(component.isAdmin).toBe(false); 
+    component.toggleAdmin(); 
+    expect(component.isAdmin).toBe(true); 
+    component.toggleAdmin(); 
+    expect(component.isAdmin).toBe(false); 
   });
+  
 });

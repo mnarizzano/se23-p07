@@ -1,116 +1,81 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PersonalDataComponent } from './personal-data.component';
+import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../shared/services/user-data.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { of } from 'rxjs';
-import { AppModule } from '../app.module';
 
-describe('PersonalDataComponent', () => {
-  let component: PersonalDataComponent;
-  let fixture: ComponentFixture<PersonalDataComponent>;
-  let userDataService: jasmine.SpyObj<UserDataService>;
-  let afAuth: jasmine.SpyObj<AngularFireAuth>;
-  let firestore: jasmine.SpyObj<AngularFirestore>;
+@Component({
+  selector: 'app-personal-data',
+  templateUrl: './personal-data.component.html',
+  styleUrls: ['./personal-data.component.css']
+})
 
-  beforeEach(() => {
-    userDataService = jasmine.createSpyObj('UserDataService', ['getUserData']);
-    afAuth = jasmine.createSpyObj('AngularFireAuth', ['authState']);
-    firestore = jasmine.createSpyObj('AngularFirestore', ['collection', 'doc']);
+export class PersonalDataComponent implements OnInit {
+  userData: any = {};
+  editingAddress: boolean = false;
+  editingPhoneNumber: boolean = false;
+  editedAddress: string = '';
+  editedPhoneNumber: string = '';
 
-    TestBed.configureTestingModule({
-      declarations: [PersonalDataComponent],
-      providers: [
-      ],
-      imports: [AppModule],
+  constructor(
+    private userDataService: UserDataService,
+    private afAuth: AngularFireAuth,
+    private firestore: AngularFirestore) {}
+
+  ngOnInit() {
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        const userId = user.uid;
+        this.userDataService.getUserData(userId).subscribe((userData) => {
+          if (userData) {
+            this.userData = userData; 
+          }
+        });
+      }
     });
+  }
 
-    fixture = TestBed.createComponent(PersonalDataComponent);
-    component = fixture.componentInstance;
-  });
+  updateInfo() {
+    this.editingAddress = true;
+    this.editedAddress = this.userData.address;
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
-  });
+    this.editingPhoneNumber = true;
+    this.editedPhoneNumber = this.userData.phoneNumber;
+  }
 
-  it('should call updateInfo', () => {
-    component.updateInfo();
-    expect(component.editingAddress).toBe(true);
-    expect(component.editingPhoneNumber).toBe(true);
-    expect(component.editedAddress).toEqual(component.userData.address);
-    expect(component.editedPhoneNumber).toEqual(component.userData.phoneNumber);
-  });
+  saveEditedAddress() {
+    this.userData.address = this.editedAddress;
+    this.editingAddress = false;
 
-  it('should save edited address - DA FINIRE', () => {
-    component.saveEditedAddress();
-    expect(component.userData.address).toBe(component.editedAddress);
-    expect(component.editingAddress).toBe(false);
-
-    // da continuare
-  });
-
-
-});
-
-
-
-/*
-  it('should fetch user data on initialization', () => {
-    const userData = { address: 'Sample Address', phoneNumber: '1234567890' };
-    const authState = { uid: 'sampleUserId' };
-    const afAuthSpy = jasmine.createSpyObj('afAuth', ['authState']);
-    afAuthSpy.authState = of(authState);
-  
-    spyOn(userDataService, 'getUserData').and.returnValue(of(userData));
-  
-    fixture.detectChanges();
-  
-    expect(afAuthSpy.authState).toHaveBeenCalled();
-    expect(userDataService.getUserData).toHaveBeenCalledWith(authState.uid);
-    component.ngOnInit(); 
-    expect(component.userData).toEqual(userData);
-  });
-
-  it('should update address', () => {
-    component.editedAddress = 'New Address';
-    component.saveEditedAddress();
-
-    const authState = { uid: 'sampleUserId' };
-    (afAuth.authState as jasmine.Spy).and.returnValue(of(authState));
-    (firestore.collection as jasmine.Spy).and.returnValue({
-      doc: (docId: string) => ({
-        update: (data: any) => {
-          expect(docId).toBe(authState.uid);
-          expect(data).toEqual({ address: 'New Address' });
-        },
-      }),
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        const userId = user.uid;
+        this.firestore.collection('users').doc(userId).update({ address: this.editedAddress })
+          .then(() => {
+            console.log('Campo "address" aggiornato con successo nel database.');
+          })
+          .catch((error) => {
+            console.error('Errore nell\'aggiornamento del campo "address" nel database:', error);
+          });
+      }
     });
+  }
 
-    component.saveEditedAddress();
-  });
+  saveEditedPhoneNumber() {
+    this.userData.phoneNumber = this.editedPhoneNumber;
+    this.editingPhoneNumber = false;
   
- 
-
-  
-
-  it('should update phone number', () => {
-    component.editedPhoneNumber = 'New Phone Number';
-    component.saveEditedPhoneNumber();
-
-    const authState = { uid: 'sampleUserId' };
-    (afAuth.authState as jasmine.Spy).and.returnValue(of(authState));
-    (firestore.collection as jasmine.Spy).and.returnValue({
-      doc: (docId: string) => ({
-        update: (data: any) => {
-          expect(docId).toBe(authState.uid);
-          expect(data).toEqual({ phoneNumber: 'New Phone Number' });
-        },
-      }),
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        const userId = user.uid;
+        this.firestore.collection('users').doc(userId).update({ phoneNumber: this.editedPhoneNumber })
+          .then(() => {
+            console.log('Campo "phoneNumber" aggiornato con successo nel database.');
+          })
+          .catch((error) => {
+            console.error('Errore nell\'aggiornamento del campo "phoneNumber" nel database:', error);
+          });
+      }
     });
-
-    component.saveEditedPhoneNumber();
-  });
-
-
-});
-*/
+  }
+  
+}

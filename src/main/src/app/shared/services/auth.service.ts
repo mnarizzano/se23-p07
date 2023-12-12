@@ -17,13 +17,13 @@
     providedIn: 'root',
   })
   export class AuthService {
-    userData: User | null = null; // Save logged in user data
+    userData: User | null = null; 
     
     constructor(
-      public afs: AngularFirestore, // Inject Firestore service
-      public afAuth: AngularFireAuth, // Inject Firebase auth service
+      public afs: AngularFirestore, 
+      public afAuth: AngularFireAuth,
       public router: Router,
-      public ngZone: NgZone // NgZone service to remove outside scope warning
+      public ngZone: NgZone 
     ) {
       /* Saving user data in local storage when 
       logged in and setting up null when logged out */
@@ -44,7 +44,6 @@
       });
     }
     
-    // Sign in with email/password
     SignIn(email: string, password: string) {
       return this.afAuth
         .signInWithEmailAndPassword(email, password)
@@ -72,10 +71,7 @@
           if (result.user) {
             user.uid = result.user.uid;
             this.SetUserData(user);
-    
-            // Ora, imposta il ruolo dell'utente nel Firestore
             this.afs.doc(`users/${user.uid}`).update({ role: role });
-    
             return this.SendVerificationMail();
           } else {
             window.alert('Errore durante la creazione dell\'account.');
@@ -104,13 +100,11 @@
           return;
         })
         .catch((error) => {
-          // Gestisci gli errori relativi all'invio dell'email di verifica
           console.error('Errore durante l\'invio della verifica dell\'email:', error);
           throw error;
         });
     }
 
-    // Reset Forggot password
     ForgotPassword(passwordResetEmail: string) {
       return this.afAuth
         .sendPasswordResetEmail(passwordResetEmail)
@@ -121,17 +115,19 @@
           window.alert(error);
         });
     }
-    // Returns true when user is looged in and email is verified
+
     get isLoggedIn(): boolean {
       const user = JSON.parse(localStorage.getItem('user')!);
       return user !== null && user.emailVerified !== false ? true : false;
     }
+
     // Sign in with Google
     GoogleAuth() {
       return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
         this.router.navigate(['home']);
       });
     }
+
     // Auth logic to run auth providers
     AuthLogin(provider: any) {
       return this.afAuth
@@ -167,7 +163,6 @@
       return userRef.set(userData, { merge: true });
     }
 
-    // Sign out
     SignOut() {
       return this.afAuth.signOut()
         .then(() => {
@@ -185,8 +180,7 @@
       );
     }
     
-
-    // Metodo per verificare se l'utente è un amministratore
+    // Check if user is an administrator
     isAdmin(): Observable<boolean> {
       return this.getUserId().pipe(
         switchMap((userId) => {
@@ -202,6 +196,5 @@
         })
       );
     }
-
     
   }
