@@ -1,4 +1,4 @@
-# Table: Features-Test cases
+# Table: Features-Test cases for Web-App
 
 ## Description
 The following table represents a matrix that links different features of the application to their respective test cases. 
