@@ -31,27 +31,27 @@ This table serves as a powerful tool for tracking progress in the testing proces
 |  | Load data from CSV file    | Test to check the correct data loading from a CSV file     | Passed |  |
 |  | Parse a CSV file    | Test to check the correct file parsing     | Passed |  |
 |  | Handle right click on rectangle  | Test to check if correctly handles the right click on rectangles    | Passed |  |
-|  | Make a PS inacessible    | Change state to inaccessible by clicking on a button  | In progress |  |
-|  | Show inaccess popup window    | Show the window to make a PS inaccessible     | In progress |  |
+|  | Make a PS inacessible    | Change state to inaccessible by clicking on a button  | Passed |  |
+|  | Show inaccess popup window    | Show the window to make a PS inaccessible     | Passed |  |
 |  | Parse a CSV file    | Test to check the correct file parsing     | Passed |  |
-|  | Update state to inaccessible    | Update state to inaccessible into the database     | In progress |  |
+|  | Update state to inaccessible    | Update state to inaccessible into the database     | Passed |  |
 |  | Handle rectangle right-click    | Handle the right-click on a PS    | Passed |  |
 |  | Load PS   | Load parking slots on the database    | Passed |  |
-|  | Handle adding a PS    | Add a rectangle on the map     | In progress |  |
-|  | Show add box confirmation window   | Show a window to confirm adding a box     | In progress |  |
-|  | Move a PS   | Move a parking slot on the map     | In progress |  |
-|  | Delete a PS   | Delete a parking slot     | In progress |  
-|  | Show delete box confirmation window   | Show a window to confirm deleting a box     | In progress |  |
-|  | Save PS   | Save parking slots in the DB  | In progress |  |
-|  | Manages the save-button click   | Save by clicking on save-button     | In progress |  |
+|  | Handle adding a PS    | Add a rectangle on the map     | Passed |  |
+|  | Show add box confirmation window   | Show a window to confirm adding a box     | Passed |  |
+|  | Move a PS   | Move a parking slot on the map     | Passed|  |
+|  | Delete a PS   | Delete a parking slot     | Passed |  
+|  | Show delete box confirmation window   | Show a window to confirm deleting a box     | Passed |  |
+|  | Save PS   | Save parking slots in the DB  | Passed |  |
+|  | Manages the save-button click   | Save by clicking on save-button     | Passed |  |
 |  | Search address  | Search an address using the search-bar     | Passed |  |
 |  | Get address  | Get the address from coordinates   | Passed |  |
-|  | Show saved parking slots on the map   | Loads and shows PS on the map     | In progress |  |
+|  | Show saved parking slots on the map   | Loads and shows PS on the map     | Passed |  |
 |  | Add a marker  | Add a marker for each PS     | Passed |  |
 |  | Change color of PS  | Change color depending on the state     | Passed |  |
 |  | Show book popup  | Show a popup for booking a PS     | Passed |  |
-|  | Open a modal window for booking  | Open a modal window that show the timeslots of a selected PS   | In progress |  |
-|  | Show property popup  | Show a popup with PS properties    | In progress |  |
+|  | Open a modal window for booking  | Open a modal window that show the timeslots of a selected PS   | Passed |  |
+|  | Show property popup  | Show a popup with PS properties    | Passed |  |
 |  | Delete all PS  | Delete all parking slots clicking on a button   | Passed |  |
 |  | Load PS using a CSV file  | Load PS on the map and on the database by selecting a CSV file  | Passed |  |
 | menù | Create the component   | Test to check the correct creation of the component     | Passed |  |
@@ -61,9 +61,9 @@ This table serves as a powerful tool for tracking progress in the testing proces
 |  | Redirect to another page   | Should navigate on redirectToPage with page other than "sign-in"      | Passed |  |
 | personal-data | Create the component   | Test to check the correct creation of the component     | Passed |  |
 |  | Update the personal information   | Test to check if it updates the personal information     | Passed |  |
-|  | Take the user data as input   | Should fetch user data on initialization     | In progress |  |
-|  | Update the address   | Should update the address     | In progress |  |
-|  | Update the phone number   | Should update the phone number     | In progress |  |
+|  | Take the user data as input   | Should fetch user data on initialization     | Passed |  |
+|  | Update the address   | Should update the address     | Passed |  |
+|  | Update the phone number   | Should update the phone number     | Passed |  |
 | save-confirmation | Create the component   | Test to check the correct creation of the component     | Passed |  |
 |  | Confirmation button   | confirmSave should emit true and hide the modal             | Passed |  |
 |  | Cancel button  | confirmSave should emit false and hide the modal              | Passed |  |
@@ -75,11 +75,11 @@ This table serves as a powerful tool for tracking progress in the testing proces
 |  | Choice of the role   | toggleAdmin function should toggle the value of isAdmin     | Passed | to change the role of the user |
 | statistics | Create the component   | Test to check the correct creation of the component     | Passed | Data statistics visualization |
 |  | Initialization of the component properties   | Test to check if it initializes the properties correctly     | Passed |  |
-|  | Calculate the average parking duration   | Test to check if the calculateAverageParkingDuration function works correctly     | In progress |  |
-|  | Get the parking lot addresses from database  | Test to check if the getParkingLotAddresses function works correctly     | In progress |  |
-|  | Get one single parking lot address   | Test to check if the getParkingLotAddress function works correctly     | In progress |  |
-|  | Calculate the most used days   | Test to check if the calculateMostUsedDays function works correctly     | In progress |  |
-|  | Plot the most used days   | Test to check if the createBarChart function works correctly     | In progress |  |
-|  | Calculate the most used parking slots   | Test to check if the calculateMostUsedParkingLots function works correctly     | In progress |  |
-|  | Plot the most used parking slots  | Test to check if the createParkingLotBarChart function works correctly     | In progress |  |
+|  | Calculate the average parking duration   | Test to check if the calculateAverageParkingDuration function works correctly     | Passed |  |
+|  | Get the parking lot addresses from database  | Test to check if the getParkingLotAddresses function works correctly     |  Passed |  |
+|  | Get one single parking lot address   | Test to check if the getParkingLotAddress function works correctly     | Passed |  |
+|  | Calculate the most used days   | Test to check if the calculateMostUsedDays function works correctly     | Passed|  |
+|  | Plot the most used days   | Test to check if the createBarChart function works correctly     | Passed |  |
+|  | Calculate the most used parking slots   | Test to check if the calculateMostUsedParkingLots function works correctly     | Passed |  |
+|  | Plot the most used parking slots  | Test to check if the createParkingLotBarChart function works correctly     | Passed |  |
 | verify-email | Create the component   | Test to check the correct creation of the component     | Passed |  |
