@@ -18,11 +18,7 @@ export class StatisticsComponent implements OnInit {
   daysOfWeek: string[] = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'];
   mostUsedDay: string[] = []; 
   mostUsedParkingLotsSorted: { key: string, value: number }[] = [];
-  
-  
-
-
-
+ 
   constructor(private firestore: AngularFirestore) { 
     this.averageDuration = 0;
     this.mostUsedDays = {};
@@ -36,13 +32,11 @@ export class StatisticsComponent implements OnInit {
     Chart.register(CategoryScale, BarController, LinearScale, Title, Tooltip, Legend);
     this.getParkingLotAddresses(); 
     this.calculateStatistics();
-  }
-  
+  } 
 
   calculateStatistics() {
     this.calculateAverageParkingDuration();
     this.calculateMostUsedDays(() => {
-      // Chiamato quando i dati dei giorni più utilizzati sono stati calcolati
       this.createBarChart();
     });
     this.calculateMostUsedParkingLots(() => {
@@ -88,7 +82,6 @@ export class StatisticsComponent implements OnInit {
     const address = this.parkingLotAddresses[parkingLotId];
     return address || 'Indirizzo non disponibile';
   }
-  
 
   calculateMostUsedDays(callback: () => void) {
     const daysOfWeek = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'];
@@ -96,7 +89,7 @@ export class StatisticsComponent implements OnInit {
     let maxCount: number = 0;
     const mostUsedDays: string[] = [];
   
-    // Inizializza il conteggio per ciascun giorno a 0 all'inizio
+    // Initialize the count for each day 
     daysOfWeek.forEach(day => {
       dayCount[day] = 0;
     });
@@ -120,7 +113,7 @@ export class StatisticsComponent implements OnInit {
       });
   
       this.mostUsedDays = dayCount;
-      this.mostUsedDay = mostUsedDays; // Ora mostUsedDay è un array di giorni più utilizzati
+      this.mostUsedDay = mostUsedDays; 
       callback();
     });
   }
@@ -204,7 +197,7 @@ export class StatisticsComponent implements OnInit {
         parkingLotAddresses[parkingLotId] = parkingLotAddress;
       });
   
-      // Conteggio dei parcheggi 
+      // Counting of parkings 
       this.firestore.collection('transazioni').get().subscribe(querySnapshot => {
         querySnapshot.forEach(doc => {
           const data: any = doc.data();
@@ -214,7 +207,7 @@ export class StatisticsComponent implements OnInit {
   
         const mostUsedParkingLotIds = Object.keys(parkingLotCount)
           .sort((a, b) => parkingLotCount[b] - parkingLotCount[a]) 
-          .slice(0, 10); // Prende solo i primi 10
+          .slice(0, 10); // First 10
   
         const mostUsedParkingLotsSorted = mostUsedParkingLotIds.map(parkingLotId => ({
           key: parkingLotId,
@@ -228,7 +221,5 @@ export class StatisticsComponent implements OnInit {
       
     });
   }
-  
-  
   
 }

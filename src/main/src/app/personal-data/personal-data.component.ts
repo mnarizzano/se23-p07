@@ -37,7 +37,6 @@ export class PersonalDataComponent implements OnInit {
   updateInfo() {
     this.editingAddress = true;
     this.editedAddress = this.userData.address;
-
     this.editingPhoneNumber = true;
     this.editedPhoneNumber = this.userData.phoneNumber;
   }

@@ -28,10 +28,8 @@ describe('SignInComponent', () => {
   it('signInOnEnter should call SignIn with correct values', () => {
     component.userNameValue = 'testUsername';
     component.userPasswordValue = 'testPassword';
-
     component.signInOnEnter();
-
-    // Verifica che il metodo SignIn dell'authService sia stato chiamato con i valori corretti
     expect(authService.SignIn).toHaveBeenCalledWith('testUsername', 'testPassword');
   });
+  
 });

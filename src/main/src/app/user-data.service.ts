@@ -1,4 +1,3 @@
-// user-data.service.ts
 import { Injectable } from '@angular/core';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
@@ -15,4 +14,5 @@ export class UserDataService {
   getUserData() {
     return this.userData;
   }
+  
 }

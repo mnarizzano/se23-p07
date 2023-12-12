@@ -36,13 +36,15 @@
             <strong>Stato:</strong> {{ parcheggio.state }}<br>
           </li>
         </ul>
-      </div>
 
-      <div class="text-right" *ngIf="isAdmin">
+      </div>
+      
+      <div class="text-left" *ngIf="isAdmin">
         <div class="mt-5 custom-search">
           <input type="file" (change)="onFileSelected($event)" accept=".csv" />
         </div>
       </div>
+      
       
     </div>
 

@@ -41,76 +41,11 @@ describe('PersonalDataComponent', () => {
     expect(component.editedPhoneNumber).toEqual(component.userData.phoneNumber);
   });
 
-  it('should save edited address - DA FINIRE', () => {
+  it('should save edited address', () => {
     component.saveEditedAddress();
     expect(component.userData.address).toBe(component.editedAddress);
     expect(component.editingAddress).toBe(false);
-
-    // da continuare
   });
-
 
 });
 
-
-
-/*
-  it('should fetch user data on initialization', () => {
-    const userData = { address: 'Sample Address', phoneNumber: '1234567890' };
-    const authState = { uid: 'sampleUserId' };
-    const afAuthSpy = jasmine.createSpyObj('afAuth', ['authState']);
-    afAuthSpy.authState = of(authState);
-  
-    spyOn(userDataService, 'getUserData').and.returnValue(of(userData));
-  
-    fixture.detectChanges();
-  
-    expect(afAuthSpy.authState).toHaveBeenCalled();
-    expect(userDataService.getUserData).toHaveBeenCalledWith(authState.uid);
-    component.ngOnInit(); 
-    expect(component.userData).toEqual(userData);
-  });
-
-  it('should update address', () => {
-    component.editedAddress = 'New Address';
-    component.saveEditedAddress();
-
-    const authState = { uid: 'sampleUserId' };
-    (afAuth.authState as jasmine.Spy).and.returnValue(of(authState));
-    (firestore.collection as jasmine.Spy).and.returnValue({
-      doc: (docId: string) => ({
-        update: (data: any) => {
-          expect(docId).toBe(authState.uid);
-          expect(data).toEqual({ address: 'New Address' });
-        },
-      }),
-    });
-
-    component.saveEditedAddress();
-  });
-  
- 
-
-  
-
-  it('should update phone number', () => {
-    component.editedPhoneNumber = 'New Phone Number';
-    component.saveEditedPhoneNumber();
-
-    const authState = { uid: 'sampleUserId' };
-    (afAuth.authState as jasmine.Spy).and.returnValue(of(authState));
-    (firestore.collection as jasmine.Spy).and.returnValue({
-      doc: (docId: string) => ({
-        update: (data: any) => {
-          expect(docId).toBe(authState.uid);
-          expect(data).toEqual({ phoneNumber: 'New Phone Number' });
-        },
-      }),
-    });
-
-    component.saveEditedPhoneNumber();
-  });
-
-
-});
-*/

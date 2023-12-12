@@ -11,7 +11,6 @@ export class HomeComponent implements OnInit {
   isAdmin = false;
 constructor(public authService: AuthService) {}
   ngOnInit(): void {
-    // Controlla che l'utente sia un amministratore
       this.authService.isAdmin().subscribe((isAdmin) => {
         this.isAdmin = isAdmin;
       });
