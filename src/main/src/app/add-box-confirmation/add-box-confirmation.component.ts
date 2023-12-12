@@ -12,7 +12,7 @@ export class AddBoxConfirmationComponent {
   constructor(public bsModalRef: BsModalRef) {}
 
   onAddBoxClick() {
-    // Emette l'evento quando si fa clic su "Aggiungi"
+    // Emits an event when you click on "Aggiungi"
     this.onAddBox.emit();
     this.bsModalRef.hide();
   }

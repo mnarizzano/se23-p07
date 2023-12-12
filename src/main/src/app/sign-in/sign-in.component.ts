@@ -18,7 +18,7 @@ export class SignInComponent implements OnInit {
    }
 
   signInOnEnter() {
-    // Chiamare la funzione di accesso quando l'utente preme "Invio"
+    // Call signIn when user press Enter 
     this.authService.SignIn(this.userNameValue, this.userPasswordValue);
   }
 }

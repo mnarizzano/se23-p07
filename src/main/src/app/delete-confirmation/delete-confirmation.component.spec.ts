@@ -16,7 +16,6 @@ describe('DeleteConfirmationComponent', () => {
 
     fixture = TestBed.createComponent(DeleteConfirmationComponent);
     component = fixture.componentInstance;
-    // fixture.detectChanges();
   });
 
   it('should create the component', () => {

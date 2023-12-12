@@ -26,28 +26,17 @@ describe('SaveConfirmationComponent', () => {
   });
 
   it('confirmSave should emit true and hide the modal', () => {
-    // Spy sull'evento onConfirm
     const onConfirmSpy = spyOn(component.onConfirm, 'emit');
-
     component.confirmSave();
-
-    // Verifica che l'evento onConfirm sia stato chiamato con true
     expect(onConfirmSpy).toHaveBeenCalledWith(true);
-
-    // Verifica che il metodo BsModalRef.hide sia stato chiamato
     expect(bsModalRef.hide).toHaveBeenCalled();
   });
 
   it('cancelSave should emit false and hide the modal', () => {
-    // Spy sull'evento onConfirm
     const onConfirmSpy = spyOn(component.onConfirm, 'emit');
-
     component.cancelSave();
-
-    // Verifica che l'evento onConfirm sia stato chiamato con false
     expect(onConfirmSpy).toHaveBeenCalledWith(false);
-
-    // Verifica che il metodo BsModalRef.hide sia stato chiamato
     expect(bsModalRef.hide).toHaveBeenCalled();
   });
+  
 });

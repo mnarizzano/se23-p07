@@ -20,7 +20,6 @@ export class SignUpComponent implements OnInit {
   userPwd: string = '';
   isAdmin: boolean = false; 
 
-
   ngOnInit() {
     const state = history.state;
     if (state && state.user) {
@@ -31,8 +30,7 @@ export class SignUpComponent implements OnInit {
 
   toggleAdmin() {
     this.isAdmin = !this.isAdmin;
-  }
-  
+  }  
   
   onSignUp() {
     if (this.firstName && this.lastName && this.email && this.phoneNumber && this.userPwd) {
@@ -43,13 +41,11 @@ export class SignUpComponent implements OnInit {
         photoURL: '',
         phoneNumber: this.phoneNumber,
       };
-
       const role: string = this.isAdmin ? 'admin' : 'user';
-      
-      // Chiama la funzione SignUp del servizio AuthService
       this.authService.SignUp(this.email, this.userPwd, user, role)
     } else {
       console.log("Compila tutti i campi obbligatori");
     }
   }
+
 }

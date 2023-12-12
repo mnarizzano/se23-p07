@@ -31,43 +31,27 @@ describe('MenuComponent', () => {
   });
 
   it('should call AuthService.isAdmin and set isAdmin to true', () => {
-    // Simula che AuthService.isAdmin restituisca true
     authService.isAdmin.and.returnValue(of(true));
-
-    component.ngOnInit(); // Chiamiamo esplicitamente ngOnInit
-
-    // Verifica che il metodo AuthService.isAdmin sia stato chiamato
+    component.ngOnInit(); 
     expect(authService.isAdmin).toHaveBeenCalled();
-
-    // Verifica che isAdmin sia stato impostato su true
     expect(component.isAdmin).toBe(true);
   });
 
   it('should call AuthService.isAdmin and set isAdmin to false', () => {
-    // Simula che AuthService.isAdmin restituisca false
     authService.isAdmin.and.returnValue(of(false));
-
-    component.ngOnInit(); // Chiamiamo esplicitamente ngOnInit
-
-    // Verifica che il metodo AuthService.isAdmin sia stato chiamato
+    component.ngOnInit(); 
     expect(authService.isAdmin).toHaveBeenCalled();
-
-    // Verifica che isAdmin sia stato impostato su false
     expect(component.isAdmin).toBe(false);
   });
 
   it('should call SignOut on redirectToPage with page "sign-in"', () => {
     component.redirectToPage('sign-in');
-
-    // Verifica che il metodo AuthService.SignOut sia stato chiamato
     expect(authService.SignOut).toHaveBeenCalled();
   });
 
   it('should navigate on redirectToPage with page other than "sign-in"', () => {
     const page = 'desired-page';
     component.redirectToPage(page);
-
-    // Verifica che il metodo Router.navigate sia stato chiamato con l'URL corretto
     expect(router.navigate).toHaveBeenCalledWith([`/${page}`]);
   });
 });

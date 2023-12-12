@@ -26,7 +26,6 @@ describe('SharedService', () => {
       FasceOrarie: {},
     };
 
-    // Update the parking state
     service.updateState(parcheggio);
 
     // Get the updated parking state
@@ -34,4 +33,5 @@ describe('SharedService', () => {
       expect(updatedParcheggio).toEqual(parcheggio);
     });
   });
+  
 });

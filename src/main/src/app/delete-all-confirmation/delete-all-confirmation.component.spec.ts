@@ -14,7 +14,6 @@ describe('DeleteAllConfirmationComponent', () => {
   let locationService: LocationService;
 
   beforeEach(() => {
-    // Crea spy per i servizi e il ChangeDetectorRef
     bsModalRef = jasmine.createSpyObj('BsModalRef', ['hide']);
     firebaseService = jasmine.createSpyObj('FirebaseService', ['deleteAllParcheggi']);
     cdr = jasmine.createSpyObj('ChangeDetectorRef', ['detectChanges']);
@@ -44,46 +43,40 @@ describe('DeleteAllConfirmationComponent', () => {
   });
 
   it('onConfirm should hide the modal and call deleteAllParcheggi', (done) => {
-    // Simula una promessa risolta
     const deleteAllParcheggiPromise = Promise.resolve();
     (firebaseService.deleteAllParcheggi as jasmine.Spy).and.returnValue(deleteAllParcheggiPromise); 
     component.onConfirm();
-    // Aspettiamo che la promessa venga risolta
     deleteAllParcheggiPromise.then(() => {
       expect(bsModalRef.hide).toHaveBeenCalled();
       expect(firebaseService.deleteAllParcheggi).toHaveBeenCalled();
       expect(locationService.reload).toHaveBeenCalled();
-      done(); // Segnala al test che è stato completato
+      done(); 
     });
   });
 
   it('onConfirm should hide the modal and log an error on failure', (done) => {
     const error = 'Test error message';
   
-    // Simula una promessa rifiutata
     const deleteAllParcheggiPromise = Promise.reject(error);
     (firebaseService.deleteAllParcheggi as jasmine.Spy).and.returnValue(deleteAllParcheggiPromise);
   
-    // Spy sulla funzione console.error
     const consoleErrorSpy = spyOn(console, 'error');
   
     component.onConfirm();
   
-    // Aspettiamo che l'operazione asincrona venga completata
     fixture.detectChanges();
   
     setTimeout(() => {
       expect(bsModalRef.hide).toHaveBeenCalled();
   
-      // Verifica che console.error sia stato chiamato con un messaggio che inizia con 'Errore durante l'eliminazione di tutti i parcheggi'
       const errorCallArgs = consoleErrorSpy.calls.argsFor(0);
-      const errorCallMessage = errorCallArgs.join(' '); // Unisci tutti i parametri in un'unica stringa
+      const errorCallMessage = errorCallArgs.join(' '); 
       expect(errorCallMessage).toContain("Errore durante l'eliminazione di tutti i parcheggi");
   
-      expect(errorCallArgs).toContain('Test error message'); // Verifica che il messaggio di errore effettivo sia stato incluso
+      expect(errorCallArgs).toContain('Test error message'); 
   
-      done(); // Segnala al test che è stato completato
-    }, 0); // Attendiamo un breve lasso di tempo per permettere all'operazione asincrona di completarsi
+      done(); 
+    }, 0); 
   });
   
   
