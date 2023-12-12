@@ -46,6 +46,7 @@ describe('StatisticsComponent', () => {
       },
     };
 
+
     TestBed.configureTestingModule({
       declarations: [StatisticsComponent],
       imports: [
@@ -69,7 +70,6 @@ describe('StatisticsComponent', () => {
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
-
 
   it('should initialize component properties', () => {
     expect(component.averageDuration).toBe(0);
@@ -171,6 +171,7 @@ describe('StatisticsComponent', () => {
     // Assert that the callback function is called
     expect(callbackSpy).toHaveBeenCalled();
   }));
+
 });
 
 

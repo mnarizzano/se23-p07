@@ -23,6 +23,7 @@ import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confi
 
 
 
+
 class MockChangeDetectorRef extends ChangeDetectorRef {
   detectChanges(): void {}
   markForCheck(): void {}
@@ -56,6 +57,7 @@ describe('MapComponent', () => {
      state: 'disponibile', 
      FasceOrarie: {},
    };
+
   
   const mockModalRef = {
     content: {
@@ -493,18 +495,22 @@ it('should show AddBoxConfirmation modal and call addBox on confirmation', () =>
   it('should delete Box', ()  => {
     const latlng: L.LatLng = L.latLng(42.3601, -71.0589);
   
+
     const rectangle = L.rectangle([
       [42.3600, -71.0590],
       [42.3602, -71.0588],
     ]);
     const marker = L.marker([42.3601, -71.0589]);
+
   
     component.rectangleMarkerMap.set(rectangle, marker);
   
+
     for (const [rect, mark] of component.rectangleMarkerMap) {
       spyOn(rect.getBounds(), 'contains').and.returnValue(true);
       spyOn(component.rectangleParcheggioMap, 'get').and.returnValue(parcheggio);
     }
+
   
     spyOn(component, 'delBox');
     spyOn(component, 'showDeleteConfirmation');
@@ -638,6 +644,7 @@ it('should show AddBoxConfirmation modal and call addBox on confirmation', () =>
     component.handleRectangleRightClick(latlng);
     expect(component.showBookPopup).toHaveBeenCalledWith(rectangle, parcheggio);
   });
+
 
   it('should get address from lat/lng', () => {
     const lat = 42.3601; 

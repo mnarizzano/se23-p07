@@ -31,6 +31,29 @@ This table serves as a powerful tool for tracking progress in the testing proces
 |  | Load data from CSV file    | Test to check the correct data loading from a CSV file     | Passed |  |
 |  | Parse a CSV file    | Test to check the correct file parsing     | Passed |  |
 |  | Handle right click on rectangle  | Test to check if correctly handles the right click on rectangles    | Passed |  |
+|  | Make a PS inacessible    | Change state to inaccessible by clicking on a button  | In progress |  |
+|  | Show inaccess popup window    | Show the window to make a PS inaccessible     | In progress |  |
+|  | Parse a CSV file    | Test to check the correct file parsing     | Passed |  |
+|  | Update state to inaccessible    | Update state to inaccessible into the database     | In progress |  |
+|  | Handle rectangle right-click    | Handle the right-click on a PS    | Passed |  |
+|  | Load PS   | Load parking slots on the database    | Passed |  |
+|  | Handle adding a PS    | Add a rectangle on the map     | In progress |  |
+|  | Show add box confirmation window   | Show a window to confirm adding a box     | In progress |  |
+|  | Move a PS   | Move a parking slot on the map     | In progress |  |
+|  | Delete a PS   | Delete a parking slot     | In progress |  
+|  | Show delete box confirmation window   | Show a window to confirm deleting a box     | In progress |  |
+|  | Save PS   | Save parking slots in the DB  | In progress |  |
+|  | Manages the save-button click   | Save by clicking on save-button     | In progress |  |
+|  | Search address  | Search an address using the search-bar     | Passed |  |
+|  | Get address  | Get the address from coordinates   | Passed |  |
+|  | Show saved parking slots on the map   | Loads and shows PS on the map     | In progress |  |
+|  | Add a marker  | Add a marker for each PS     | Passed |  |
+|  | Change color of PS  | Change color depending on the state     | Passed |  |
+|  | Show book popup  | Show a popup for booking a PS     | Passed |  |
+|  | Open a modal window for booking  | Open a modal window that show the timeslots of a selected PS   | In progress |  |
+|  | Show property popup  | Show a popup with PS properties    | In progress |  |
+|  | Delete all PS  | Delete all parking slots clicking on a button   | Passed |  |
+|  | Load PS using a CSV file  | Load PS on the map and on the database by selecting a CSV file  | Passed |  |
 | menù | Create the component   | Test to check the correct creation of the component     | Passed |  |
 |  | Set isAdmin   | Should call AuthService.isAdmin and set isAdmin to true     | Passed |  |
 |  | Set isAdmin   | Should call AuthService.isAdmin and set isAdmin to false      | Passed |  |
