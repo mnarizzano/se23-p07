@@ -7,6 +7,8 @@ import { AuthService } from '../shared/services/auth.service';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
+
+  // Class that manages the menù of the web application
 export class MenuComponent implements OnInit {
   isAdmin = false;
   constructor(private router: Router, private authService: AuthService) {}
@@ -16,6 +18,7 @@ ngOnInit(): void {
   });
 }
 
+  // redirects to the page on which the user has clicked
   redirectToPage(page: string) {
     if (page === 'sign-in') {
       this.authService.SignOut();
