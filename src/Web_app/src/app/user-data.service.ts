@@ -4,6 +4,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 @Injectable({
   providedIn: 'root'
 })
+
+  // manages the user data for the sign-up page
 export class UserDataService {
   private userData: any = {};
 
