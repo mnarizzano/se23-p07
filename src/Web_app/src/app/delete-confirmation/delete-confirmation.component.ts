@@ -8,11 +8,15 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './delete-confirmation.component.html',
   styleUrls: ['./delete-confirmation.component.css']
 })
+
+  // Manages the deletion of a parking slot
 export class DeleteConfirmationComponent {
   @Output() onClose = new EventEmitter<boolean>();
 
   constructor(public bsModalRef: BsModalRef) {}
 
+
+  // Closes the window
   onCloseClick(result: boolean) {
     this.onClose.emit(result);
     this.bsModalRef.hide();
