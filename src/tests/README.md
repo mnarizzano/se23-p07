@@ -1,4 +1,9 @@
 # Table: Features-Test cases for Web-App
+## Test execution
+- The tests relative to the web application are inside each component in a spec.ts file (path: `se23-p07/src/Web_app/src/app/component_name`).  
+  In order to execute the tests, use the command from command line: ng test
+- The tests relative to the mobile application are inside `se23-p07/src/Mobile_app/app/src/androidTest/java/com/example/mobile_app_2` and inside `se23-p07/src/Mobile_app/app/src/test/java/com/example/mobile_app_2` directories.  
+  In order to execute the tests, run in test-mode into AndroidStudio using an appropriate device. 
 
 ## Description
 The following table represents a matrix that links different features of the application to their respective test cases. 
