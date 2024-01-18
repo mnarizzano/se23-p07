@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
+
+  // Manages the log of each user into the system
 export class AuthGuard {
   constructor(public authService: AuthService, public router: Router) {}
   canActivate(
