@@ -3,6 +3,7 @@ package com.example.mobile_app_2;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polygon;
 
+// Manages the polygon and the marker for the area of the PS
 public class ParkingArea {
     private Polygon polygon;
     private Marker marker;
