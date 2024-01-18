@@ -37,7 +37,7 @@ interface TimeSlot {
 })
 
 
-
+// Manages the map 
 export class MapComponent implements OnInit {
   isAdmin = false;
   mappa: any;
@@ -83,6 +83,7 @@ export class MapComponent implements OnInit {
 
 
   documentName: string = ''; 
+  // Loads several parking slots from a csv file 
   loadFromCsv(documentName: string){
     const csvPath = `assets/${documentName}.csv`;
     this.http.get(csvPath, { responseType: 'text' })
@@ -93,7 +94,8 @@ export class MapComponent implements OnInit {
         this.caricaParcheggiSalvati();
       }); 
   } 
- 
+
+  // Reads the content of a csv file
   parseCsv(csvText: string): void {
       const rows = csvText.split('\n');
       const headers = rows[0].split(',');
@@ -107,7 +109,8 @@ export class MapComponent implements OnInit {
       }
       console.log('Lettura del file CSV completata:', this.csvData);
   } 
-    
+
+  // Initializes the map (using OpenStreetMao)
   initMap() {
     if (this.mapContainer && this.mapContainer.nativeElement) {
       this.mappa = L.map(this.mapContainer.nativeElement).setView([44.4056, 8.9463], 15);
@@ -165,6 +168,7 @@ export class MapComponent implements OnInit {
     });
   } 
 
+  // makes a parking slot inaccessible 
   makeInaccessible(latlng: L.LatLng) {
     for (const [rectangle, marker] of this.rectangleMarkerMap.entries()) {
       if (rectangle.getBounds().contains(latlng)) {
@@ -176,7 +180,8 @@ export class MapComponent implements OnInit {
       }
     }
   } 
-      
+
+  // shows a popup window to make a parking slot inaccessible 
   showInaccessPopup(rectangle: L.Rectangle, parcheggio: Parcheggio) {
     const initialState = { parcheggio }; 
     const popupContent = `
@@ -196,6 +201,8 @@ export class MapComponent implements OnInit {
     }
   } 
 
+
+  // updates the state of a parking slot into "inaccessible"
   updateStateToInaccessible(parcheggio: Parcheggio) {
     console.log('sto chiamando la funzione updateStateToInaccessible');
     const parcheggioId = parcheggio.pid;
@@ -215,8 +222,9 @@ export class MapComponent implements OnInit {
     });
   } 
 
+  
   handleRectangleRightClick(latlng: L.LatLng) {
-    // Itera attraverso i rettangoli esistenti per verificare quale è stato cliccato
+    // Iterates among the existing rectangles to veriy on which the user clicked on
     for (const [rectangle, marker] of this.rectangleMarkerMap.entries()) {
       if (rectangle.getBounds().contains(latlng)) {
         const parcheggio = this.rectangleParcheggioMap.get(rectangle);
@@ -231,6 +239,7 @@ export class MapComponent implements OnInit {
   bsModalRef!: BsModalRef;
   rectangleParcheggioMap: Map<L.Rectangle, Parcheggio> = new Map();
 
+  // loads the parking slots from the database with the relative attributes
   loadParking() {
     for (const item of this.csvData) {
       const coordinate = {
@@ -290,6 +299,7 @@ export class MapComponent implements OnInit {
     console.log('loadParking() completato');
   } 
 
+  // Adds a box that represents the parking slot
   addBox(coordinate: { lat: number; lng: number }) {
     const latlng = new L.LatLng(coordinate.lat, coordinate.lng);
     const bounds = L.latLngBounds([
@@ -356,6 +366,7 @@ export class MapComponent implements OnInit {
     });
   } 
 
+  // shows the modal window for confirming the adding of a parking slot
   showAddBoxConfirmation(event: L.LeafletMouseEvent) {
     this.bsModalRef = this.modalService.show(AddBoxConfirmationComponent);
   this.bsModalRef.content.onAddBox.subscribe(() => {
@@ -364,6 +375,7 @@ export class MapComponent implements OnInit {
   });
   } 
 
+  // moves a parking slot from a position to another one
   moveParcheggio(marker: L.Marker, newLatLng: L.LatLng) {
     const associatedRectangle = Array.from(this.rectangleMarkerMap.keys()).find(key => this.rectangleMarkerMap.get(key) === marker);
     const associatedParcheggio = associatedRectangle ? this.rectangleParcheggioMap.get(associatedRectangle) : null;
@@ -433,6 +445,7 @@ export class MapComponent implements OnInit {
     }
   } 
 
+  // deletes the box from the map
   delBox(latlng: L.LatLng){
   this.mappa.eachLayer((layer: L.Layer) => {
     if (layer instanceof L.Rectangle && layer.getBounds().contains(latlng)) {
@@ -443,6 +456,7 @@ export class MapComponent implements OnInit {
 
   private parcheggiDaEliminare: Parcheggio[] = [];
 
+  // shows the modal window for confirming the deletion of the parking slot 
   showDeleteConfirmation(layer: L.Rectangle) {
     const modalRef: BsModalRef = this.modalService.show(DeleteConfirmationComponent);
     modalRef.content?.onClose.subscribe((result: boolean) => {
@@ -466,6 +480,7 @@ export class MapComponent implements OnInit {
   mapMarker: any;
   markerAdded: boolean = false;
 
+  // saves the parkign slots into the database 
   async saveParking() {
     const parcheggiNelDatabase = await this.firebaseService.getParcheggi();
     this.mappa.eachLayer(async (layer: L.Layer) => {
@@ -536,7 +551,7 @@ export class MapComponent implements OnInit {
       }
     });
 
-    // Elimina i parcheggi in parcheggiDaEliminare dal database
+    // Deletes the PS to be deleted from the database 
     this.parcheggiDaEliminare.forEach(async (parcheggioDaEliminare: Parcheggio) => {
     console.log('parcheggio da eliminare:',parcheggioDaEliminare );
       await this.firebaseService.deleteParcheggio(parcheggioDaEliminare);
@@ -549,6 +564,7 @@ export class MapComponent implements OnInit {
     return coord1.lat === coord2.lat && coord1.lng === coord2.lng;
   } 
 
+  // manages the click on the save button for saving the parking slots
   onSaveButtonClick() {
     const initialState = {}; 
     // Open "Save" window
@@ -561,6 +577,7 @@ export class MapComponent implements OnInit {
     });
   } 
 
+  // search an address localizing it on the map
   searchAddress() {
     const searchUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${this.searchQuery}`;
 
@@ -605,6 +622,7 @@ export class MapComponent implements OnInit {
       console.log("Search button clicked")
   }  
 
+  // takes the address from a pairs of coordinates
   getAddress(lat: number, lng: number): Observable<string> {
     const geocodeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
 
@@ -626,6 +644,7 @@ export class MapComponent implements OnInit {
   parcheggiSalvati: Parcheggio[] = []; 
   parcheggioSelezionato: Parcheggio | null = null;
 
+  // Loads the parkign slots 
   async caricaParcheggiSalvati() {
     await this.firebaseService.getParcheggi().then((parcheggi) => {
       this.parcheggiSalvati = parcheggi;
@@ -635,13 +654,15 @@ export class MapComponent implements OnInit {
     });
   } 
 
+  // shows the parking slots on the map 
   mostraParcheggiSullaMappa() {
     for (const parcheggio of this.parcheggiSalvati) {
       this.addMarker(parcheggio);
       this.addBox(parcheggio.coordinate); 
     }
   } 
-  
+
+  // set the color of the rectangle depending on its state
   setColorsBasedOnState() {
     Array.from(this.rectangleMarkerMap.keys()).forEach((rectangle) => {
       const associatedParcheggio = this.rectangleParcheggioMap.get(rectangle);
@@ -660,6 +681,7 @@ export class MapComponent implements OnInit {
     });
   } 
 
+  // adds a marker for each parking slot
   addMarker(parcheggio: Parcheggio) { 
     const marker = L.marker([parcheggio.coordinate.lat, parcheggio.coordinate.lng], {
       icon: this.customIcon, 
@@ -676,11 +698,14 @@ export class MapComponent implements OnInit {
     marker.bindPopup(popupContent);
   }
 
+  // selects a parking slots from the map
   selectParking(parcheggio: Parcheggio) {
     this.parcheggioSelezionato = parcheggio;
     this.updateMap(parcheggio);
   } 
 
+
+  // updates the map 
   updateMap(parcheggio: Parcheggio) {
     this.mappa.setView([parcheggio.coordinate.lat, parcheggio.coordinate.lng], 16);
     const marker = L.marker([parcheggio.coordinate.lat, parcheggio.coordinate.lng], {
@@ -691,6 +716,7 @@ export class MapComponent implements OnInit {
 
   // BOOKING 
 
+  // shows the booking popup window
   showBookPopup(rectangle: L.Rectangle, parcheggio: Parcheggio) {
     const popupContent = `
       <button id="prenotaButton">Prenota</button>
@@ -711,6 +737,7 @@ export class MapComponent implements OnInit {
     }
   } 
 
+  // opens the modal window for the booking of a PS
   openBookingModal(parcheggio: Parcheggio) {
     this.firebaseService.getFasceOrarieParcheggio(parcheggio.pid).then(fasceOrarie => {
       const initialState = { parcheggio, fasceOrarie };
@@ -723,6 +750,7 @@ export class MapComponent implements OnInit {
    });
   } 
 
+  // popup window that shows the property of a PS
   showPropertyPopup(parcheggio: Parcheggio) {
     const popupContent = `
       <strong>Indirizzo:</strong> ${parcheggio.indirizzo}<br>
@@ -734,10 +762,12 @@ export class MapComponent implements OnInit {
     popup.setLatLng([parcheggio.coordinate.lat, parcheggio.coordinate.lng]).openOn(this.mappa);
   } 
 
+  // Reloads the page
   updateData() {
     this.cdr.detectChanges();
   } 
 
+  // Confirm the deletion of all the parking slots 
   confirmDeleteAllParcheggi() {
     const initialState = {};
     this.bsModalRef = this.modalService.show(DeleteAllConfirmationComponent, {
@@ -750,6 +780,7 @@ export class MapComponent implements OnInit {
     });
   } 
 
+  // Selects a csv file
   onFileSelected(event: any) {
     console.log('onFileSelected called');
     const file = event.target.files[0];
