@@ -10,6 +10,8 @@ import { MenuComponent } from '../menu/menu.component';
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.css']
 })
+
+  // Manages the statistics page 
 export class StatisticsComponent implements OnInit {
   averageDuration: number;
   mostUsedDays: Record<string, number>;
@@ -34,6 +36,7 @@ export class StatisticsComponent implements OnInit {
     this.calculateStatistics();
   } 
 
+  // Compute the statistics
   calculateStatistics() {
     this.calculateAverageParkingDuration();
     this.calculateMostUsedDays(() => {
@@ -44,6 +47,7 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  // Compute the average parking duration
   calculateAverageParkingDuration() {
     this.firestore.collection('transazioni').get().subscribe(querySnapshot => {
       let totalDuration = 0;
@@ -64,6 +68,7 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  // get all the addresses of the saved parking slots
   getParkingLotAddresses() {
     const database = firebase.database();
     const parcheggiRef = database.ref('/parcheggi');
@@ -78,11 +83,13 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  // get the address of a PS for showing the most used parking slots
   getParkingLotAddress(parkingLotId: string): string {
     const address = this.parkingLotAddresses[parkingLotId];
     return address || 'Indirizzo non disponibile';
   }
 
+  // Compute the most used days
   calculateMostUsedDays(callback: () => void) {
     const daysOfWeek = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'];
     const dayCount: Record<string, number> = {};
@@ -118,6 +125,7 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  // create the chart of the most used days
   createBarChart() {
     const chartData = {
       labels: this.daysOfWeek,
@@ -152,6 +160,7 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  // create the chart of the most used Parking slots
   createParkingLotBarChart() {
     const parkingLotChartData = {
       labels: this.mostUsedParkingLotsSorted.map(parkingLot => this.getParkingLotAddress(parkingLot.key)),
@@ -185,6 +194,7 @@ export class StatisticsComponent implements OnInit {
     });
 }
 
+  // compute the most used parking slots
   calculateMostUsedParkingLots(callback: () => void) {
     const parkingLotCount: Record<string, number> = {};
     const parkingLotAddresses: Record<string, string> = {}; // mappa ID parcheggio -> Indirizzo
