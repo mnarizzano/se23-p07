@@ -1,3 +1,4 @@
+// Structure of a User object 
 export class User {
   uid: string;
   email: string | null;
