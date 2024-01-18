@@ -7,6 +7,8 @@ import { User } from '../shared/services/user.model';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
+
+  // Manages the sign-up page 
 export class SignUpComponent implements OnInit {
   
   constructor(public authService: AuthService) { }
@@ -28,10 +30,12 @@ export class SignUpComponent implements OnInit {
     }
   }
 
+  // Choose the role of the user
   toggleAdmin() {
     this.isAdmin = !this.isAdmin;
   }  
-  
+
+  // Manages the registration of a new user
   onSignUp() {
     if (this.firstName && this.lastName && this.email && this.phoneNumber && this.userPwd) {
       const user: User = {
