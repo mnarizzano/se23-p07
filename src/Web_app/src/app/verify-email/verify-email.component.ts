@@ -6,6 +6,8 @@ import { AuthService } from "../shared/services/auth.service";
   templateUrl: './verify-email.component.html',
   styleUrls: ['./verify-email.component.css']
 })
+
+  // Class to send the mail verification
 export class VerifyEmailComponent implements OnInit {
   constructor(
     public authService: AuthService
