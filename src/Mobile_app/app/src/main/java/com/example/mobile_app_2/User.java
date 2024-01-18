@@ -1,5 +1,7 @@
 package com.example.mobile_app_2;
 
+// Defines the User structure
+
 public class User {
     private String displayName;
     private String phoneNumber;
@@ -7,6 +9,7 @@ public class User {
     private String email;
     private String photoURL;
     private String uid;
+
 
     public User() {
 
