@@ -7,6 +7,7 @@ import { AuthService } from '../shared/services/auth.service';
   styleUrls: ['./home.component.css']
 })
 
+  // Manages the home page 
 export class HomeComponent implements OnInit {
   isAdmin = false;
 constructor(public authService: AuthService) {}
