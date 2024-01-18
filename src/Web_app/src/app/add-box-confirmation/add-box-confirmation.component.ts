@@ -6,6 +6,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './add-box-confirmation.component.html'
 
 })
+
+// Class for the management of the confirmation of adding a parking on the map 
 export class AddBoxConfirmationComponent {
   public onAddBox: EventEmitter<void> = new EventEmitter<void>(); 
 
