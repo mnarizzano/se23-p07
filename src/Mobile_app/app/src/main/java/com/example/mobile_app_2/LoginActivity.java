@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.FirebaseApp;
 
-
+// Manages the login page 
 public class LoginActivity extends AppCompatActivity {
 
     EditText emailEditText;
@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    
     void loginUser() {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
