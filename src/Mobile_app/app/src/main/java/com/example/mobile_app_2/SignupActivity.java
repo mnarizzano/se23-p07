@@ -22,6 +22,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
+
+// Management of the sign-up page 
 public class SignupActivity extends Activity {
 
     @Override
@@ -53,7 +55,6 @@ public class SignupActivity extends Activity {
 
                                         String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-                                        // Aggiungi ulteriori informazioni utente a Cloud Firestore
                                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                                         DocumentReference userRef = db.collection("users").document(userId);
 
@@ -67,7 +68,7 @@ public class SignupActivity extends Activity {
                                                     public void onSuccess(Void aVoid) {
                                                         Toast.makeText(SignupActivity.this, R.string.Signup_done, Toast.LENGTH_SHORT).show();
 
-                                                        // Passa all'activity di login
+                                                        // Go to the LoginActivity
                                                         Intent loginIntent = new Intent(SignupActivity.this, LoginActivity.class);
                                                         startActivity(loginIntent);
                                                         finish();
@@ -88,6 +89,7 @@ public class SignupActivity extends Activity {
             }
         });
 
+        // Management of the button for going back to the login
         Button btnBackToLogin = findViewById(R.id.btnBackToLogin);
         btnBackToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
