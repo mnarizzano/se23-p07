@@ -15,6 +15,8 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
+
+  // Manages the roles depending on the type of user
 export class AdminGuard {
   constructor(public authService: AuthService, public router: Router) {}
 
@@ -25,10 +27,10 @@ export class AdminGuard {
     return this.authService.isAdmin().pipe(
       map((isAdmin) => {
         if (isAdmin) {
-          return true; // L'amministratore può accedere a tutte le pagine
+          return true; // The admin can access to all the pages
         } else {
           if (next.url[0].path === 'statistics') {
-            // L'utente normale non può accedere alla pagina "statistics"
+            // The normal user cannot access to the page "statistics"
             this.router.navigate(['home']);
             console.log('redirect to Home because it is not an administrator');
             return false;
