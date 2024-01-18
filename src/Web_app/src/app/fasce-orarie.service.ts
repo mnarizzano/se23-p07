@@ -6,6 +6,7 @@ import { Parcheggio } from './shared/services/parking.interface';
   providedIn: 'root',
 })
 
+  // Class for managing the time slots of the parking slots
 export class FasceOrarieService {
   fasceOrarie: { [key: string]: { stato: string} } = {
 
@@ -27,6 +28,7 @@ export class FasceOrarieService {
     return this.fasceOrarie;
   }
 
+// get a state of a time slot
   async getStatoFasciaOraria(parcheggioId: string, fasciaOraria: string) {
     try {
       const parcheggio = await this.firebaseService.getParcheggioById(parcheggioId);
@@ -42,6 +44,7 @@ export class FasceOrarieService {
     }
   }
 
+  // set the state of a time slot
   setStatoFasciaOraria(parcheggio: Parcheggio, fasciaOraria: string, stato: string): void {
     this.firebaseService.updateFasciaOraria(parcheggio, fasciaOraria, stato)
       .then(() => {
@@ -55,6 +58,7 @@ export class FasceOrarieService {
       });
   }
 
+  // update the state of a PS to "occupato" if all the relative time slots have the state "occupato"
   updateStatoParcheggio(parcheggioId: string) {
     this.firebaseService.getParcheggioById(parcheggioId)
       .then((parcheggio) => {
@@ -70,10 +74,13 @@ export class FasceOrarieService {
       });
   }
   
+  // get the state of a parking slot
   async getStatoParcheggio(parcheggio: Parcheggio): Promise<string> {
     return parcheggio.state;
   }
 
+
+  // checks if all the time slots of a PS have the state "occupato"
   areAllFasceOccupate(fasceOrarie: { [key: string]: { stato: string } }) {
     const statiFasce = Object.values(fasceOrarie).map(fascia => fascia.stato);
     return statiFasce.every(stato => stato === 'occupato');
