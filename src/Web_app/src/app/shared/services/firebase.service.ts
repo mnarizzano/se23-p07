@@ -10,12 +10,15 @@ import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root',
   })
+
+    // Manages the interaction with the firebase database 
   export class FirebaseService {
 
     constructor() {
       firebase.initializeApp(firebaseConfig);
     }
 
+    // updates the time slots of each parking slot
     async updateFasciaOraria(parcheggio: Parcheggio, fasciaOraria: string, stato: string) {
       try {
         const fasciaKey = `${fasciaOraria}`;
@@ -31,12 +34,14 @@ import { Observable } from 'rxjs';
       }
     }
 
+    // get the time slots of a PS
     async getFasceOrarieParcheggio(parcheggioId: string): Promise<any> {
       const fasceOrarieRef = firebase.database().ref(`parcheggi/${parcheggioId}/FasceOrarie`);
       const snapshot = await fasceOrarieRef.once('value');
       return snapshot.val();
     }
-  
+
+    // generates a unique PS identifier
     generateParcheggioID(coordinate: { lat: number, lng: number }): string {
       const latStr = coordinate.lat.toString();
       const lngStr = coordinate.lng.toString();
@@ -67,6 +72,7 @@ import { Observable } from 'rxjs';
     });
   }
 
+    // Delete PS 
   deleteParcheggio(parcheggio: Parcheggio): Promise<void> {
     if (!parcheggio || !parcheggio.pid) {
       console.error('ID del parcheggio non valido o mancante.');
@@ -78,7 +84,8 @@ import { Observable } from 'rxjs';
       console.log('Parcheggio eliminato da Firebase:', parcheggio.pid);
     });
   }
-  
+
+    // update a PS state
   async updateParcheggioState(pid: string, newState: string) {
     try {
       const parcheggioRef = firebase.database().ref(`parcheggi/${pid}`);
@@ -92,11 +99,13 @@ import { Observable } from 'rxjs';
     }
   }
 
+    // update a parking slot
   updateParcheggio(parcheggio: Parcheggio) {
     const parcheggioRef = firebase.database().ref(`parcheggi/${parcheggio.pid}`);
     return parcheggioRef.update(parcheggio);
   }
 
+    // deletes all the parking slots from the database
   async deleteAllParcheggi() {
   try {
     const parcheggiSalvati = await this.getParcheggi(); 
@@ -115,6 +124,7 @@ import { Observable } from 'rxjs';
 
 }
 
+    // get a parking slot filtering the ID
 getParcheggioById(parcheggioId: string): Promise<Parcheggio | null> {
   const parcheggiRef = firebase.database().ref('parcheggi').child(parcheggioId);
   return parcheggiRef.once('value').then((snapshot) => {
