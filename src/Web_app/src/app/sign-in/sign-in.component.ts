@@ -7,6 +7,7 @@ import { AuthService } from "../shared/services/auth.service";
   styleUrls: ['./sign-in.component.css']
 })
 
+  // Manages the sign-in page
 export class SignInComponent implements OnInit {
   userNameValue: string = '';
   userPasswordValue: string = '';
@@ -17,8 +18,8 @@ export class SignInComponent implements OnInit {
     this.signInOnEnter;
    }
 
-  signInOnEnter() {
-    // Call signIn when user press Enter 
+   // Call signIn when user press Enter
+  signInOnEnter() { 
     this.authService.SignIn(this.userNameValue, this.userPasswordValue);
   }
 }
