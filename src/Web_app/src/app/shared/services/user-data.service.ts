@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
+
+  // Class to manage the user data 
 export class UserDataService {
   constructor(private firestore: AngularFirestore) {}
 
