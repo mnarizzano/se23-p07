@@ -43,7 +43,8 @@
         }
       });
     }
-    
+
+    // Manages the sign-in
     SignIn(email: string, password: string) {
       return this.afAuth
         .signInWithEmailAndPassword(email, password)
@@ -63,7 +64,8 @@
           window.alert(error.message);
         });
     }
-    
+
+    // Manages the registration of a user
     SignUp(email: string, password: string, user: User, role: string) {
       return this.afAuth
         .createUserWithEmailAndPassword(email, password)
@@ -84,6 +86,7 @@
         });
     }
 
+    // Takes the role of a user
     getRole(userId: string): Observable<string | null> {
       return this.afs.doc(`users/${userId}`).valueChanges().pipe(
         map((userData: any) => {
@@ -92,6 +95,7 @@
       );
     }
 
+    // Send a verification mail whenever a user registrates
     SendVerificationMail() {
       return this.afAuth.currentUser
         .then((user: any) => user.sendEmailVerification())
@@ -105,6 +109,7 @@
         });
     }
 
+    // Manages the case of forgot password
     ForgotPassword(passwordResetEmail: string) {
       return this.afAuth
         .sendPasswordResetEmail(passwordResetEmail)
@@ -163,6 +168,7 @@
       return userRef.set(userData, { merge: true });
     }
 
+    // Manages the sign out of a user 
     SignOut() {
       return this.afAuth.signOut()
         .then(() => {
