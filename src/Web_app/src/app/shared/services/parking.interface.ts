@@ -1,3 +1,4 @@
+// Structure of a parking slot object
 export interface Parcheggio {
     pid: string,
     indirizzo: string;
