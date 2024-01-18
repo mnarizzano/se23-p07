@@ -8,13 +8,17 @@ import { LocationService } from '../shared/services/location.service';
   selector: 'app-delete-all-confirmation',
   templateUrl: './delete-all-confirmation.component.html',
 })
+
+  // For the management of the whole deletion of all the parking slots
 export class DeleteAllConfirmationComponent {
   constructor(public bsModalRef: BsModalRef, private firebaseService: FirebaseService, private cdr: ChangeDetectorRef, private locationService: LocationService) {}
 
+  // To hide the window
   onCancel() {
     this.bsModalRef.hide(); 
   }
 
+  // To confirm the deletion of all the parking slots
   onConfirm() {
     this.bsModalRef.hide(); 
     this.firebaseService.deleteAllParcheggi().then(() => {
