@@ -44,18 +44,20 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+// manages the home in which there is the map view
+
 public class HomeActivity extends AppCompatActivity {
     private static final String CHANNEL_ID = "my_channel";
 
     private static final int NOTIFICATION_ID = 1;
 
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
-    private static final long CHECK_INTERVAL = 5000; // Intervallo di controllo in millisecondi (5 secondi)
+    private static final long CHECK_INTERVAL = 5000; // Control interval in milliseconds
 
     MapView mapView;
     private final Handler handler = new Handler();
 
-    private static final double PARKING_RADIUS_METERS = 50.0; // Raggio del parcheggio in metri
+    private static final double PARKING_RADIUS_METERS = 50.0; // radium of the parking area in meters
 
     MyLocationNewOverlay locationOverlay;
 
@@ -68,8 +70,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-
-
+    // creates the activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +90,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         if (currentUser == null) {
-            // Se l'utente non è autenticato, torna alla LoginActivity
+            // If the user is not authenticated, come back to LoginActivity
             Intent loginIntent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(loginIntent);
             finish();
@@ -97,10 +98,10 @@ public class HomeActivity extends AppCompatActivity {
         }
 
 
-        // Verifica le autorizzazioni per l'accesso alla posizione
+        // Verify the authorizations for the access to the position
         if (checkPermissions()) {
             setupMap();
-            // Esegui la verifica della posizione ogni tot tempo
+            // Executes the position verification at a specified time
             handler.postDelayed(checkParkingRunnable, CHECK_INTERVAL);
             Log.d("HomeActivity", "Controllo del parcheggio avviato con successo");
         } else {
@@ -108,34 +109,37 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    // checks the localization permissions
     boolean checkPermissions() {
         int permissionState = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         return permissionState == PackageManager.PERMISSION_GRANTED;
     }
 
+    // request for localization permissions
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 REQUEST_PERMISSIONS_REQUEST_CODE);
     }
 
+    // initialized the map (using OpenStreetMap)
     public void setupMap() {
         mapView.setMultiTouchControls(true);
         mapView.getController().setZoom(15.0);
 
-        // Inizializza l'overlay della posizione attuale
+        // Initializes the overlay of the actual position
         locationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this), mapView);
         locationOverlay.enableMyLocation();
 
-        // Aggiungi l'overlay della posizione attuale all'OverlayManager
+        // Add the overlay  of the actual position to the OverlayManager
         mapView.getOverlayManager().add(locationOverlay);
 
-        // Imposta un listener per la posizione attuale
+        // Set a listener for the actual position
         locationOverlay.enableFollowLocation();
         locationOverlay.enableMyLocation();
 
 
-        // Imposta il centro della mappa sulla tua posizione attuale
+        // Set the centre of the map on the actual position
         GeoPoint myLocation = locationOverlay.getMyLocation();
         if (myLocation != null) {
             mapView.getController().setCenter(myLocation);
@@ -148,23 +152,23 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public void run() {
             if (!isDestroyed()) {
-                // Recupera tutte le prenotazioni dell'utente e ordina per data di prenotazione
+                // Recover all the user booking the order them by booking data 
                 FirebaseFirestore.getInstance().collection("prenotazioni")
-                        .whereEqualTo("utenteId", utenteId) // Sostituisci 'utenteId' con l'ID dell'utente corrente
+                        .whereEqualTo("utenteId", utenteId) 
                         .orderBy("orarioPrenotazioneIn", Query.Direction.ASCENDING)
                         .get()
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    // Verifica e gestisci l'ingresso e l'uscita per ciascuna prenotazione
+                                    // Verify and manage the enter and exit from a PS for each booking
                                     handleParkingEntryExit(document);
                                 }
                             } else {
-                                // Si è verificato un errore durante il recupero delle prenotazioni
+                                // Error during the recovering of bookings
                                 Log.e("HomeActivity", "Errore durante il recupero delle prenotazioni", task.getException());
                             }
 
-                            // Esegui il controllo nuovamente dopo l'intervallo specificato
+                            // Check again after a time interval
                             handler.postDelayed(this, CHECK_INTERVAL);
                             Log.d("HomeActivity", "Controllo del parcheggio in corso...");
                         });
@@ -173,22 +177,23 @@ public class HomeActivity extends AppCompatActivity {
     };
 
 
+    // Get the current time
     private String getCurrentTime() {
-        // Restituisci l'orario attuale come una stringa nel formato desiderato
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
         return sdf.format(new Date());
     }
 
 
+    // See the result of the permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // L'utente ha concesso l'autorizzazione
+                // The user gives the authorization
                 setupMap();
             } else {
-                // L'utente ha negato l'autorizzazione
+                // The user denies the authorization
                 Toast.makeText(this, "Permission denied. App cannot access location.", Toast.LENGTH_SHORT).show();
             }
         }
@@ -217,15 +222,15 @@ public class HomeActivity extends AppCompatActivity {
             mapView.onDetach();
         }
         FirebaseFirestore.getInstance().terminate();
-        // Rimuovi il callback per evitare memory leak
+        // Remove the callback not to get into memory leak
         handler.removeCallbacks(checkParkingRunnable);
     }
 
     ParkingArea createParkingAreaPolygon(GeoPoint center) {
         Polygon polygon = new Polygon();
 
-        double radiusDegrees = PARKING_RADIUS_METERS / (111.32 * 1000.0); // Conversione da metri a gradi (approssimativa)
-        int numPoints = 100; // Numero di punti per rappresentare il cerchio
+        double radiusDegrees = PARKING_RADIUS_METERS / (111.32 * 1000.0); // Conversion meters->degrees 
+        int numPoints = 100; // number of points to represent the circle 
         double circleStep = 360.0 / numPoints;
 
         List<GeoPoint> circlePoints = new ArrayList<>();
@@ -238,12 +243,11 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         polygon.setPoints(circlePoints);
-        polygon.getFillPaint().setColor(0x301080E0); // Colore blu con opacità
-        polygon.getOutlinePaint().setColor(0xFF1080E0); // Colore del bordo blu
+        polygon.getFillPaint().setColor(0x301080E0); 
+        polygon.getOutlinePaint().setColor(0xFF1080E0); 
 
-        //mapView.getController().setCenter(center);
 
-        // Creazione del marker nel centro del poligono
+        // Marker creation in the center of the polygon
         Marker parkingMarker = new Marker(mapView);
         parkingMarker.setPosition(center);
         parkingMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
@@ -253,13 +257,15 @@ public class HomeActivity extends AppCompatActivity {
         return new ParkingArea(polygon, parkingMarker);
 
     }
+
+    // send a notification when the booking times out
     private void sendNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentTitle("Notifica di Prenotazione")
                 .setContentText(getString(R.string.notice_text))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true); // Imposta il flag per cancellare la notifica quando viene aperta
+                .setAutoCancel(true); // Set a flag to delete the notification when it is opened
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -268,6 +274,7 @@ public class HomeActivity extends AppCompatActivity {
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
+    // Create the channel for sending the notification
     private void createNotificationChannel() {
         CharSequence name = "My Channel";
         String description = "Canale di notifica per le prenotazioni";
@@ -278,6 +285,8 @@ public class HomeActivity extends AppCompatActivity {
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(channel);
     }
+
+    // manages the enter and exit time from a PS
     void handleParkingEntryExit(QueryDocumentSnapshot document) {
         if (locationOverlay != null) {
             GeoPoint myLocation = locationOverlay.getMyLocation();
@@ -298,9 +307,9 @@ public class HomeActivity extends AppCompatActivity {
                     Timestamp exitTimestamp = document.getTimestamp("orarioUscita");
 
                     if (distance <= PARKING_RADIUS_METERS) {
-                        // L'utente è all'interno del raggio del parcheggio.
+                        // The user is inside the area of the PS
                         if (entryTimestamp == null) {
-                            // Registra l'orario di entrata
+                            // Register the enter time
                             registerEntranceInDatabase(getCurrentTime(), document.getId());
                         }
 
@@ -309,7 +318,7 @@ public class HomeActivity extends AppCompatActivity {
                             boolean userExitedParking = isUserOutsideParking(myLocation, parkingLocation);
 
                             if (userExitedParking) {
-                                // L'utente è uscito dall'area del parcheggio, quindi registra l'orario di uscita
+                                // The user exits from the area, so it registers the exit time
                                 registerExitInDatabase(getCurrentTime(), document.getId());
                             }
 
@@ -320,21 +329,21 @@ public class HomeActivity extends AppCompatActivity {
                         Log.d("HomeActivity", "Prima dell'aggiunta del poligono per il documento con ID: " + document.getId());
 
                         if (System.currentTimeMillis() <= prenotazioneOutTimestamp.toDate().getTime()) {
-                            // Calcola il tempo rimanente nella prenotazione
+                            // compute the residual time of the booking
                             long currentTimeMillis = System.currentTimeMillis();
                             long prenotazioneEndTimeMillis = prenotazioneOutTimestamp.toDate().getTime();
                             long timeRemainingMinutes = (prenotazioneEndTimeMillis - currentTimeMillis) / (1000 * 60);
 
-                            // Se mancano meno di 2 minuti alla scadenza, invia una notifica
+                            // Send a notification if there are 2 minutes left
                             if (timeRemainingMinutes <= 2) {
-                                // Se la notifica non è stata inviata, inviala
+                                // send notification if it is not done yet
                                 if (!notificationSent) {
                                     sendNotification();
-                                    // Imposta la variabile di stato a true per indicare che la notifica è stata inviata
+                                    // Notification has been sent
                                     notificationSent = true;
                                 }
                             } else {
-                                // Se la notifica è stata inviata ma mancano più di 2 minuti alla scadenza, reimposta la variabile di stato a false
+                                // Reset the state variable to false if the nofitication has been sent but there are more than 2 minutes left
                                 if (notificationSent) {
                                     notificationSent = false;
                                 }
@@ -343,7 +352,7 @@ public class HomeActivity extends AppCompatActivity {
                         }
 
                     }
-                    //Se la prenotazione è scaduta non visualizzo il parcheggio
+                 
                     if(System.currentTimeMillis() <= prenotazioneOutTimestamp.toDate().getTime()) {
 
                         if (currentParkingArea != null) {
@@ -352,7 +361,7 @@ public class HomeActivity extends AppCompatActivity {
                             Log.d("HomeActivity", "È stato rimosso il poligono " +  document.getId());
                         }
 
-                        // Crea e aggiungi il poligono del parcheggio attuale e il marker
+                        // Create and add the marker and the polygon of the actual PS 
                         currentParkingArea = createParkingAreaPolygon(parkingLocation);
                         mapView.getOverlayManager().add(currentParkingArea.getPolygon());
                         mapView.getOverlayManager().add(currentParkingArea.getMarker());
@@ -368,8 +377,9 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    // Compute the distance between 2 points
     double calculateDistance(GeoPoint point1, GeoPoint point2) {
-        double earthRadius = 6371000; // Raggio medio della Terra in metri
+        double earthRadius = 6371000; /
         double dLat = Math.toRadians(point2.getLatitude() - point1.getLatitude());
         double dLon = Math.toRadians(point2.getLongitude() - point1.getLongitude());
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -379,21 +389,21 @@ public class HomeActivity extends AppCompatActivity {
         return earthRadius * c;
     }
 
+    // Check if the user is outside the PS
     private boolean isUserOutsideParking(GeoPoint userLocation, GeoPoint parkingLocation) {
         double distance = calculateDistance(userLocation, parkingLocation);
         return distance > HomeActivity.PARKING_RADIUS_METERS;
     }
 
+    // Register the entrance into the database
     private void registerEntranceInDatabase(String arrivalTime, String parkingId) {
-        // Ottieni l'orario di arrivo come oggetto Timestamp
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
         try {
             Date arrivalDate = sdf.parse(arrivalTime);
             assert arrivalDate != null;
             Timestamp arrivalTimestamp = new Timestamp(arrivalDate);
 
-            // Aggiorna l'orario di arrivo nel documento specifico nel tuo caso
-            // Utilizza 'parkingId' per identificare il parcheggio specifico
+            // Update the entering time
             DocumentReference parkingDocRef = FirebaseFirestore.getInstance()
                     .collection("prenotazioni")
                     .document(parkingId);
@@ -401,24 +411,23 @@ public class HomeActivity extends AppCompatActivity {
             Map<String, Object> updates = new HashMap<>();
             updates.put("orarioArrivo", arrivalTimestamp);
 
-            // Esegui l'aggiornamento nel documento specifico
             parkingDocRef.update(updates)
                     .addOnSuccessListener(aVoid -> {
-                        // L'aggiornamento è avvenuto con successo
+                        // Update successful
                         Log.d("Firestore", "Orario di arrivo registrato con successo");
                     })
                     .addOnFailureListener(e -> {
-                        // Si è verificato un errore durante l'aggiornamento
+                        // Error during the update
                         Log.e("Firestore", "Errore durante l'aggiornamento dell'orario di arrivo: " + e.getMessage());
                     });
         } catch (ParseException e) {
-            // Gestisci eventuali errori di parsing dell'orario
             Log.e("Timestamp", "Errore durante il parsing dell'orario di arrivo: " + e.getMessage());
         } catch (java.text.ParseException e) {
             throw new RuntimeException(e);
         }
     }
 
+    // Register the exit time into the database
     private void registerExitInDatabase(String exitTime, String parkingId) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
         try {
@@ -433,7 +442,6 @@ public class HomeActivity extends AppCompatActivity {
             Map<String, Object> updates = new HashMap<>();
             updates.put("orarioUscita", exitTimestamp);
 
-            // Esegui l'aggiornamento nel documento specifico
             parkingDocRef.update(updates)
                     .addOnSuccessListener(aVoid -> Log.d("Firestore", "Orario di uscita registrato con successo"))
                     .addOnFailureListener(e -> Log.e("Firestore", "Errore durante l'aggiornamento dell'orario di uscita: " + e.getMessage()));
