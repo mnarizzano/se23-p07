@@ -11,6 +11,8 @@ import { Parcheggio } from '../shared/services/parking.interface';
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.css']
 })
+
+  // Class for managing the booking window
 export class BookingComponent implements OnInit {
 
 
@@ -32,11 +34,13 @@ export class BookingComponent implements OnInit {
     });
   }
 
+  // Click on the "Conferma" button
   onConfermaClick(result: boolean) {
     this.onConferma.emit(result);
     this.bsModalRef.hide();
   }
-  
+
+  // Change the state of the selected slots
   updateSelectedFasce(fascia: string) {
     if (this.selectedFasce.includes(fascia)) {
       this.selectedFasce = this.selectedFasce.filter(item => item !== fascia);
@@ -45,6 +49,7 @@ export class BookingComponent implements OnInit {
     }
   }
 
+  // Confirm the booking 
   async confermaPrenotazione() {  
     for (const fascia of this.selectedFasce) {
       await this.firebaseService.updateFasciaOraria(this.parcheggio, fascia, 'occupato');
@@ -57,6 +62,7 @@ export class BookingComponent implements OnInit {
     this.chiudiFinestraModale();
   }
 
+  // Update the state of the parking slot into "occupato"
   updateStateToOccupato(parcheggio: Parcheggio) {
     console.log('sto chiamando la funzione updateStateToOccupato');
     const parcheggioId = parcheggio.pid;
@@ -65,6 +71,7 @@ export class BookingComponent implements OnInit {
     this.firebaseService.updateParcheggioState(parcheggio.pid, 'occupato');
   }
 
+  // Close the modal booking window
   chiudiFinestraModale() {
      this.onConfermaClick(false);
      this.bsModalRef.hide();
