@@ -103,4 +103,6 @@ const routes: Routes = [
  
   bootstrap: [AppComponent]
 })
+
+  // manages all the imported modules and the used components inside the entire system
 export class AppModule { }
