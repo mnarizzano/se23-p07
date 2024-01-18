@@ -1,1 +1,1 @@
-Here you have to describe how the code is organized
+Inside the `src/app` there are the components organized as directories and in each component there is the class file (.ts), the html file, the css file and the test file (.spec.ts). Furthermore, inside the `src/app` there is also AppModule which manages all the components and the paths. 
