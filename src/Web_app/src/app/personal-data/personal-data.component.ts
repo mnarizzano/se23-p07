@@ -9,6 +9,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./personal-data.component.css']
 })
 
+  // Manages the page relative to the personal data of each user
 export class PersonalDataComponent implements OnInit {
   userData: any = {};
   editingAddress: boolean = false;
@@ -34,6 +35,7 @@ export class PersonalDataComponent implements OnInit {
     });
   }
 
+  // manages the change of personal data
   updateInfo() {
     this.editingAddress = true;
     this.editedAddress = this.userData.address;
@@ -41,6 +43,7 @@ export class PersonalDataComponent implements OnInit {
     this.editedPhoneNumber = this.userData.phoneNumber;
   }
 
+  // save the new address 
   saveEditedAddress() {
     this.userData.address = this.editedAddress;
     this.editingAddress = false;
@@ -59,6 +62,7 @@ export class PersonalDataComponent implements OnInit {
     });
   }
 
+  // save the new phone number
   saveEditedPhoneNumber() {
     this.userData.phoneNumber = this.editedPhoneNumber;
     this.editingPhoneNumber = false;
